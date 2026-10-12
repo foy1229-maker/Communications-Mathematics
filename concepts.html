@@ -1,0 +1,1003 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>개념 정리 · 기초통신수학 II</title>
+  <meta name="description" content="기초통신수학 II 중간고사 범위 Ch.12~16.4 핵심 공식과 출제 유형 52가지 정리 — 유형별 풀이 순서와 연습 문제 연결">
+  <link rel="icon" href="assets/img/ku-emblem.webp">
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="assets/site.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  <script defer src="assets/problems.js"></script>
+  <script defer src="assets/common.js"></script>
+  <script defer src="assets/concepts.js"></script>
+</head>
+<body>
+  <header class="top wrap">
+    <a class="brand" href="index.html">
+      <img src="assets/img/ku-emblem.webp" alt="" width="164" height="220">
+      <span><b>기초통신수학 II</b>중간고사 문제 은행</span>
+    </a>
+    <nav class="top-links" aria-label="페이지">
+      <a href="bank.html?level=1">문제 은행</a>
+      <a href="index.html">대시보드</a>
+    </nav>
+  </header>
+
+  <section class="hero wrap">
+    <p class="eyebrow ko">시험 범위 Ch.12 – 16.4</p>
+    <h1>개념 정리와 출제 유형</h1>
+    <p class="lead">단원별 핵심 공식과, 강의 예제·복습문제·과제에서 뽑은 출제 유형을 강의 순서대로 정리했어요. 유형 아래의 문제 번호를 누르면 문제 은행의 그 문제로 바로 이동해요.</p>
+    <div class="facts">
+      <span><b>8</b>개 강의 단위</span>
+      <span><b data-count="types">52</b>개 출제 유형</span>
+      <span><b data-count="problems">120</b>문제와 연결</span>
+    </div>
+  </section>
+
+  <nav class="toc" aria-label="단원 목차">
+    <div class="wrap">
+      <a href="#strategy">시험 전략</a>
+      <a href="#c12"><span class="n">12</span>벡터·공간기하</a>
+      <a href="#c13"><span class="n">13</span>벡터함수</a>
+      <a href="#c14a"><span class="n">14.1–3</span>극한·편미분</a>
+      <a href="#c14b"><span class="n">14.4–6</span>접평면·연쇄·방향</a>
+      <a href="#c14c"><span class="n">14.7–8</span>극값·라그랑주</a>
+      <a href="#c15a"><span class="n">15.1–3</span>이중적분</a>
+      <a href="#c15b"><span class="n">15.6–8</span>삼중적분</a>
+      <a href="#c16"><span class="n">16.1–4</span>선적분·그린</a>
+    </div>
+  </nav>
+
+  <main class="wrap">
+
+    <!-- ───────────── 시험 전략 ───────────── -->
+    <section class="sec" id="strategy" aria-labelledby="h-strategy">
+      <div class="sec-h">
+        <h2 id="h-strategy">시험 전략</h2>
+      </div>
+      <div class="purpose"><div class="purpose-in">
+        <blockquote>증명보다 풀이법을 적용해 답을 내는 문제가 나와요. 유형별 풀이 순서를 손에 익히고, 계산기 없이 정확한 값으로 답하세요.</blockquote>
+        <p>시험 범위: Ch.12 벡터 ~ 16.4 그린 정리 (16.5 이후 제외). 문제 은행의 모든 정답은 분수·근호·$\pi$·$e$·$\ln$ 형태로 손으로 계산할 수 있게 만들었어요.</p>
+      </div></div>
+      <div class="grid3">
+        <div class="card">
+          <h3>정확한 값으로 답하기</h3>
+          <ul>
+            <li>특수각이 아니면 $\cos^{-1}\!\tfrac16$처럼 그대로 둬요.</li>
+            <li>근호는 정리: $\sqrt{75}=5\sqrt3$, $\tfrac{5}{\sqrt3}=\tfrac{5\sqrt3}{3}$</li>
+            <li>소수는 선형근사·미분 오차처럼 문제가 요구할 때만.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>마지막에 확인할 네 가지</h3>
+          <ul>
+            <li>방향벡터를 단위벡터로 나눴나? (방향도함수, $\mathbf T$)</li>
+            <li>야코비안 $r$, $\rho^2\sin\phi$를 곱했나?</li>
+            <li>곡선 방향이 반시계(양의 방향)인가?</li>
+            <li>각·거리에 절댓값을 씌웠나?</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>자주 쓰는 값</h3>
+          <ul>
+            <li>$\cos\tfrac\pi6=\tfrac{\sqrt3}{2},\ \cos\tfrac\pi4=\tfrac{\sqrt2}{2},\ \cos\tfrac\pi3=\tfrac12$</li>
+            <li>$\int_0^{2\pi}\sin^2\theta\,d\theta=\int_0^{2\pi}\cos^2\theta\,d\theta=\pi$</li>
+            <li>$\int_0^{\pi/2}\sin^2\theta\,d\theta=\tfrac\pi4,\ \ \int_0^{\pi/2}\cos^4\theta\,d\theta=\tfrac{3\pi}{16}$</li>
+            <li>$\int_0^{\pi}\sin\phi\,d\phi=2,\ \ \int_0^{\pi/4}\sin\phi\,d\phi=1-\tfrac{\sqrt2}{2}$</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────── Ch.12 ───────────── -->
+    <section class="sec" id="c12" aria-labelledby="h-c12">
+      <div class="sec-h">
+        <p class="k">12.1 – 12.5</p>
+        <h2 id="h-c12">벡터와 공간기하</h2>
+        <p>점·벡터·직선·평면을 식으로 다루는 단원이에요. 시험에서는 내적과 외적을 도구로 써서 평면의 방정식, 사잇각, 거리를 구하는 문제가 중심이에요.</p>
+      </div>
+
+      <h3 class="sub">핵심 공식</h3>
+      <div class="fgrid">
+        <div class="fcard">
+          <h4>거리와 구</h4>
+          <p>$$|P_1P_2|=\sqrt{(x_2-x_1)^2+(y_2-y_1)^2+(z_2-z_1)^2}$$</p>
+          <p>$$(x-h)^2+(y-k)^2+(z-l)^2=r^2$$</p>
+        </div>
+        <div class="fcard">
+          <h4>내적과 사잇각</h4>
+          <p>$$\mathbf a\cdot\mathbf b=a_1b_1+a_2b_2+a_3b_3=|\mathbf a||\mathbf b|\cos\theta$$</p>
+          <p>직교 $\iff\mathbf a\cdot\mathbf b=0$<br>방향코사인 $\cos\alpha=\tfrac{a_1}{|\mathbf a|},\ \cos\beta=\tfrac{a_2}{|\mathbf a|},\ \cos\gamma=\tfrac{a_3}{|\mathbf a|}$,  $\cos^2\alpha+\cos^2\beta+\cos^2\gamma=1$</p>
+        </div>
+        <div class="fcard">
+          <h4>사영과 일</h4>
+          <p>$$\operatorname{comp}_{\mathbf a}\mathbf b=\frac{\mathbf a\cdot\mathbf b}{|\mathbf a|},\qquad \operatorname{proj}_{\mathbf a}\mathbf b=\frac{\mathbf a\cdot\mathbf b}{|\mathbf a|^2}\,\mathbf a$$</p>
+          <p>일 $W=\mathbf F\cdot\mathbf D=|\mathbf F||\mathbf D|\cos\theta$ ($\mathbf D$: 변위벡터)</p>
+        </div>
+        <div class="fcard">
+          <h4>외적</h4>
+          <p>$$\mathbf a\times\mathbf b=\begin{vmatrix}\mathbf i&amp;\mathbf j&amp;\mathbf k\\ a_1&amp;a_2&amp;a_3\\ b_1&amp;b_2&amp;b_3\end{vmatrix}=\langle a_2b_3-a_3b_2,\ a_3b_1-a_1b_3,\ a_1b_2-a_2b_1\rangle$$</p>
+          <p>평행사변형 넓이 $|\mathbf a\times\mathbf b|=|\mathbf a||\mathbf b|\sin\theta$ (삼각형은 절반)<br>$\mathbf a\times\mathbf b\perp\mathbf a,\ \mathbf b$,  $\mathbf a\parallel\mathbf b\iff\mathbf a\times\mathbf b=\mathbf 0$,  $\mathbf i\times\mathbf j=\mathbf k$</p>
+        </div>
+        <div class="fcard">
+          <h4>스칼라 삼중적</h4>
+          <p>$$\mathbf a\cdot(\mathbf b\times\mathbf c)=\begin{vmatrix}a_1&amp;a_2&amp;a_3\\ b_1&amp;b_2&amp;b_3\\ c_1&amp;c_2&amp;c_3\end{vmatrix}$$</p>
+          <p>평행육면체 부피 $=|\mathbf a\cdot(\mathbf b\times\mathbf c)|$, 사면체는 $\tfrac16$배, 값이 $0$이면 세 벡터는 공면</p>
+        </div>
+        <div class="fcard">
+          <h4>직선</h4>
+          <p>$$\mathbf r=\mathbf r_0+t\mathbf v,\qquad \frac{x-x_0}{a}=\frac{y-y_0}{b}=\frac{z-z_0}{c}$$</p>
+          <p>방향벡터 $\mathbf v=\langle a,b,c\rangle$의 성분이 0이면 분모에 0을 쓰지 않고 따로 써요. 예) $a=0$이면</p>
+          <p>$$x=x_0,\qquad \frac{y-y_0}{b}=\frac{z-z_0}{c}$$</p>
+        </div>
+        <div class="fcard">
+          <h4>평면</h4>
+          <p>$$a(x-x_0)+b(y-y_0)+c(z-z_0)=0,\quad \mathbf n=\langle a,b,c\rangle$$</p>
+          <p>두 평면의 각 $\cos\theta=\dfrac{|\mathbf n_1\cdot\mathbf n_2|}{|\mathbf n_1||\mathbf n_2|}$,  교선의 방향 $\mathbf n_1\times\mathbf n_2$</p>
+        </div>
+        <div class="fcard">
+          <h4>거리 공식</h4>
+          <p>$$D=\frac{|ax_1+by_1+cz_1+d|}{\sqrt{a^2+b^2+c^2}},\qquad d=\frac{|\overrightarrow{PS}\times\mathbf v|}{|\mathbf v|}$$</p>
+          <p>평행한 두 평면: $\dfrac{|d_1-d_2|}{\sqrt{a^2+b^2+c^2}}$ (계수를 먼저 같게)</p>
+        </div>
+      </div>
+
+      <h3 class="sub">출제 유형</h3>
+      <div class="types">
+        <article class="type" id="t-12-sphere" data-type="12-sphere">
+          <header><h4>구의 방정식·등거리 집합</h4><span class="sec-tag">12.1</span></header>
+          <ol>
+            <li>반지름 = 중심과 주어진 점 사이의 거리 → 표준형에 대입</li>
+            <li>두 점에서 같은 거리: $|PA|^2=|PB|^2$를 전개하면 이차항이 지워져 평면(수직이등분면)이 돼요.</li>
+          </ol>
+          <p class="from">근거: 과제 12.1 #17 · #49</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-12-vec" data-type="12-vec">
+          <header><h4>벡터 연산·단위벡터·일차결합</h4><span class="sec-tag">12.2</span></header>
+          <ol>
+            <li>단위벡터 $\mathbf u=\mathbf v/|\mathbf v|$, 길이 $k$인 같은 방향 벡터는 $k\mathbf u$</li>
+            <li>$\mathbf c=s\mathbf a+t\mathbf b$는 성분끼리 비교해 연립방정식으로</li>
+          </ol>
+          <p class="from">근거: 과제 12.2 #25 · #45 · #47</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-12-dot" data-type="12-dot">
+          <header><h4>내적·사잇각·방향코사인</h4><span class="sec-tag">12.3</span></header>
+          <ol>
+            <li>$\mathbf a\cdot\mathbf b$, $|\mathbf a|$, $|\mathbf b|$를 각각 계산</li>
+            <li>$\cos\theta=\dfrac{\mathbf a\cdot\mathbf b}{|\mathbf a||\mathbf b|}$ → 특수각이 아니면 $\cos^{-1}$로 둬요.</li>
+            <li>방향코사인은 $\mathbf a/|\mathbf a|$의 성분 (제곱합이 1인지 검산)</li>
+          </ol>
+          <p class="from">근거: 복습 12장 기초1 · 강의 12.3 ex5</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-12-proj" data-type="12-proj">
+          <header><h4>정사영과 일</h4><span class="sec-tag">12.3</span></header>
+          <ol>
+            <li>$\operatorname{comp}$는 부호 있는 길이, $\operatorname{proj}$는 $\mathbf a$ 방향 벡터</li>
+            <li>수직 성분 $=\mathbf b-\operatorname{proj}_{\mathbf a}\mathbf b$ (내적이 0인지 검산)</li>
+            <li>일: 변위 $\mathbf D=\overrightarrow{PQ}$를 구해 $W=\mathbf F\cdot\mathbf D$</li>
+          </ol>
+          <p class="from">근거: 복습 12장 기초2 · 강의 12.3 ex6 · ex8 · 과제 12.3 #45 · #47</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-12-cross" data-type="12-cross">
+          <header><h4>외적·넓이·수직 벡터</h4><span class="sec-tag">12.4</span></header>
+          <ol>
+            <li>행렬식 전개 ($\mathbf j$ 성분 앞의 $-$ 주의)</li>
+            <li>검산: $(\mathbf a\times\mathbf b)\cdot\mathbf a=0$</li>
+            <li>평행사변형 넓이 $|\mathbf a\times\mathbf b|$, 삼각형 $\tfrac12|\overrightarrow{PQ}\times\overrightarrow{PR}|$, 두 벡터에 수직인 벡터 $=\mathbf a\times\mathbf b$</li>
+          </ol>
+          <p class="from">근거: 강의 12.4 ex1 · ex3 · 복습 12장 기초3 · 과제 12.4 #19 · #31</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-12-triple" data-type="12-triple">
+          <header><h4>스칼라 삼중적·부피·공면</h4><span class="sec-tag">12.4</span></header>
+          <ol>
+            <li>세 벡터를 행으로 놓고 $3\times3$ 행렬식</li>
+            <li>평행육면체 부피는 절댓값, 사면체는 그 $\tfrac16$, 0이면 공면</li>
+          </ol>
+          <p class="from">근거: 강의 12.4 ex5</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-12-line" data-type="12-line">
+          <header><h4>직선의 방정식·두 직선의 위치</h4><span class="sec-tag">12.5</span></header>
+          <ol>
+            <li>한 점과 방향벡터 → 매개방정식·대칭방정식</li>
+            <li>두 직선: 방향벡터가 평행한지 먼저 → 아니면 $x,y$ 식으로 $t,s$를 구하고 $z$에서 일치하는지 확인</li>
+            <li>일치하면 교점, 아니면 꼬인 위치</li>
+          </ol>
+          <p class="from">근거: 강의 12.5 ex1 · 과제 12.5 #7 · #19</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-12-plane" data-type="12-plane">
+          <header><h4>평면의 방정식·사잇각·교선</h4><span class="sec-tag">12.5</span></header>
+          <ol>
+            <li>세 점: $\mathbf n=\overrightarrow{PQ}\times\overrightarrow{PR}$ → 점-법선 형태</li>
+            <li>직선을 포함하는 평면: 직선의 방향벡터와 평면 위 다른 벡터의 외적이 법선</li>
+            <li>두 평면의 각은 법선끼리 (절댓값 → 예각). 교선은 방향 $\mathbf n_1\times\mathbf n_2$와, $z=0$을 넣어 찾은 한 점으로</li>
+          </ol>
+          <p class="from">근거: 강의 12.5 ex4 · ex5 · ex7 · 과제 12.5 #31 · #51</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-12-dist" data-type="12-dist">
+          <header><h4>거리 공식</h4><span class="sec-tag">12.4 – 12.5</span></header>
+          <ol>
+            <li>점–평면: 공식에 바로 대입 (평면을 $ax+by+cz+d=0$ 꼴로)</li>
+            <li>점–직선: $d=|\overrightarrow{PS}\times\mathbf v|/|\mathbf v|$</li>
+            <li>평행한 직선·평면, 평행 평면: 한 점을 잡아 점–평면 거리로</li>
+            <li>꼬인 직선: $\mathbf n=\mathbf v_1\times\mathbf v_2$, $d=|\mathbf n\cdot\overrightarrow{P_1P_2}|/|\mathbf n|$</li>
+          </ol>
+          <p class="from">근거: 강의 12.5 ex8 · ex9 · 과제 12.4 #45 · 12.5 #75 · 복습 12장 심화1(b)</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-12-identity" data-type="12-identity">
+          <header><h4>내적·외적 관계식</h4><span class="sec-tag">심화</span></header>
+          <ol>
+            <li>$|\mathbf a\times\mathbf b|^2+(\mathbf a\cdot\mathbf b)^2=|\mathbf a|^2|\mathbf b|^2$</li>
+            <li>$\tan\theta=\dfrac{|\mathbf a\times\mathbf b|}{\mathbf a\cdot\mathbf b}$</li>
+            <li>$\operatorname{proj}_{\mathbf a}\mathbf b\times\operatorname{proj}_{\mathbf b}\mathbf a=\dfrac{(\mathbf a\cdot\mathbf b)^2}{|\mathbf a|^2|\mathbf b|^2}(\mathbf a\times\mathbf b)$</li>
+          </ol>
+          <p class="from">근거: 복습 12장 심화1</p>
+          <p class="practice"></p>
+        </article>
+      </div>
+      <aside class="pitfall">
+        <h4>자주 하는 실수</h4>
+        <ul>
+          <li>외적의 $\mathbf j$ 성분은 $-(a_1b_3-a_3b_1)$ — 부호 실수가 가장 흔해요.</li>
+          <li>두 평면 사이의 각은 내적에 절댓값을 씌워 예각으로 답해요.</li>
+          <li>평행한 두 평면의 거리는 계수를 같게 맞춘 다음 공식에 넣어요.</li>
+          <li>대칭방정식에서 방향벡터 성분이 0이면 분모에 0을 쓰지 말고 $y=y_0$처럼 따로 써요.</li>
+        </ul>
+      </aside>
+    </section>
+
+    <!-- ───────────── Ch.13 ───────────── -->
+    <section class="sec" id="c13" aria-labelledby="h-c13">
+      <div class="sec-h">
+        <p class="k">13.1 – 13.3</p>
+        <h2 id="h-c13">벡터함수</h2>
+        <p>곡선을 벡터함수 $\mathbf r(t)$로 다루는 단원이에요. 계산은 모두 성분별이라 쉬워 보이지만, 단위접선과 호의 길이에서 크기로 나누는 단계를 빠뜨리기 쉬워요.</p>
+      </div>
+      <h3 class="sub">핵심 공식</h3>
+      <div class="fgrid">
+        <div class="fcard">
+          <h4>벡터함수·극한</h4>
+          <p>$$\mathbf r(t)=\langle f(t),g(t),h(t)\rangle,\quad \lim_{t\to a}\mathbf r(t)=\Big\langle\lim f,\ \lim g,\ \lim h\Big\rangle$$</p>
+          <p>정의역은 세 성분 정의역의 교집합</p>
+        </div>
+        <div class="fcard">
+          <h4>도함수·단위접선·접선</h4>
+          <p>$$\mathbf r'(t)=\langle f',g',h'\rangle,\qquad \mathbf T(t)=\frac{\mathbf r'(t)}{|\mathbf r'(t)|}$$</p>
+          <p>접선: $\mathbf r(t_0)+u\,\mathbf r'(t_0)$</p>
+        </div>
+        <div class="fcard">
+          <h4>미분 법칙</h4>
+          <p>$$(\mathbf u\cdot\mathbf v)'=\mathbf u'\cdot\mathbf v+\mathbf u\cdot\mathbf v',\quad (\mathbf u\times\mathbf v)'=\mathbf u'\times\mathbf v+\mathbf u\times\mathbf v'$$</p>
+          <p>$|\mathbf r(t)|=c$ (상수) $\Rightarrow \mathbf r\cdot\mathbf r'=0$ (외적은 순서 유지)</p>
+        </div>
+        <div class="fcard">
+          <h4>운동</h4>
+          <p>$$\mathbf v=\mathbf r',\qquad \text{speed}=|\mathbf v|,\qquad \mathbf a=\mathbf v'=\mathbf r''$$</p>
+        </div>
+        <div class="fcard">
+          <h4>적분</h4>
+          <p>$$\int\mathbf r(t)\,dt=\mathbf R(t)+\mathbf C,\qquad \int_a^b\mathbf r(t)\,dt=\mathbf R(b)-\mathbf R(a)$$</p>
+          <p>$\mathbf C$는 상수벡터 — 초기조건으로 결정</p>
+        </div>
+        <div class="fcard">
+          <h4>호의 길이</h4>
+          <p>$$L=\int_a^b|\mathbf r'(t)|\,dt,\qquad s(t)=\int_a^t|\mathbf r'(u)|\,du,\quad \frac{ds}{dt}=|\mathbf r'(t)|$$</p>
+        </div>
+      </div>
+      <h3 class="sub">출제 유형</h3>
+      <div class="types">
+        <article class="type" id="t-13-func" data-type="13-func">
+          <header><h4>정의역·극한·연속</h4><span class="sec-tag">13.1</span></header>
+          <ol>
+            <li>성분마다 정의역 조건을 쓰고 교집합</li>
+            <li>극한은 성분별 ($\lim_{u\to0}\frac{\sin u}{u}=1$ 등)</li>
+          </ol>
+          <p class="from">근거: 강의 13.1 ex1 · ex3 · ex4</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-13-curve" data-type="13-curve">
+          <header><h4>교선의 매개화</h4><span class="sec-tag">13.1</span></header>
+          <ol>
+            <li>원기둥 $x^2+y^2=a^2$ → $x=a\cos t,\ y=a\sin t$</li>
+            <li>나머지 좌표는 다른 곡면(평면) 식에서 $z$를 구해 대입</li>
+          </ol>
+          <p class="from">근거: 복습 13장 기초1 · 과제 13.1 #35</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-13-deriv" data-type="13-deriv">
+          <header><h4>도함수·단위접선·접선</h4><span class="sec-tag">13.2</span></header>
+          <ol>
+            <li>주어진 점에 대응하는 $t_0$부터 찾기</li>
+            <li>$\mathbf r'(t_0)$ → 단위접선은 크기로 나누기, 접선은 $\mathbf r(t_0)+u\,\mathbf r'(t_0)$</li>
+            <li>접선이 평면과 평행 ⇔ $\mathbf r'(t)\cdot\mathbf n=0$</li>
+          </ol>
+          <p class="from">근거: 강의 13.2 ex1 · 과제 13.2 #15 · #19 · #27</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-13-integ" data-type="13-integ">
+          <header><h4>벡터함수의 적분</h4><span class="sec-tag">13.2</span></header>
+          <ol>
+            <li>성분별로 적분 (정적분은 FTC)</li>
+            <li>부정적분이면 $+\mathbf C$, 초기조건 $\mathbf r(0)$으로 결정</li>
+          </ol>
+          <p class="from">근거: 강의 13.2 ex5 · 과제 13.2 #40</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-13-motion" data-type="13-motion">
+          <header><h4>속도·속력·가속도</h4><span class="sec-tag">13.2</span></header>
+          <ol>
+            <li>$\mathbf v=\mathbf r'$, 속력 $|\mathbf v|$, $\mathbf a=\mathbf r''$ — 곱의 미분 주의 ($te^t$ 등)</li>
+          </ol>
+          <p class="from">근거: 강의 13.2 (velocity · speed · acceleration)</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-13-arc" data-type="13-arc">
+          <header><h4>호의 길이</h4><span class="sec-tag">13.3</span></header>
+          <ol>
+            <li>$|\mathbf r'(t)|$ 계산 → 근호 안이 상수나 완전제곱인지 확인</li>
+            <li>$L=\int_a^b|\mathbf r'(t)|\,dt$</li>
+          </ol>
+          <p class="from">근거: 강의 13.3 ex1 · 과제 13.3 #5 · 복습 13장 기초2</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-13-arcfn" data-type="13-arcfn">
+          <header><h4>호의 길이 함수·재매개화</h4><span class="sec-tag">13.3</span></header>
+          <ol>
+            <li>시작점의 $t_0$ → $s(t)=\int_{t_0}^{t}|\mathbf r'(u)|\,du$</li>
+            <li>$t=t(s)$로 풀어 $\mathbf r(t(s))$ (확인: $|d\mathbf r/ds|=1$)</li>
+            <li>“$L$만큼 이동한 점” → $s=L$ 대입</li>
+          </ol>
+          <p class="from">근거: 과제 13.3 #15 · #17</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-13-tplane" data-type="13-tplane">
+          <header><h4>두 곡선으로 접평면</h4><span class="sec-tag">심화</span></header>
+          <ol>
+            <li>곡면 위 두 곡선의 접벡터 $\mathbf r_1',\ \mathbf r_2'$는 모두 접평면 안에 있어요.</li>
+            <li>법선 $\mathbf n=\mathbf r_1'\times\mathbf r_2'$ → 점-법선 형태</li>
+          </ol>
+          <p class="from">근거: 복습 13장 심화1</p>
+          <p class="practice"></p>
+        </article>
+      </div>
+      <aside class="pitfall">
+        <h4>자주 하는 실수</h4>
+        <ul>
+          <li>점이 주어지면 그 점의 $t$부터 — $t=1$이라고 가정하지 마세요.</li>
+          <li>$\mathbf T$는 크기로 나눠야 단위벡터예요.</li>
+          <li>호의 길이의 근호 안을 완전제곱으로: $4+4t^2+t^4=(t^2+2)^2$, $e^{2t}+2+e^{-2t}=(e^t+e^{-t})^2$</li>
+        </ul>
+      </aside>
+    </section>
+
+    <!-- ───────────── 14.1–14.3 ───────────── -->
+    <section class="sec" id="c14a" aria-labelledby="h-c14a">
+      <div class="sec-h">
+        <p class="k">14.1 – 14.3</p>
+        <h2 id="h-c14a">다변수함수·극한·편미분</h2>
+        <p>극한 문제는 ‘존재하지 않음’을 보이는 경로 선택과, ‘존재함’을 보이는 조임정리·극좌표가 핵심이에요. 편미분은 다른 변수를 상수로 보는 계산 연습이에요.</p>
+      </div>
+      <h3 class="sub">핵심 공식</h3>
+      <div class="fgrid">
+        <div class="fcard">
+          <h4>정의역·등위곡선</h4>
+          <p>근호 안 $\ge0$, 로그 안 $>0$, 분모 $\ne0$. 등위곡선 $f(x,y)=k$, 등위곡면 $f(x,y,z)=k$</p>
+        </div>
+        <div class="fcard">
+          <h4>극한이 존재하지 않음</h4>
+          <p>두 경로에서 극한이 다르면 존재하지 않아요. 경로 후보: 축, $y=mx$, $y=x^2$, $x=y^2$, (원점이 아니면) $x=a$, $y=b$</p>
+        </div>
+        <div class="fcard">
+          <h4>극한이 존재함</h4>
+          <p>$$|f(x,y)-L|\le g(x,y)\to0\quad\Rightarrow\quad \lim f=L$$</p>
+          <p>극좌표 $x=r\cos\theta,\ y=r\sin\theta$에서 $r\to0^+$일 때 $\theta$와 무관하게 0으로</p>
+        </div>
+        <div class="fcard">
+          <h4>편도함수</h4>
+          <p>$$f_x(x,y)=\lim_{h\to0}\frac{f(x+h,y)-f(x,y)}{h}$$</p>
+          <p>음함수 $F(x,y,z)=0$: $\dfrac{\partial z}{\partial x}=-\dfrac{F_x}{F_z},\ \ \dfrac{\partial z}{\partial y}=-\dfrac{F_y}{F_z}$</p>
+        </div>
+        <div class="fcard">
+          <h4>고계 편도함수</h4>
+          <p>$$f_{xy}=(f_x)_y=\frac{\partial^2f}{\partial y\,\partial x},\qquad f_{xy}=f_{yx}\ \ (\text{Clairaut})$$</p>
+          <p>라플라스 $u_{xx}+u_{yy}=0$, 파동 $u_{tt}=a^2u_{xx}$</p>
+        </div>
+        <div class="fcard">
+          <h4>연속</h4>
+          <p>$$\lim_{(x,y)\to(a,b)}f(x,y)=f(a,b)$$</p>
+          <p>다항식·유리함수(분모$\ne0$)·연속함수의 합성은 연속 → 대입으로 극한</p>
+        </div>
+      </div>
+      <h3 class="sub">출제 유형</h3>
+      <div class="types">
+        <article class="type" id="t-14-domain" data-type="14-domain">
+          <header><h4>정의역·치역·등위곡선</h4><span class="sec-tag">14.1</span></header>
+          <ol>
+            <li>근호·로그·분모 조건을 부등식으로 → 영역 묘사 (경계 포함 여부!)</li>
+            <li>치역: 안쪽 식이 가질 수 있는 값의 범위부터</li>
+          </ol>
+          <p class="from">근거: 강의 14.1 ex1 · ex2 · ex10 · ex11 · 과제 14.1 #10 · #13</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-14-limit" data-type="14-limit">
+          <header><h4>극한 계산·존재 보이기</h4><span class="sec-tag">14.2</span></header>
+          <ol>
+            <li>분모가 0이 아니면 대입</li>
+            <li>$0/0$ 꼴: 극좌표로 $r\cdot g(\theta)$ ($g$는 유계) 꼴을 만들거나 조임정리</li>
+          </ol>
+          <p class="from">근거: 강의 14.2 ex4 · ex5 · ex6 · 과제 14.2 #8 · #51 · 복습 14.1–3 심화1</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-14-dne" data-type="14-dne">
+          <header><h4>극한이 존재하지 않음</h4><span class="sec-tag">14.2</span></header>
+          <ol>
+            <li>축 방향 두 경로 → 같으면 $y=mx$ ($m$에 따라 다르면 끝)</li>
+            <li>직선에서 모두 같으면 차수를 맞춘 곡선 ($x^2y/(x^4+y^2)$ → $y=x^2$)</li>
+            <li>원점이 아닌 점은 $x=a$, $y=b$를 따라</li>
+          </ol>
+          <p class="from">근거: 강의 14.2 ex1 · ex2 · 과제 14.2 #15 · #18 · 복습 14.1–3 기초1 · 심화2</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-14-partial" data-type="14-partial">
+          <header><h4>편도함수·변화율</h4><span class="sec-tag">14.3</span></header>
+          <ol>
+            <li>다른 변수를 상수로 보고 미분 (몫·연쇄 미분 그대로)</li>
+            <li>“$x$방향 변화율” = $f_x$ 값</li>
+          </ol>
+          <p class="from">근거: 강의 14.3 ex1 · ex2 · ex3 · 과제 14.3 #19 · #29 · #46 · #82</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-14-implicit" data-type="14-implicit">
+          <header><h4>음함수 편미분</h4><span class="sec-tag">14.3 · 14.5</span></header>
+          <ol>
+            <li>모든 항을 한쪽으로: $F(x,y,z)=0$</li>
+            <li>$\partial z/\partial x=-F_x/F_z$ — 점 대입 전에 점이 식을 만족하는지 확인</li>
+          </ol>
+          <p class="from">근거: 강의 14.3 ex5 · 14.5 ex8 · ex9</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-14-higher" data-type="14-higher">
+          <header><h4>고계 편도함수·라플라스</h4><span class="sec-tag">14.3</span></header>
+          <ol>
+            <li>$f_{xy}$는 $x$ 먼저, $y$ 나중 — 결과는 Clairaut로 검산</li>
+            <li>라플라스: $u_{xx}$와 $u_{yy}$를 각각 구해 더하기</li>
+          </ol>
+          <p class="from">근거: 강의 14.3 ex7 · ex8 · ex9</p>
+          <p class="practice"></p>
+        </article>
+      </div>
+      <aside class="pitfall">
+        <h4>자주 하는 실수</h4>
+        <ul>
+          <li>여러 경로에서 같은 값이 나와도 극한이 존재한다는 증명은 아니에요 (조임정리 필요).</li>
+          <li>직선 $y=mx$에서 모두 0이어도 포물선에서 달라질 수 있어요.</li>
+          <li>음함수 공식의 마이너스 부호를 빼먹지 마세요.</li>
+        </ul>
+      </aside>
+    </section>
+
+    <!-- ───────────── 14.4–14.6 ───────────── -->
+    <section class="sec" id="c14b" aria-labelledby="h-c14b">
+      <div class="sec-h">
+        <p class="k">14.4 – 14.6</p>
+        <h2 id="h-c14b">접평면·연쇄법칙·방향도함수</h2>
+        <p>‘한 점에서의 값’을 정확히 대입하는 계산 문제가 많은 구간이에요. 편도함수 값은 $(x,y)$에서, 매개변수 도함수는 $t$나 $(s,t)$에서 계산한다는 것만 지키면 돼요.</p>
+      </div>
+      <h3 class="sub">핵심 공식</h3>
+      <div class="fgrid">
+        <div class="fcard">
+          <h4>접평면·선형근사</h4>
+          <p>$$z-z_0=f_x(x_0,y_0)(x-x_0)+f_y(x_0,y_0)(y-y_0)$$</p>
+          <p>$L(x,y)=f(a,b)+f_x(a,b)(x-a)+f_y(a,b)(y-b)$,  $f(x,y)\approx L(x,y)$</p>
+        </div>
+        <div class="fcard">
+          <h4>전미분·오차</h4>
+          <p>$$dz=f_x\,dx+f_y\,dy,\qquad \Delta z\approx dz$$</p>
+          <p>최대 오차: $|dx|,|dy|$에 측정 오차의 최댓값</p>
+        </div>
+        <div class="fcard">
+          <h4>연쇄법칙</h4>
+          <p>$$\frac{dz}{dt}=\frac{\partial z}{\partial x}\frac{dx}{dt}+\frac{\partial z}{\partial y}\frac{dy}{dt},\qquad \frac{\partial z}{\partial s}=\frac{\partial z}{\partial x}\frac{\partial x}{\partial s}+\frac{\partial z}{\partial y}\frac{\partial y}{\partial s}$$</p>
+          <p>나무 그림: 경로마다 곱하고 모두 더하기</p>
+        </div>
+        <div class="fcard">
+          <h4>방향도함수</h4>
+          <p>$$D_{\mathbf u}f=\nabla f\cdot\mathbf u,\qquad |\mathbf u|=1$$</p>
+          <p>$\mathbf u=\langle\cos\theta,\sin\theta\rangle$ 또는 $\mathbf v/|\mathbf v|$</p>
+        </div>
+        <div class="fcard">
+          <h4>최대 변화율</h4>
+          <p>최댓값 $|\nabla f|$ (방향 $\nabla f$), 최솟값 $-|\nabla f|$ (방향 $-\nabla f$),  $\nabla f\perp$ 등위곡선</p>
+        </div>
+        <div class="fcard">
+          <h4>등위곡면의 접평면·법선</h4>
+          <p>$$F_x(x-x_0)+F_y(y-y_0)+F_z(z-z_0)=0$$</p>
+          <p>법선: $\dfrac{x-x_0}{F_x}=\dfrac{y-y_0}{F_y}=\dfrac{z-z_0}{F_z}$</p>
+        </div>
+      </div>
+      <h3 class="sub">출제 유형</h3>
+      <div class="types">
+        <article class="type" id="t-14-tangent" data-type="14-tangent">
+          <header><h4>접평면·선형근사</h4><span class="sec-tag">14.4</span></header>
+          <ol>
+            <li>$f(a,b),\ f_x(a,b),\ f_y(a,b)$ 세 값 계산</li>
+            <li>접평면/선형화 식에 대입 → 근삿값은 $L$에 점 대입</li>
+          </ol>
+          <p class="from">근거: 강의 14.4 ex2 · 과제 14.4 #4 · #17 · 복습 14.4–6 기초3</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-14-diff" data-type="14-diff">
+          <header><h4>전미분·오차 추정</h4><span class="sec-tag">14.4</span></header>
+          <ol>
+            <li>$dz$ 식을 쓰고 $dx,dy$ (변화량 또는 오차) 대입</li>
+            <li>$\Delta z$는 두 함숫값의 차 — 비교하면 $dz$는 1차 근사</li>
+          </ol>
+          <p class="from">근거: 강의 14.4 ex5 · 과제 14.4 #33 · #39</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-14-chain" data-type="14-chain">
+          <header><h4>연쇄법칙</h4><span class="sec-tag">14.5</span></header>
+          <ol>
+            <li>나무 그림으로 식 세우기</li>
+            <li>주어진 $t$ (또는 $(s,t)$)에서 $x,y$ 값부터 구하기</li>
+            <li>편도함수는 $(x,y)$에서, 내부 도함수는 $t$에서 계산해 대입</li>
+          </ol>
+          <p class="from">근거: 강의 14.5 ex1 · ex3 · ex5 · 과제 14.5 #1 · #4 · #14 · #27 · #39</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-14-chain2" data-type="14-chain2">
+          <header><h4>2계 연쇄법칙</h4><span class="sec-tag">14.5</span></header>
+          <ol>
+            <li>1계: $z_r=z_x x_r+z_y y_r$</li>
+            <li>한 번 더 미분할 때 $z_x,\ z_y$도 $(x,y)$를 거쳐 의존 → 다시 연쇄법칙 + 곱의 미분</li>
+            <li>$z_{xy}=z_{yx}$로 정리</li>
+          </ol>
+          <p class="from">근거: 복습 14.4–6 기초1 · 과제 14.5 #49</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-14-dir" data-type="14-dir">
+          <header><h4>방향도함수</h4><span class="sec-tag">14.6</span></header>
+          <ol>
+            <li>$\nabla f$를 점에서 계산</li>
+            <li>방향은 단위벡터로 (“$P$에서 $Q$ 방향”이면 $\overrightarrow{PQ}/|\overrightarrow{PQ}|$)</li>
+            <li>내적. 두 방향의 값이 주어지면 $\nabla f=\langle a,b\rangle$로 놓고 연립</li>
+          </ol>
+          <p class="from">근거: 강의 14.6 ex2 – ex5 · 과제 14.6 #5 · #11 · #13 · #23 · #41</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-14-maxrate" data-type="14-maxrate">
+          <header><h4>최대 변화율과 방향</h4><span class="sec-tag">14.6</span></header>
+          <ol>
+            <li>$\nabla f(P)$ → 방향은 $\nabla f$, 최대 변화율은 $|\nabla f|$</li>
+            <li>온도 문제처럼 분수 꼴이면 공통 인수를 묶어 계산을 줄이기</li>
+          </ol>
+          <p class="from">근거: 강의 14.6 ex6 · 과제 14.6 #27 · #29 · 복습 14.4–6 기초2</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-14-levelsurf" data-type="14-levelsurf">
+          <header><h4>등위곡면의 접평면·법선</h4><span class="sec-tag">14.6</span></header>
+          <ol>
+            <li>$F(x,y,z)=k$ 꼴로 → $\nabla F(P)$가 법선</li>
+            <li>“주어진 평면과 평행한 접평면” → $\nabla F=k\,\mathbf n$으로 놓고 곡면 식에 대입</li>
+          </ol>
+          <p class="from">근거: 강의 14.6 ex8</p>
+          <p class="practice"></p>
+        </article>
+      </div>
+      <aside class="pitfall">
+        <h4>자주 하는 실수</h4>
+        <ul>
+          <li>방향벡터를 정규화하지 않고 내적하는 실수.</li>
+          <li>연쇄법칙에서 편도함수에 $t$ 값을, 도함수에 $(x,y)$ 값을 넣는 혼동.</li>
+          <li>$z=f(x,y)$의 접평면을 등위곡면 공식으로 쓰면 $F=f(x,y)-z$로 두어야 해요.</li>
+        </ul>
+      </aside>
+    </section>
+
+    <!-- ───────────── 14.7–14.8 ───────────── -->
+    <section class="sec" id="c14c" aria-labelledby="h-c14c">
+      <div class="sec-h">
+        <p class="k">14.7 – 14.8</p>
+        <h2 id="h-c14c">극값·라그랑주 승수</h2>
+        <p>임계점 판정, 닫힌 영역의 최대·최소, 라그랑주 승수 — 세 가지 틀만 확실하면 되는 구간이에요.</p>
+      </div>
+      <h3 class="sub">핵심 공식</h3>
+      <div class="fgrid">
+        <div class="fcard">
+          <h4>2계 도함수 판정법</h4>
+          <p>$$D=f_{xx}f_{yy}-(f_{xy})^2$$</p>
+          <p>$D>0,\ f_{xx}>0$ 극소 · $D>0,\ f_{xx}\lt 0$ 극대 · $D\lt 0$ 안장점 · $D=0$ 판정 불가</p>
+        </div>
+        <div class="fcard">
+          <h4>닫힌 유계 영역의 최대·최소</h4>
+          <p>① 내부 임계점의 함숫값 ② 경계의 최대·최소 (1변수로 바꿔서, 끝점 포함) ③ 전부 비교</p>
+        </div>
+        <div class="fcard">
+          <h4>라그랑주 승수</h4>
+          <p>$$\nabla f=\lambda\nabla g,\qquad g(x,y,z)=k$$</p>
+          <p>후보점의 $f$ 값을 비교해 최대·최소</p>
+        </div>
+        <div class="fcard">
+          <h4>제약조건 두 개</h4>
+          <p>$$\nabla f=\lambda\nabla g+\mu\nabla h,\qquad g=k,\ h=c$$</p>
+        </div>
+      </div>
+      <h3 class="sub">출제 유형</h3>
+      <div class="types">
+        <article class="type" id="t-14-crit" data-type="14-crit">
+          <header><h4>임계점·2계 판정법</h4><span class="sec-tag">14.7</span></header>
+          <ol>
+            <li>$f_x=0,\ f_y=0$ 연립 (인수분해로 경우 나누기)</li>
+            <li>점마다 $D$와 $f_{xx}$ 부호 → 극대/극소/안장점, 값까지 답하기</li>
+          </ol>
+          <p class="from">근거: 강의 14.7 ex1 · ex2 · ex3 · 과제 14.7 #19</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-14-absext" data-type="14-absext">
+          <header><h4>닫힌 영역의 최댓값·최솟값</h4><span class="sec-tag">14.7</span></header>
+          <ol>
+            <li>내부 임계점 (영역 안에 있는 것만)</li>
+            <li>경계를 변마다 1변수 함수로 (원이면 $y^2=r^2-x^2$ 대입)</li>
+            <li>꼭짓점·끝점까지 모든 후보 비교</li>
+          </ol>
+          <p class="from">근거: 강의 14.7 ex7 · 과제 14.7 #35 · 복습 14.7–8 기초4 · 심화1</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-14-optim" data-type="14-optim">
+          <header><h4>최적화 응용</h4><span class="sec-tag">14.7</span></header>
+          <ol>
+            <li>제약식으로 변수 하나를 소거해 2변수 함수로</li>
+            <li>임계점 → 판정, 물리적으로 최소(최대)임을 언급</li>
+            <li>거리 최소는 거리의 제곱을 최소화</li>
+          </ol>
+          <p class="from">근거: 강의 14.7 ex6 · 과제 14.7 #45 · 복습 14.7–8 기초2 · 기초3</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-14-lagrange" data-type="14-lagrange">
+          <header><h4>라그랑주 승수</h4><span class="sec-tag">14.8</span></header>
+          <ol>
+            <li>$\nabla f=\lambda\nabla g$ 성분별로 쓰기</li>
+            <li>$\lambda$ 소거 (각 식에 $x,y,z$를 곱해 공통항 만들기가 자주 쓰여요)</li>
+            <li>변수가 0인 경우를 따로 확인, 후보의 $f$ 값 비교</li>
+          </ol>
+          <p class="from">근거: 강의 14.8 ex1 · ex3 · 과제 14.8 #12 · #29 · #39</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-14-lagrange2" data-type="14-lagrange2">
+          <header><h4>제약조건 2개 라그랑주</h4><span class="sec-tag">14.8</span></header>
+          <ol>
+            <li>$\nabla f=\lambda\nabla g+\mu\nabla h$ — 한 성분에서 $\lambda$가 바로 나오는지 보기</li>
+            <li>나머지 변수를 $\mu$로 표현 → 제약식에 대입</li>
+          </ol>
+          <p class="from">근거: 강의 14.8 ex5</p>
+          <p class="practice"></p>
+        </article>
+      </div>
+      <aside class="pitfall">
+        <h4>자주 하는 실수</h4>
+        <ul>
+          <li>경계를 1변수로 바꾼 뒤 끝점(꼭짓점)을 빠뜨려요.</li>
+          <li>라그랑주에서 양변을 변수로 나눌 때 그 변수가 0인 경우를 잊어요.</li>
+          <li>$D=0$이면 판정 불가 — “극값 없음”이라고 쓰면 안 돼요.</li>
+        </ul>
+      </aside>
+    </section>
+
+    <!-- ───────────── 15.1–15.3 ───────────── -->
+    <section class="sec" id="c15a" aria-labelledby="h-c15a">
+      <div class="sec-h">
+        <p class="k">15.1 – 15.3</p>
+        <h2 id="h-c15a">이중적분</h2>
+        <p>영역을 그리고 Type I/II 또는 극좌표 중 계산이 쉬운 쪽을 고르는 판단이 점수를 가르는 단원이에요.</p>
+      </div>
+      <h3 class="sub">핵심 공식</h3>
+      <div class="fgrid">
+        <div class="fcard">
+          <h4>리만합·중점법칙</h4>
+          <p>$$\iint_Rf\,dA\approx\sum_{i}\sum_{j}f(\bar x_i,\bar y_j)\,\Delta A$$</p>
+        </div>
+        <div class="fcard">
+          <h4>푸비니·변수분리</h4>
+          <p>$$\iint_Rf\,dA=\int_a^b\!\!\int_c^df\,dy\,dx,\qquad \iint_Rg(x)h(y)\,dA=\int_a^bg\,dx\int_c^dh\,dy$$</p>
+        </div>
+        <div class="fcard">
+          <h4>일반 영역</h4>
+          <p>$$\text{Type I: }\int_a^b\!\!\int_{g_1(x)}^{g_2(x)}f\,dy\,dx\qquad \text{Type II: }\int_c^d\!\!\int_{h_1(y)}^{h_2(y)}f\,dx\,dy$$</p>
+        </div>
+        <div class="fcard">
+          <h4>성질</h4>
+          <p>대칭: 영역이 $y$축 대칭이고 $f$가 $x$에 대해 홀함수면 $0$. 부등식 $m\,A(D)\le\iint_Df\,dA\le M\,A(D)$</p>
+        </div>
+        <div class="fcard">
+          <h4>극좌표</h4>
+          <p>$$\iint_Df\,dA=\int_\alpha^\beta\!\!\int_{h_1(\theta)}^{h_2(\theta)}f(r\cos\theta,r\sin\theta)\,r\,dr\,d\theta$$</p>
+          <p>넓이 $A=\displaystyle\int_\alpha^\beta\tfrac12\,r(\theta)^2\,d\theta$</p>
+        </div>
+        <div class="fcard">
+          <h4>자주 나오는 극곡선</h4>
+          <p>$x^2+y^2=2ax\iff r=2a\cos\theta\ (-\tfrac\pi2\le\theta\le\tfrac\pi2)$,  $x^2+y^2=2ay\iff r=2a\sin\theta\ (0\le\theta\le\pi)$</p>
+        </div>
+      </div>
+      <h3 class="sub">출제 유형</h3>
+      <div class="types">
+        <article class="type" id="t-15-rect" data-type="15-rect">
+          <header><h4>직사각형 영역·리만합</h4><span class="sec-tag">15.1</span></header>
+          <ol>
+            <li>중점법칙: 작은 직사각형 중심에서 함숫값 × $\Delta A$</li>
+            <li>정확한 값: 쉬운 변수부터 적분 ($y\sin(xy)$는 $x$ 먼저), 곱이면 분리</li>
+          </ol>
+          <p class="from">근거: 강의 15.1 ex1 · ex3 · ex4 · ex6 · ex8 · 과제 15.1 #11 · #14 · #21 · #25 · #55 · 복습 15.1–3 기초1 · 2</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-15-general" data-type="15-general">
+          <header><h4>일반 영역(Type I/II)·부피</h4><span class="sec-tag">15.2</span></header>
+          <ol>
+            <li>교점을 구해 영역을 그리기</li>
+            <li>경계가 $x=\cdots$ 꼴이면 Type II가 한 번에 끝나요.</li>
+            <li>부피 = (위 곡면 − 아래 곡면)의 이중적분</li>
+          </ol>
+          <p class="from">근거: 강의 15.2 ex1 · ex3 · 과제 15.2 #11 · #27 · #33 · 복습 15.1–3 기초3 · 4 · 5</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-15-order" data-type="15-order">
+          <header><h4>적분 순서 바꾸기</h4><span class="sec-tag">15.2</span></header>
+          <ol>
+            <li>신호: $e^{x^2},\ e^{x^3},\ \sin(y^2),\ \cos(y^2)$처럼 바로 적분이 안 되는 함수</li>
+            <li>주어진 범위로 영역을 그리고 반대 순서로 다시 읽기</li>
+            <li>바뀐 적분에서 치환 ($u=x^3$ 등)</li>
+          </ol>
+          <p class="from">근거: 강의 15.2 ex5 · 과제 15.2 #59 · #61</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-15-polar" data-type="15-polar">
+          <header><h4>극좌표 이중적분·넓이</h4><span class="sec-tag">15.3</span></header>
+          <ol>
+            <li>원·부채꼴·환형·$x^2+y^2$이 보이면 극좌표</li>
+            <li>$dA=r\,dr\,d\theta$, 범위 정하기 (교점의 $\theta$)</li>
+            <li>여러 직교좌표 적분의 합 → 하나의 극좌표 영역으로 합치기</li>
+          </ol>
+          <p class="from">근거: 강의 15.3 ex1 – ex4 · 과제 15.3 #13 · #17 · #35 · #49 · 복습 15.1–3 기초6 · 7 · 심화1 · 2</p>
+          <p class="practice"></p>
+        </article>
+      </div>
+      <aside class="pitfall">
+        <h4>자주 하는 실수</h4>
+        <ul>
+          <li>극좌표에서 $r$ (야코비안)을 빠뜨리는 실수가 1순위예요.</li>
+          <li>순서 바꾸기는 반드시 영역 그림부터 — 범위를 기계적으로 바꾸면 틀려요.</li>
+          <li>원 $r=2\cos\theta$의 $\theta$ 범위는 $-\tfrac\pi2\sim\tfrac\pi2$예요.</li>
+        </ul>
+      </aside>
+    </section>
+
+    <!-- ───────────── 15.6–15.8 ───────────── -->
+    <section class="sec" id="c15b" aria-labelledby="h-c15b">
+      <div class="sec-h">
+        <p class="k">15.6 – 15.8</p>
+        <h2 id="h-c15b">삼중적분·원주좌표·구면좌표</h2>
+        <p>입체의 경계 곡면을 알맞은 좌표계로 바꾸면 적분 범위가 상수가 되는 순간이 있어요. 그 좌표계를 고르는 것이 핵심이에요.</p>
+      </div>
+      <h3 class="sub">핵심 공식</h3>
+      <div class="fgrid">
+        <div class="fcard">
+          <h4>삼중적분·부피</h4>
+          <p>$$\iiint_Ef\,dV=\iint_D\Big[\int_{u_1(x,y)}^{u_2(x,y)}f\,dz\Big]dA,\qquad V=\iiint_EdV$$</p>
+        </div>
+        <div class="fcard">
+          <h4>질량·질량중심</h4>
+          <p>$$m=\iiint_E\rho\,dV,\qquad \bar z=\frac1m\iiint_Ez\,\rho\,dV$$</p>
+          <p>대칭이면 $\bar x=\bar y=0$</p>
+        </div>
+        <div class="fcard">
+          <h4>원주좌표</h4>
+          <p>$$x=r\cos\theta,\ y=r\sin\theta,\ z=z,\qquad dV=r\,dz\,dr\,d\theta$$</p>
+        </div>
+        <div class="fcard">
+          <h4>구면좌표</h4>
+          <p>$$x=\rho\sin\phi\cos\theta,\ y=\rho\sin\phi\sin\theta,\ z=\rho\cos\phi,\qquad dV=\rho^2\sin\phi\,d\rho\,d\theta\,d\phi$$</p>
+          <p>$\rho\ge0,\ 0\le\phi\le\pi$ ($z$축에서 잰 각)</p>
+        </div>
+        <div class="fcard">
+          <h4>곡면 변환표</h4>
+          <p>$z=\sqrt{x^2+y^2}\iff\phi=\tfrac\pi4$,  $z=\sqrt{3(x^2+y^2)}\iff\phi=\tfrac\pi6$,  $x^2+y^2+z^2=a^2\iff\rho=a$,  $x^2+y^2+z^2=2az\iff\rho=2a\cos\phi$,  $z=x^2+y^2\iff z=r^2$</p>
+        </div>
+      </div>
+      <h3 class="sub">출제 유형</h3>
+      <div class="types">
+        <article class="type" id="t-15-triple" data-type="15-triple">
+          <header><h4>직교좌표 삼중적분·부피</h4><span class="sec-tag">15.6</span></header>
+          <ol>
+            <li>위·아래 곡면 → $z$ 범위, 그림자(영역 $D$) → $x,y$ 범위</li>
+            <li>안쪽부터 차례로 적분 (사면체는 $0\le z\le$ 평면)</li>
+          </ol>
+          <p class="from">근거: 강의 15.6 ex1 · ex2 · ex5 · ex6 · 과제 15.6 #5 · #17</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-15-order3" data-type="15-order3">
+          <header><h4>삼중적분 순서 바꾸기</h4><span class="sec-tag">15.6</span></header>
+          <ol>
+            <li>범위를 부등식 하나로 묶기 (예: $0\le z\le x\le y\le1$)</li>
+            <li>적분하기 어려운 변수를 바깥으로 보내는 순서를 고르기</li>
+          </ol>
+          <p class="from">근거: 강의 15.6 ex4 · 과제 15.6 #31 · #39</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-15-cyl" data-type="15-cyl">
+          <header><h4>원주좌표</h4><span class="sec-tag">15.7</span></header>
+          <ol>
+            <li>원기둥·포물면·원뿔($z$에 대해 풀린 꼴)이면 원주좌표</li>
+            <li>두 곡면의 교선 $r$ 값 → $r$ 범위, $dV=r\,dz\,dr\,d\theta$</li>
+            <li>축이 $y$축이면 $x=r\cos\theta,\ z=r\sin\theta$로 바꿔요.</li>
+          </ol>
+          <p class="from">근거: 강의 15.7 ex1 · ex3 · 과제 15.7 #9 · #19 · #23 · #31 · 복습 15.6–8 기초1 · 3</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-15-sph" data-type="15-sph">
+          <header><h4>구면좌표·질량중심</h4><span class="sec-tag">15.8</span></header>
+          <ol>
+            <li>구·원뿔이 경계면이면 구면좌표</li>
+            <li>변환표로 $\rho,\phi$ 범위 → $dV=\rho^2\sin\phi\,d\rho\,d\theta\,d\phi$</li>
+            <li>질량중심은 대칭으로 $\bar x=\bar y=0$, $\bar z$만 계산</li>
+          </ol>
+          <p class="from">근거: 강의 15.8 ex1 – ex3 · 과제 15.8 #5 · #17 · #23 · 복습 15.6–8 기초4 · 심화1 · 2</p>
+          <p class="practice"></p>
+        </article>
+      </div>
+      <aside class="pitfall">
+        <h4>자주 하는 실수</h4>
+        <ul>
+          <li>야코비안: 원주 $r$, 구면 $\rho^2\sin\phi$.</li>
+          <li>$\phi$는 $z$축에서 잰 각 — 위쪽 반구는 $0\le\phi\le\tfrac\pi2$.</li>
+          <li>$x^2+y^2+z^2=2z$는 중심 $(0,0,1)$의 구 → $\rho=2\cos\phi$.</li>
+        </ul>
+      </aside>
+    </section>
+
+    <!-- ───────────── 16.1–16.4 ───────────── -->
+    <section class="sec" id="c16" aria-labelledby="h-c16">
+      <div class="sec-h">
+        <p class="k">16.1 – 16.4</p>
+        <h2 id="h-c16">벡터장·선적분·그린 정리</h2>
+        <p>‘보존장이면 끝점만, 닫힌 곡선이면 그린 정리, 아니면 매개화’ — 이 판단 순서가 가장 중요해요.</p>
+      </div>
+      <h3 class="sub">핵심 공식</h3>
+      <div class="fgrid">
+        <div class="fcard">
+          <h4>스칼라 선적분</h4>
+          <p>$$\int_Cf\,ds=\int_a^bf(\mathbf r(t))\,|\mathbf r'(t)|\,dt$$</p>
+          <p>방향과 무관 · 질량 $=\int_C\rho\,ds$</p>
+        </div>
+        <div class="fcard">
+          <h4>벡터 선적분·일</h4>
+          <p>$$\int_C\mathbf F\cdot d\mathbf r=\int_a^b\mathbf F(\mathbf r(t))\cdot\mathbf r'(t)\,dt=\int_CP\,dx+Q\,dy+R\,dz$$</p>
+          <p>방향을 바꾸면 부호가 바뀌어요.</p>
+        </div>
+        <div class="fcard">
+          <h4>선적분의 기본정리</h4>
+          <p>$$\int_C\nabla f\cdot d\mathbf r=f(\mathbf r(b))-f(\mathbf r(a))$$</p>
+          <p>경로 독립 ⇔ 모든 닫힌 곡선에서 0</p>
+        </div>
+        <div class="fcard">
+          <h4>보존장 판정</h4>
+          <p>2차원: $P_y=Q_x$ (단순연결 영역) · 3차원: $P_y=Q_x,\ Q_z=R_y,\ R_x=P_z$</p>
+          <p>퍼텐셜: $f_x=P$를 $x$로 적분 → $f_y,f_z$와 비교</p>
+        </div>
+        <div class="fcard">
+          <h4>그린 정리</h4>
+          <p>$$\oint_CP\,dx+Q\,dy=\iint_D\Big(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\Big)dA$$</p>
+          <p>양의 방향: 영역이 항상 왼쪽 (바깥 반시계, 안쪽 구멍은 시계)</p>
+        </div>
+        <div class="fcard">
+          <h4>넓이 공식</h4>
+          <p>$$A=\oint_Cx\,dy=-\oint_Cy\,dx=\frac12\oint_C(x\,dy-y\,dx)$$</p>
+        </div>
+      </div>
+      <h3 class="sub">출제 유형</h3>
+      <div class="types">
+        <article class="type" id="t-16-field" data-type="16-field">
+          <header><h4>벡터장·기울기장</h4><span class="sec-tag">16.1</span></header>
+          <ol>
+            <li>$\nabla f=\langle f_x,f_y,f_z\rangle$ 계산 후 점 대입</li>
+          </ol>
+          <p class="from">근거: 강의 16.1 ex6 · 과제 16.1 #6 · #25</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-16-scalar" data-type="16-scalar">
+          <header><h4>스칼라 선적분 ∫f ds</h4><span class="sec-tag">16.2</span></header>
+          <ol>
+            <li>곡선 매개화 (선분 $\mathbf r_0+t(\mathbf r_1-\mathbf r_0)$, 원 $a\cos t,a\sin t$)</li>
+            <li>$|\mathbf r'(t)|$를 곱해 적분, 구간별 곡선은 조각마다 합</li>
+          </ol>
+          <p class="from">근거: 강의 16.2 ex1 · ex2 · ex3 · ex5 · 복습 16.1–4 기초1 · 2</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-16-vector" data-type="16-vector">
+          <header><h4>벡터 선적분·일</h4><span class="sec-tag">16.2</span></header>
+          <ol>
+            <li>보존장인지 먼저 확인 (맞으면 기본정리로)</li>
+            <li>아니면 $\mathbf F(\mathbf r(t))\cdot\mathbf r'(t)$를 적분, 구간별 경로는 각각</li>
+          </ol>
+          <p class="from">근거: 강의 16.2 ex7 · 과제 16.2 #7 · #15 · #24 · 복습 16.1–4 기초4</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-16-conserv" data-type="16-conserv">
+          <header><h4>보존장 판정·퍼텐셜</h4><span class="sec-tag">16.3</span></header>
+          <ol>
+            <li>2D $P_y=Q_x$ / 3D 세 조건 확인</li>
+            <li>$f=\int P\,dx+g(y,z)$ → $f_y=Q$로 $g$ 결정 → $f_z=R$로 마무리</li>
+          </ol>
+          <p class="from">근거: 강의 16.3 ex2 · ex3 · ex5 · 과제 16.3 #7 · #14 · 복습 16.1–4 기초3</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-16-ftli" data-type="16-ftli">
+          <header><h4>선적분의 기본정리</h4><span class="sec-tag">16.3</span></header>
+          <ol>
+            <li>퍼텐셜 $f$를 구하고</li>
+            <li>곡선의 시작점 $\mathbf r(a)$와 끝점 $\mathbf r(b)$만 계산해 $f(\mathbf r(b))-f(\mathbf r(a))$</li>
+          </ol>
+          <p class="from">근거: 강의 16.3 ex4 · 과제 16.3 #16 · #25</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-16-green" data-type="16-green">
+          <header><h4>그린 정리</h4><span class="sec-tag">16.4</span></header>
+          <ol>
+            <li>닫힌 곡선이 양의 방향인지 확인</li>
+            <li>$Q_x-P_y$ 계산 → 영역에서 이중적분 (원·환형이면 극좌표)</li>
+            <li>직접 계산과 비교하라는 문제는 변마다 매개화해 검산</li>
+          </ol>
+          <p class="from">근거: 강의 16.4 ex1 · ex4 · 과제 16.4 #3 · #8 · #12 · 복습 16.1–4 기초5</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-16-greenarea" data-type="16-greenarea">
+          <header><h4>그린 정리로 넓이</h4><span class="sec-tag">16.4</span></header>
+          <ol>
+            <li>$A=\tfrac12\oint(x\,dy-y\,dx)$에 경계의 매개식 대입</li>
+            <li>타원 $x=a\cos t,\ y=b\sin t$ → $\pi ab$</li>
+          </ol>
+          <p class="from">근거: 강의 16.4 ex3</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-16-singular" data-type="16-singular">
+          <header><h4>특이점이 있는 벡터장</h4><span class="sec-tag">16.4</span></header>
+          <ol>
+            <li>$\mathbf F=\dfrac{-y\,\mathbf i+x\,\mathbf j}{x^2+y^2}$는 원점 밖에서 $Q_x=P_y$</li>
+            <li>곡선이 원점을 둘러싸지 않으면 $0$, 둘러싸면 작은 원으로 바꿔 $2\pi$</li>
+          </ol>
+          <p class="from">근거: 강의 16.4 ex5</p>
+          <p class="practice"></p>
+        </article>
+      </div>
+      <aside class="pitfall">
+        <h4>자주 하는 실수</h4>
+        <ul>
+          <li>$ds$에는 $|\mathbf r'(t)|$, $d\mathbf r$에는 $\mathbf r'(t)$ — 둘을 섞지 마세요.</li>
+          <li>구멍 있는 영역의 경계 방향: 바깥은 반시계, 안쪽은 시계.</li>
+          <li>원점에서 정의되지 않는 장은 그린 정리를 바로 쓰면 안 돼요.</li>
+        </ul>
+      </aside>
+    </section>
+
+    <div class="next">
+      <a class="ghost" href="index.html">대시보드로</a>
+      <a href="bank.html?level=1">1단계 문제 풀기</a>
+    </div>
+  </main>
+
+  <footer class="foot">
+    강의 자료(Stewart, Calculus 9E Ch.12–16 기반)의 예제·복습문제·과제를 바탕으로 정리한 개인 학습용 자료예요.<br>
+    <a href="index.html">대시보드</a> · <a href="bank.html?level=1">문제 은행</a>
+  </footer>
+</body>
+</html>
