@@ -9,6 +9,10 @@
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
   <link rel="stylesheet" href="assets/site.css">
+  <script>
+    /* 단계 색을 첫 화면부터 적용 (bank.js와 같은 규칙: 1~4, 그 밖의 값은 1단계) */
+    (function () { var l = parseInt(new URLSearchParams(location.search).get('level'), 10); document.documentElement.setAttribute('data-level', l >= 1 && l <= 4 ? l : 1); })();
+  </script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
   <script defer src="assets/problems.js"></script>

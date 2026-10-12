@@ -7,6 +7,7 @@
   var params = new URLSearchParams(window.location.search);
   var level = parseInt(params.get('level'), 10);
   if (!(level >= 1 && level <= 4)) level = 1;
+  document.documentElement.setAttribute('data-level', level); // 단계별 색 (site.css)
   var meta = D.levels[String(level)];
   var problems = D.problems.filter(function (p) { return p.lv === level; });
   var chapters = [12, 13, 14, 15, 16];
@@ -219,7 +220,7 @@
     ? '<a class="ghost" href="bank.html?level=' + (level - 1) + '">' + (level - 1) + '단계로</a>'
     : '<a class="ghost" href="concepts.html">개념 정리 보기</a>');
   parts.push(level < 4
-    ? '<a href="bank.html?level=' + (level + 1) + '">' + (level + 1) + '단계 · ' + esc(D.levels[String(level + 1)].name) + ' 풀기</a>'
+    ? '<a href="bank.html?level=' + (level + 1) + '" data-level="' + (level + 1) + '">' + (level + 1) + '단계 · ' + esc(D.levels[String(level + 1)].name) + ' 풀기</a>'
     : '<a href="index.html">대시보드로</a>');
   nav.innerHTML = parts.join('');
 
