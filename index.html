@@ -95,16 +95,21 @@ body::before {
   filter: drop-shadow(0 18px 28px rgba(0, 0, 0, .6));
   transition: transform .35s cubic-bezier(.2, .8, .2, 1), filter .35s;
 }
+/* 카드마다 테두리 색 — 개념은 흰색, 단계가 오를수록 청록 → 금 → 주황 → 크림슨 */
+.aug { --f-hi: #c93a56; --f-mid: #a01334; --f-lo: #4a0011; --f-deep: #880024; --f-line: rgba(201, 58, 86, .4); --f-line-on: rgba(226, 110, 132, .9); --f-glow: rgba(196, 30, 62, .6); }
+.aug.concept { --f-hi: #ffffff; --f-mid: #dde2e6; --f-lo: #67727b; --f-deep: #b3bcc3; --f-line: rgba(255, 255, 255, .4); --f-line-on: rgba(255, 255, 255, .95); --f-glow: rgba(255, 255, 255, .4); }
+.aug.lv1 { --f-hi: #8fe3ec; --f-mid: #3fb6c4; --f-lo: #0d4048; --f-deep: #1f7f8b; --f-line: rgba(115, 210, 222, .42); --f-line-on: rgba(160, 232, 240, .95); --f-glow: rgba(80, 200, 215, .5); }
+.aug.lv2 { --f-hi: #f2dfb1; --f-mid: #c9a15c; --f-lo: #5b4426; --f-deep: #8a6a3c; --f-line: rgba(233, 201, 131, .42); --f-line-on: rgba(245, 225, 175, .95); --f-glow: rgba(233, 201, 131, .45); }
+.aug.lv3 { --f-hi: #f7a866; --f-mid: #dc6a2a; --f-lo: #5a260b; --f-deep: #a04716; --f-line: rgba(240, 138, 75, .42); --f-line-on: rgba(250, 180, 130, .95); --f-glow: rgba(240, 125, 55, .5); }
+/* 4단계는 기본값(크림슨) 그대로 */
 .aug-frame {
   display: flex;
   flex: 1 1 auto;
   padding: 6px;
   clip-path: polygon(var(--cut) 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, var(--cut) 100%, 0 calc(100% - var(--cut)), 0 var(--cut));
-  background: linear-gradient(158deg, var(--cr-hi) 0%, var(--cr) 18%, var(--cr-lo) 46%, var(--cr-mid) 66%, var(--cr-hi) 100%);
+  background: linear-gradient(158deg, var(--f-hi) 0%, var(--f-mid) 18%, var(--f-lo) 46%, var(--f-deep) 66%, var(--f-hi) 100%);
   transition: filter .35s;
 }
-/* 개념 카드는 금색 테두리 — 문제 은행 네 장과 구분 */
-.aug.concept .aug-frame { background: linear-gradient(158deg, #f2dfb1 0%, #c49a5a 20%, #5b4426 48%, #8a6a3c 68%, #e9c983 100%); }
 .aug-face {
   --c2: 13.5px;
   position: relative;
@@ -118,20 +123,16 @@ body::before {
   background: radial-gradient(130% 62% at 50% 0%, var(--face-top) 0%, var(--face) 52%, var(--face-deep) 100%);
 }
 /* 안쪽 실선 + 위·아래 가운데 보석 */
-.aug-line { position: absolute; inset: 10px; border: 1px solid rgba(201, 58, 86, .4); border-radius: 10px; pointer-events: none; }
+.aug-line { position: absolute; inset: 10px; border: 1px solid var(--f-line); border-radius: 10px; pointer-events: none; }
 .aug-line::before, .aug-line::after {
   content: ""; position: absolute; left: 50%; width: 9px; height: 9px; margin-left: -4.5px;
-  background: var(--cr-hi); transform: rotate(45deg); box-shadow: 0 0 0 3px var(--face);
+  background: var(--f-hi); transform: rotate(45deg); box-shadow: 0 0 0 3px var(--face);
 }
 .aug-line::before { top: -5px; }
-.aug-line::after { bottom: -5px; background: var(--cr); }
-.aug.concept .aug-line { border-color: rgba(233, 201, 131, .38); }
-.aug.concept .aug-line::before { background: #e9c983; }
-.aug.concept .aug-line::after { background: #c49a5a; }
+.aug-line::after { bottom: -5px; background: var(--f-mid); }
 
 .medal { width: clamp(84px, 11.5vh, 104px); height: auto; flex: none; overflow: visible; }
-.medal-ticks { fill: none; stroke: var(--cr-hi); stroke-opacity: .7; stroke-width: 2; stroke-linecap: round; transform-origin: 60px 60px; transition: transform .6s cubic-bezier(.2, .8, .2, 1), stroke-opacity .35s; }
-.aug.concept .medal-ticks { stroke: #e9c983; }
+.medal-ticks { fill: none; stroke: var(--f-hi); stroke-opacity: .7; stroke-width: 2; stroke-linecap: round; transform-origin: 60px 60px; transition: transform .6s cubic-bezier(.2, .8, .2, 1), stroke-opacity .35s; }
 .medal .lvnum { font-family: inherit; font-size: 35px; font-weight: 800; fill: #efe3c4; letter-spacing: -0.02em; }
 .aug-title { margin-top: clamp(12px, 2.2vh, 18px); font-size: clamp(19px, 1.55vw, 22px); white-space: nowrap; font-weight: 700; letter-spacing: -0.01em; color: var(--ivory); }
 .chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-top: 10px; }
@@ -145,7 +146,7 @@ body::before {
 /* 진행 상황 (이 브라우저에 저장된 기록) */
 .prog { margin-top: auto; padding-top: 16px; width: 100%; display: flex; flex-direction: column; align-items: center; gap: 7px; }
 .prog-bar { display: block; width: 78%; height: 5px; border-radius: 3px; background: rgba(239, 230, 210, .1); overflow: hidden; }
-.prog-bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--cr), var(--cr-hi)); border-radius: 3px; transition: width .6s ease; }
+.prog-bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--f-mid), var(--f-hi)); border-radius: 3px; transition: width .6s ease; }
 .prog-txt { font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .prog-txt b { color: var(--ivory); font-weight: 700; }
 .prog-note { font-size: 12.5px; color: var(--muted); }
@@ -153,14 +154,12 @@ body::before {
 /* 고를 때: 떠오르며 테두리가 밝아짐 */
 .aug:hover, .aug:focus-visible {
   transform: translateY(-12px);
-  filter: drop-shadow(0 0 20px rgba(196, 30, 62, .6)) drop-shadow(0 26px 34px rgba(0, 0, 0, .65));
+  filter: drop-shadow(0 0 20px var(--f-glow)) drop-shadow(0 26px 34px rgba(0, 0, 0, .65));
 }
-.aug.concept:hover, .aug.concept:focus-visible { filter: drop-shadow(0 0 20px rgba(233, 201, 131, .45)) drop-shadow(0 26px 34px rgba(0, 0, 0, .65)); }
 .aug:hover .aug-frame, .aug:focus-visible .aug-frame { filter: brightness(1.22) saturate(1.05); }
 .aug:hover .medal-ticks, .aug:focus-visible .medal-ticks { transform: rotate(30deg); stroke-opacity: 1; }
 .aug:active { transform: translateY(-6px) scale(.985); }
-.aug:focus-visible .aug-line { border-color: rgba(226, 110, 132, .9); }
-.aug.concept:focus-visible .aug-line { border-color: rgba(242, 223, 177, .9); }
+.aug:focus-visible .aug-line { border-color: var(--f-line-on); }
 
 .slogan { margin: clamp(26px, 4.5vh, 44px) 0 0; font-size: 14px; color: var(--body); text-align: center; text-shadow: 0 1px 10px rgba(0, 0, 0, .85); line-height: 1.6; }
 .slogan b { color: #e9c983; font-weight: 700; }
@@ -209,8 +208,17 @@ body::before {
       <linearGradient id="cm-ring" x1="0" y1="0" x2="1" y2="1">
         <stop offset="0" stop-color="#dc6a80"/><stop offset=".45" stop-color="#a01334"/><stop offset="1" stop-color="#4a0011"/>
       </linearGradient>
-      <linearGradient id="cm-ring-gold" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#f2dfb1"/><stop offset=".45" stop-color="#c49a5a"/><stop offset="1" stop-color="#5b4426"/>
+      <linearGradient id="cm-ring-c" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#ffffff"/><stop offset=".45" stop-color="#cfd5da"/><stop offset="1" stop-color="#6f7a83"/>
+      </linearGradient>
+      <linearGradient id="cm-ring-1" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#b5f0f5"/><stop offset=".45" stop-color="#3fb6c4"/><stop offset="1" stop-color="#0d4048"/>
+      </linearGradient>
+      <linearGradient id="cm-ring-2" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#f6e7c1"/><stop offset=".45" stop-color="#c49a5a"/><stop offset="1" stop-color="#5b4426"/>
+      </linearGradient>
+      <linearGradient id="cm-ring-3" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#fbc79a"/><stop offset=".45" stop-color="#dc6a2a"/><stop offset="1" stop-color="#5a260b"/>
       </linearGradient>
       <radialGradient id="cm-medal" cx=".5" cy=".38" r=".7">
         <stop offset="0" stop-color="#1d4049"/><stop offset=".7" stop-color="#0d1d23"/><stop offset="1" stop-color="#081115"/>
@@ -243,13 +251,13 @@ body::before {
           <span class="aug-line" aria-hidden="true"></span>
           <svg class="medal" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
             <use href="#cm-ticks" class="medal-ticks"/>
-            <circle cx="60" cy="60" r="47" fill="url(#cm-medal)" stroke="url(#cm-ring-gold)" stroke-width="3"/>
-            <circle cx="60" cy="60" r="40.5" fill="none" stroke="#e9c983" stroke-opacity=".3"/>
+            <circle cx="60" cy="60" r="47" fill="url(#cm-medal)" stroke="url(#cm-ring-c)" stroke-width="3"/>
+            <circle cx="60" cy="60" r="40.5" fill="none" stroke="#ffffff" stroke-opacity=".3"/>
             <path d="M60 47C52 42 43 41 35 43.5V80C43 77.5 52 78.5 60 83.5Z" fill="#0e2128" stroke="#efe3c4" stroke-width="2.4" stroke-linejoin="round"/>
             <path d="M60 47C68 42 77 41 85 43.5V80C77 77.5 68 78.5 60 83.5Z" fill="#0e2128" stroke="#efe3c4" stroke-width="2.4" stroke-linejoin="round"/>
             <path d="M41 54.5h12.5M41 61.5h12.5M41 68.5h9" stroke="#efe3c4" stroke-opacity=".42" stroke-width="2" stroke-linecap="round"/>
             <path d="M78.6 51.6C77.4 48.6 73.6 48.8 73.1 52.6L71.2 72.4C70.7 76.4 66.9 76.6 65.7 73.6" fill="none" stroke="#f6e7c1" stroke-width="2.6" stroke-linecap="round"/>
-            <path d="M57 83v10.5l3-3 3 3V83" fill="#c49a5a"/>
+            <path d="M57 83v10.5l3-3 3 3V83" fill="#dde2e6"/>
           </svg>
           <span class="aug-title" id="t0">개념 정리</span>
           <span class="chips"><span>Ch.12 – 16.4</span><span>출제 유형</span></span>
@@ -260,15 +268,15 @@ body::before {
     </div>
 
     <div class="slot" style="--i:1">
-      <a class="aug" href="bank.html?level=1" aria-labelledby="t1" aria-describedby="d1">
+      <a class="aug lv1" href="bank.html?level=1" aria-labelledby="t1" aria-describedby="d1">
         <span class="aug-frame"><span class="aug-face">
           <span class="aug-line" aria-hidden="true"></span>
           <svg class="medal" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
             <use href="#cm-ticks" class="medal-ticks"/>
-            <circle cx="60" cy="60" r="47" fill="url(#cm-medal)" stroke="url(#cm-ring)" stroke-width="3"/>
-            <circle cx="60" cy="60" r="40.5" fill="none" stroke="#c93a56" stroke-opacity=".35"/>
+            <circle cx="60" cy="60" r="47" fill="url(#cm-medal)" stroke="url(#cm-ring-1)" stroke-width="3"/>
+            <circle cx="60" cy="60" r="40.5" fill="none" stroke="#73d2de" stroke-opacity=".35"/>
             <text class="lvnum" x="60" y="70" text-anchor="middle">1</text>
-            <g transform="translate(60 86)"><rect x="-21.5" y="-3.5" width="7" height="7" transform="rotate(45 -18 0)" fill="#e2566f"/><rect x="-9.5" y="-3.5" width="7" height="7" transform="rotate(45 -6 0)" fill="none" stroke="#efe3c4" stroke-opacity=".35" stroke-width="1.4"/><rect x="2.5" y="-3.5" width="7" height="7" transform="rotate(45 6 0)" fill="none" stroke="#efe3c4" stroke-opacity=".35" stroke-width="1.4"/><rect x="14.5" y="-3.5" width="7" height="7" transform="rotate(45 18 0)" fill="none" stroke="#efe3c4" stroke-opacity=".35" stroke-width="1.4"/></g>
+            <g transform="translate(60 86)"><rect x="-21.5" y="-3.5" width="7" height="7" transform="rotate(45 -18 0)" fill="#6fd6e2"/><rect x="-9.5" y="-3.5" width="7" height="7" transform="rotate(45 -6 0)" fill="none" stroke="#efe3c4" stroke-opacity=".35" stroke-width="1.4"/><rect x="2.5" y="-3.5" width="7" height="7" transform="rotate(45 6 0)" fill="none" stroke="#efe3c4" stroke-opacity=".35" stroke-width="1.4"/><rect x="14.5" y="-3.5" width="7" height="7" transform="rotate(45 18 0)" fill="none" stroke="#efe3c4" stroke-opacity=".35" stroke-width="1.4"/></g>
           </svg>
           <span class="aug-title" id="t1">1단계 · 기본</span>
           <span class="chips"><span>30문제</span><span>공식 바로 적용</span></span>
@@ -279,15 +287,15 @@ body::before {
     </div>
 
     <div class="slot" style="--i:2">
-      <a class="aug" href="bank.html?level=2" aria-labelledby="t2" aria-describedby="d2">
+      <a class="aug lv2" href="bank.html?level=2" aria-labelledby="t2" aria-describedby="d2">
         <span class="aug-frame"><span class="aug-face">
           <span class="aug-line" aria-hidden="true"></span>
           <svg class="medal" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
             <use href="#cm-ticks" class="medal-ticks"/>
-            <circle cx="60" cy="60" r="47" fill="url(#cm-medal)" stroke="url(#cm-ring)" stroke-width="3"/>
-            <circle cx="60" cy="60" r="40.5" fill="none" stroke="#c93a56" stroke-opacity=".35"/>
+            <circle cx="60" cy="60" r="47" fill="url(#cm-medal)" stroke="url(#cm-ring-2)" stroke-width="3"/>
+            <circle cx="60" cy="60" r="40.5" fill="none" stroke="#e9c983" stroke-opacity=".35"/>
             <text class="lvnum" x="60" y="70" text-anchor="middle">2</text>
-            <g transform="translate(60 86)"><rect x="-21.5" y="-3.5" width="7" height="7" transform="rotate(45 -18 0)" fill="#e2566f"/><rect x="-9.5" y="-3.5" width="7" height="7" transform="rotate(45 -6 0)" fill="#e2566f"/><rect x="2.5" y="-3.5" width="7" height="7" transform="rotate(45 6 0)" fill="none" stroke="#efe3c4" stroke-opacity=".35" stroke-width="1.4"/><rect x="14.5" y="-3.5" width="7" height="7" transform="rotate(45 18 0)" fill="none" stroke="#efe3c4" stroke-opacity=".35" stroke-width="1.4"/></g>
+            <g transform="translate(60 86)"><rect x="-21.5" y="-3.5" width="7" height="7" transform="rotate(45 -18 0)" fill="#e9c983"/><rect x="-9.5" y="-3.5" width="7" height="7" transform="rotate(45 -6 0)" fill="#e9c983"/><rect x="2.5" y="-3.5" width="7" height="7" transform="rotate(45 6 0)" fill="none" stroke="#efe3c4" stroke-opacity=".35" stroke-width="1.4"/><rect x="14.5" y="-3.5" width="7" height="7" transform="rotate(45 18 0)" fill="none" stroke="#efe3c4" stroke-opacity=".35" stroke-width="1.4"/></g>
           </svg>
           <span class="aug-title" id="t2">2단계 · 표준</span>
           <span class="chips"><span>30문제</span><span>강의 예제·과제 유형</span></span>
@@ -298,15 +306,15 @@ body::before {
     </div>
 
     <div class="slot" style="--i:3">
-      <a class="aug" href="bank.html?level=3" aria-labelledby="t3" aria-describedby="d3">
+      <a class="aug lv3" href="bank.html?level=3" aria-labelledby="t3" aria-describedby="d3">
         <span class="aug-frame"><span class="aug-face">
           <span class="aug-line" aria-hidden="true"></span>
           <svg class="medal" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
             <use href="#cm-ticks" class="medal-ticks"/>
-            <circle cx="60" cy="60" r="47" fill="url(#cm-medal)" stroke="url(#cm-ring)" stroke-width="3"/>
-            <circle cx="60" cy="60" r="40.5" fill="none" stroke="#c93a56" stroke-opacity=".35"/>
+            <circle cx="60" cy="60" r="47" fill="url(#cm-medal)" stroke="url(#cm-ring-3)" stroke-width="3"/>
+            <circle cx="60" cy="60" r="40.5" fill="none" stroke="#f08a4b" stroke-opacity=".35"/>
             <text class="lvnum" x="60" y="70" text-anchor="middle">3</text>
-            <g transform="translate(60 86)"><rect x="-21.5" y="-3.5" width="7" height="7" transform="rotate(45 -18 0)" fill="#e2566f"/><rect x="-9.5" y="-3.5" width="7" height="7" transform="rotate(45 -6 0)" fill="#e2566f"/><rect x="2.5" y="-3.5" width="7" height="7" transform="rotate(45 6 0)" fill="#e2566f"/><rect x="14.5" y="-3.5" width="7" height="7" transform="rotate(45 18 0)" fill="none" stroke="#efe3c4" stroke-opacity=".35" stroke-width="1.4"/></g>
+            <g transform="translate(60 86)"><rect x="-21.5" y="-3.5" width="7" height="7" transform="rotate(45 -18 0)" fill="#f39257"/><rect x="-9.5" y="-3.5" width="7" height="7" transform="rotate(45 -6 0)" fill="#f39257"/><rect x="2.5" y="-3.5" width="7" height="7" transform="rotate(45 6 0)" fill="#f39257"/><rect x="14.5" y="-3.5" width="7" height="7" transform="rotate(45 18 0)" fill="none" stroke="#efe3c4" stroke-opacity=".35" stroke-width="1.4"/></g>
           </svg>
           <span class="aug-title" id="t3">3단계 · 응용</span>
           <span class="chips"><span>30문제</span><span>복습문제(연습) 유형</span></span>
@@ -317,7 +325,7 @@ body::before {
     </div>
 
     <div class="slot" style="--i:4">
-      <a class="aug" href="bank.html?level=4" aria-labelledby="t4" aria-describedby="d4">
+      <a class="aug lv4" href="bank.html?level=4" aria-labelledby="t4" aria-describedby="d4">
         <span class="aug-frame"><span class="aug-face">
           <span class="aug-line" aria-hidden="true"></span>
           <svg class="medal" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
