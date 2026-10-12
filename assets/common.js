@@ -1,6 +1,6 @@
-/* 공통: 수식 렌더링과 풀이 기록(이 브라우저에만 저장) */
+/* 공통: 수식 렌더링과 풀이 기록(계정마다 이 브라우저에만 저장) */
 (function () {
-  var KEY = 'cm2.progress.v1';
+  var KEY = window.CM_SESSION ? window.CM_SESSION.progressKey() : 'cm2.progress.v1';
   var memory = {};
 
   function load() {
