@@ -1,6 +1,6 @@
 /* 로그인 상태 — 모든 페이지 <head>에서 스타일시트보다 먼저(동기) 불러와요.
    서버가 없는 정적 사이트라 계정 · 로그인 상태 · 풀이 기록은 모두 이 브라우저에만 저장돼요.
-   - 로그인하지 않고 대시보드 · 개념 정리 · 문제 은행을 열면 login.html?next=… 로 보내요.
+   - 로그인하지 않고 대시보드 · 개념 정리 · 문제 은행 · 예상 모의고사를 열면 login.html?next=… 로 보내요.
    - 이미 로그인했는데 login.html을 열면 바로 next(없으면 대시보드)로 보내요.
    - 저장 공간이나 암호화 기능을 쓸 수 없는 브라우저에서는 막지 않고 그냥 열어 둬요.
    - [data-user-menu] 자리에 사용자 메뉴(이름 + 로그아웃)를 그려요. */
@@ -97,7 +97,7 @@
 
   /* 로그인 뒤 돌아갈 주소는 이 사이트 페이지만 허용 */
   function safeNext(n) {
-    return typeof n === 'string' && /^(index|concepts|bank)\.html(\?[\w=&%.-]*)?(#[\w-]*)?$/.test(n) ? n : 'index.html';
+    return typeof n === 'string' && /^(index|concepts|bank|mock)\.html(\?[\w=&%.-]*)?(#[\w-]*)?$/.test(n) ? n : 'index.html';
   }
 
   function logout() {
