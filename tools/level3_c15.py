@@ -84,15 +84,15 @@ P(id="3-76", ch=15, sec="15.2", type="15-order", src="2022 중간(블럭2) 6번 
 
 
 def _c():
-    I = integrate(integrate(cos(x)*sqrt(1 + cos(x)**2), (y, 0, sin(x))), (x, 0, pi/2))
-    assert EQ(I, (2*sqrt(2) - 1)/3)
+    I = integrate(integrate(exp(cos(x)), (y, 0, sin(x))), (x, 0, pi/2))
+    assert EQ(I, E - 1)
 P(id="3-77", ch=15, sec="15.2", type="15-order", src="2022 생명과학대 기말 16(b) 유형",
-  q=r"$\displaystyle\int_0^1\!\!\int_{\sin^{-1}y}^{\pi/2}\cos x\sqrt{1+\cos^2x}\,dx\,dy$를 계산하라.",
-  hint=r"$\sin^{-1}y\le x \iff y\le\sin x$. 바꾼 뒤 $u=1+\cos^2x$",
-  ans=r"$\dfrac{2\sqrt2-1}{3}$",
-  sol=[r"영역: $0\le x\le\tfrac\pi2,\ 0\le y\le\sin x$",
-       r"$\displaystyle\int_0^{\pi/2}\sin x\cos x\sqrt{1+\cos^2x}\,dx$, $u=1+\cos^2x$, $du=-2\sin x\cos x\,dx$",
-       r"$=\dfrac12\displaystyle\int_1^2\sqrt u\,du=\frac13\Big[u^{3/2}\Big]_1^2=\frac{2\sqrt2-1}{3}$"],
+  q=r"$\displaystyle\int_0^1\!\!\int_{\sin^{-1}y}^{\pi/2}e^{\cos x}\,dx\,dy$를 계산하라.",
+  hint=r"$e^{\cos x}$는 $x$로 바로 적분할 수 없어요. $\sin^{-1}y\le x \iff y\le\sin x$로 순서를 바꾸면 $\sin x$가 곱해져요.",
+  ans=r"$e-1$",
+  sol=[r"영역: $0\le y\le1,\ \sin^{-1}y\le x\le\tfrac\pi2$ $\iff$ $0\le x\le\tfrac\pi2,\ 0\le y\le\sin x$",
+       r"$\displaystyle\int_0^{\pi/2}\!\!\int_0^{\sin x}e^{\cos x}\,dy\,dx=\int_0^{\pi/2}\sin x\,e^{\cos x}\,dx$",
+       r"$u=\cos x$: $\displaystyle\int_0^1e^u\,du=e-1$"],
   check=_c)
 
 

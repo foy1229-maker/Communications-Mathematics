@@ -244,15 +244,17 @@ P(id="2-117", ch=16, sec="16.4", type="16-greenarea", src="강의 16.4 (넓이 �
 
 
 def _c():
-    A = R(1, 2)*line_int([-y, x], [cos(t)**3, sin(t)**3], 0, 2*pi, (x, y))
-    assert EQ(A, 3*pi/8)
+    X, Y = 2*cos(t) - cos(2*t), 2*sin(t) - sin(2*t)
+    assert simplify(X*diff(Y, t) - Y*diff(X, t) - (6 - 6*cos(t))) == 0
+    A = R(1, 2)*line_int([-y, x], [X, Y], 0, 2*pi, (x, y))
+    assert EQ(A, 6*pi)
 P(id="2-118", ch=16, sec="16.4", type="16-greenarea", src="강의 16.4 (넓이 공식) 유형",
-  q=r"성망형(astroid) $x=\cos^3t,\ y=\sin^3t\ (0\le t\le2\pi)$로 둘러싸인 영역의 넓이를 구하라.",
-  hint=r"$A=\dfrac12\displaystyle\oint x\,dy-y\,dx$. $\sin^2t\cos^2t=\tfrac14\sin^22t$",
-  ans=r"$\dfrac{3\pi}{8}$",
-  sol=[r"$dx=-3\cos^2t\sin t\,dt,\ dy=3\sin^2t\cos t\,dt$",
-       r"$x\,dy-y\,dx=3\cos^4t\sin^2t+3\sin^4t\cos^2t=3\sin^2t\cos^2t$ (공통인수 $\sin^2t+\cos^2t=1$)",
-       r"$A=\dfrac32\displaystyle\int_0^{2\pi}\frac{\sin^22t}{4}\,dt=\frac38\cdot\pi=\frac{3\pi}{8}$"],
+  q=r"곡선 $x=2\cos t-\cos2t,\ y=2\sin t-\sin2t\ (0\le t\le2\pi)$로 둘러싸인 영역(심장형)의 넓이를 그린 정리의 넓이 공식으로 구하라.",
+  hint=r"$A=\dfrac12\displaystyle\oint x\,dy-y\,dx$. 정리하면 $\cos t\cos2t+\sin t\sin2t=\cos(2t-t)=\cos t$가 나와요.",
+  ans=r"$6\pi$",
+  sol=[r"$x'=-2\sin t+2\sin2t,\ y'=2\cos t-2\cos2t$",
+       r"$xy'-yx'=4\cos^2t+4\sin^2t+2\cos^22t+2\sin^22t-6(\cos t\cos2t+\sin t\sin2t)=6-6\cos t$",
+       r"$A=\dfrac12\displaystyle\int_0^{2\pi}(6-6\cos t)\,dt=\frac12\cdot12\pi=6\pi$"],
   check=_c)
 
 
