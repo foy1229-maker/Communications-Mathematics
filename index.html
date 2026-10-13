@@ -165,6 +165,53 @@ body::before {
 .aug:active { transform: translateY(-6px) scale(.985); }
 .aug:focus-visible .aug-line { border-color: var(--f-line-on); }
 
+/* ── 예상 모의고사 띠: 카드 다섯 장 아래, 같은 폭. 테두리는 네 단계 색이 이어지는 그라데이션 (모든 단계가 섞인 시험) */
+.mock-row { display: flex; justify-content: center; width: 100%; margin-top: clamp(18px, 2.6vh, 28px); }
+.mock-slot { width: calc(5 * clamp(222px, 16.6vw, 248px) + 4 * clamp(16px, 1.5vw, 26px)); max-width: 100%; align-items: stretch; }
+.mock-cta { display: block; color: inherit; text-decoration: none; outline: none; filter: drop-shadow(0 14px 22px rgba(0, 0, 0, .55)); transition: transform .35s cubic-bezier(.2, .8, .2, 1), filter .35s; }
+.mc-frame {
+  --cut: 12px;
+  display: block;
+  padding: 3px;
+  clip-path: polygon(var(--cut) 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, var(--cut) 100%, 0 calc(100% - var(--cut)), 0 var(--cut));
+  background: linear-gradient(90deg, #8fe3ec 0%, #3fb6c4 14%, #c9a15c 40%, #dc6a2a 66%, #a01334 90%, #c93a56 100%);
+  transition: filter .35s;
+}
+.mc-face {
+  --c2: 10px;
+  display: flex;
+  align-items: center;
+  gap: 14px 22px;
+  padding: 16px 24px 16px 26px;
+  clip-path: polygon(var(--c2) 0, calc(100% - var(--c2)) 0, 100% var(--c2), 100% calc(100% - var(--c2)), calc(100% - var(--c2)) 100%, var(--c2) 100%, 0 calc(100% - var(--c2)), 0 var(--c2));
+  background: radial-gradient(110% 160% at 30% 0%, var(--face-top) 0%, var(--face) 55%, var(--face-deep) 100%);
+}
+.mc-gems { flex: none; display: flex; gap: 8px; }
+.mc-gems i { width: 10px; height: 10px; transform: rotate(45deg); }
+.mc-gems i:nth-child(1) { background: #6fd6e2; }
+.mc-gems i:nth-child(2) { background: #e9c983; }
+.mc-gems i:nth-child(3) { background: #f39257; }
+.mc-gems i:nth-child(4) { background: #e2566f; }
+.mc-text { flex: 1 1 auto; min-width: 0; display: grid; gap: 3px; text-align: left; }
+.mc-title { font-size: 19px; font-weight: 700; letter-spacing: -0.01em; color: var(--ivory); }
+.mc-desc { font-size: 14px; line-height: 1.5; color: var(--body); }
+.mc-side { flex: none; display: flex; align-items: center; gap: 16px; }
+.mc-prog { font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.mc-prog b { color: var(--ivory); font-weight: 700; }
+.mc-go {
+  --cut: 7px;
+  padding: 9px 16px 10px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+  background: linear-gradient(158deg, #c93a56, #a01334 45%, #880024);
+  clip-path: polygon(var(--cut) 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, var(--cut) 100%, 0 calc(100% - var(--cut)), 0 var(--cut));
+}
+.mock-cta:hover, .mock-cta:focus-visible { transform: translateY(-5px); filter: drop-shadow(0 0 16px rgba(233, 201, 131, .3)) drop-shadow(0 20px 28px rgba(0, 0, 0, .6)); }
+.mock-cta:hover .mc-frame, .mock-cta:focus-visible .mc-frame { filter: brightness(1.18); }
+.mock-cta:focus-visible .mc-title { text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--gold-hi); }
+
 .slogan { margin: clamp(26px, 4.5vh, 44px) 0 0; font-size: 14px; color: var(--body); text-align: center; text-shadow: 0 1px 10px rgba(0, 0, 0, .85); line-height: 1.6; }
 .slogan b { color: #e9c983; font-weight: 700; }
 .foot { margin: 10px 0 0; max-width: 640px; font-size: 12px; line-height: 1.6; color: var(--muted); text-align: center; text-shadow: 0 1px 8px rgba(0, 0, 0, .85); }
@@ -175,6 +222,7 @@ body::before {
   .aug { width: 266px; min-height: 0; }
   .aug-face { padding: 28px 22px 22px; }
   .aug-title { font-size: 21px; }
+  .mock-slot { width: calc(3 * 266px + 2 * clamp(16px, 1.5vw, 26px)); }
 }
 @media (max-height: 780px) and (min-width: 1240px) {
   .course h1 { font-size: 38px; }
@@ -198,11 +246,16 @@ body::before {
   .medal { width: 78px; }
   .aug-title { margin-top: 10px; font-size: 21px; white-space: normal; }
   .aug-desc { margin-top: 10px; max-width: 320px; }
+  .mock-row { margin-top: 18px; }
+  .mock-slot { width: 100%; max-width: 400px; }
+  .mc-face { flex-wrap: wrap; padding: 18px 20px; }
+  .mc-gems { width: 100%; }
+  .mc-side { width: 100%; justify-content: space-between; }
 }
 @media (prefers-reduced-motion: reduce) {
   .slot { animation: none; }
-  .aug, .aug-frame, .medal-ticks, .prog-bar i { transition: none; }
-  .aug:hover, .aug:focus-visible { transform: none; }
+  .aug, .aug-frame, .medal-ticks, .prog-bar i, .mock-cta, .mc-frame { transition: none; }
+  .aug:hover, .aug:focus-visible, .mock-cta:hover, .mock-cta:focus-visible { transform: none; }
 }
   </style>
 </head>
@@ -350,6 +403,24 @@ body::before {
     </div>
   </main>
 
+  <div class="mock-row">
+    <div class="slot mock-slot" style="--i:5">
+      <a class="mock-cta" href="mock.html" aria-labelledby="mock-t" aria-describedby="mock-d">
+        <span class="mc-frame"><span class="mc-face">
+          <span class="mc-gems" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <span class="mc-text">
+            <span class="mc-title" id="mock-t">중간고사 예상 모의고사</span>
+            <span class="mc-desc" id="mock-d">예상 유형 10문항과 2025 시험에서 빠진 유형 5문항. 시간을 재면서 실전처럼 풀어 보세요.</span>
+          </span>
+          <span class="mc-side">
+            <span class="mc-prog" data-mock-prog><b>0</b> / 15 맞음</span>
+            <span class="mc-go" aria-hidden="true">풀러 가기</span>
+          </span>
+        </span></span>
+      </a>
+    </div>
+  </div>
+
   <p class="slogan"><b>시험 범위 Ch.12 – 16.4:</b> 개념 한 장과 단계별 120문제, 계산기 없이 정확한 값으로</p>
   <p class="foot">수업 자료의 강의 예제·복습문제·과제 유형을 바탕으로 새로 만든 개인 학습용 문제예요. 계정과 풀이 기록은 이 브라우저에만 저장돼요.</p>
 
@@ -368,6 +439,13 @@ body::before {
       els[i].querySelector('.prog-txt b').textContent = ok;
       els[i].querySelector('.prog-bar i').style.width = Math.round(ok / 30 * 100) + '%';
     }
+    // 예상 모의고사 (기록 키: 예상 문제 mock-q1 … mock-q10, 추가 문제 mock-x1 … mock-x5)
+    var mockOk = 0;
+    for (var mk in progress) {
+      if (Object.prototype.hasOwnProperty.call(progress, mk) && /^mock-(q([1-9]|10)|x[1-5])$/.test(mk) && progress[mk] === 'ok') mockOk++;
+    }
+    var mockOut = document.querySelector('[data-mock-prog] b');
+    if (mockOut) mockOut.textContent = mockOk;
   })();
   </script>
 </body>
