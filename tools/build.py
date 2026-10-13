@@ -1,9 +1,11 @@
 """모든 문제의 정답을 sympy로 다시 계산해 확인한 뒤 assets/problems.js 와 assets/mock-problems.js 를 만든다.
 
 사용법 (저장소 루트에서):
-    pip install sympy
-    python3 tools/build.py
+    pip install sympy mpmath
+    python3 tools/build.py            # 전체 검산 + 생성 (단계당 120문제 확인)
+    python3 tools/build.py --partial  # 작업 중: 아직 120문제가 안 된 단계는 개수 확인을 건너뜀
 """
+import importlib
 import json
 import os
 import re
@@ -14,13 +16,23 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 
 import bank_lib  # noqa: E402
-import level1, level2, level3, level4  # noqa: E402,F401
 import mock  # noqa: E402
 from bank_lib import PROBLEMS, CHAPTERS, SECTIONS, TYPES, LEVELS  # noqa: E402
 
+PARTIAL = "--partial" in sys.argv
+# 단계마다 원래 30문제(levelN.py) + 추가 90문제(levelN_c1213 / _c14 / _c15 / _c16)
+MODULES = [f"level{lv}{part}" for lv in (1, 2, 3, 4) for part in ("", "_c1213", "_c14", "_c15", "_c16")]
+for _name in MODULES:
+    try:
+        importlib.import_module(_name)
+    except ModuleNotFoundError as _e:
+        if not (PARTIAL and _e.name == _name):
+            raise
+
 OUT = os.path.join(HERE, "..", "assets", "problems.js")
 MOCK_OUT = os.path.join(HERE, "..", "assets", "mock-problems.js")
-EXPECTED_PER_CHAPTER = {12: 6, 13: 4, 14: 9, 15: 6, 16: 5}
+PER_LEVEL = 120
+EXPECTED_PER_CHAPTER = {12: 8, 13: 6, 14: 46, 15: 36, 16: 24}
 
 
 def fix_html(text):
@@ -33,6 +45,11 @@ def space_text(text):
     """수식 밖에서 연속 공백(문항 (a)/(b) 구분 등)을 &emsp; 로 바꿔 HTML에서도 간격이 보이게 한다."""
     parts = re.split(r"(\$\$.*?\$\$|\$.*?\$)", text, flags=re.S)
     return "".join(seg if seg.startswith("$") else re.sub(r" {2,}", "&emsp;", seg) for seg in parts)
+
+
+def bank_html(text):
+    """문제 은행 문자열: 행렬·cases 의 '&' 가 HTML 에서 깨지지 않게 &amp; 로, '<' 는 \\lt 로."""
+    return space_text(fix_html(text.replace("&", "&amp;")))
 
 
 def check_dollars(pid, field, text):
@@ -57,23 +74,27 @@ def main():
     assert len(ids) == len(set(ids)), "중복 id"
     for lv in (1, 2, 3, 4):
         items = [p for p in PROBLEMS if p["lv"] == lv]
-        assert len(items) == 30, f"{lv}단계 문제 수 {len(items)}"
+        if PARTIAL and len(items) != PER_LEVEL:
+            print(f"  (작업 중) {lv}단계 {len(items)}문제 — 개수 확인 건너뜀")
+            continue
+        assert len(items) == PER_LEVEL, f"{lv}단계 문제 수 {len(items)}"
         cnt = Counter(p["ch"] for p in items)
         assert dict(cnt) == EXPECTED_PER_CHAPTER, f"{lv}단계 단원 분배 {dict(cnt)}"
         nums = sorted(int(p["id"].split("-")[1]) for p in items)
-        assert nums == list(range(1, 31)), f"{lv}단계 번호 누락"
+        assert nums == list(range(1, PER_LEVEL + 1)), f"{lv}단계 번호 누락"
     unused = [k for k in TYPES if not any(p["type"] == k for p in PROBLEMS)]
-    assert not unused, f"문제가 없는 유형: {unused}"
+    if unused and not PARTIAL:
+        raise SystemExit(f"문제가 없는 유형: {unused}")
 
     out = []
     for p in sorted(PROBLEMS, key=lambda q: (q["lv"], int(q["id"].split("-")[1]))):
         item = {k: p[k] for k in ("id", "lv", "ch", "sec", "type", "src", "q", "hint", "ans", "sol")}
         for f in ("q", "hint", "ans"):
             check_dollars(p["id"], f, item[f])
-            item[f] = space_text(fix_html(item[f]))
+            item[f] = bank_html(item[f])
         for i, line in enumerate(item["sol"]):
             check_dollars(p["id"], f"sol[{i}]", line)
-        item["sol"] = [space_text(fix_html(line)) for line in item["sol"]]
+        item["sol"] = [bank_html(line) for line in item["sol"]]
         out.append(item)
 
     data = {
