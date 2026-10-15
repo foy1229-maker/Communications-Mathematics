@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="assets/session.js"></script>
   <title>개념 정리 · 기초통신수학 II</title>
-  <meta name="description" content="기초통신수학 II 중간고사 범위 Ch.12~16.4 핵심 공식과 출제 유형 52가지 정리 — 유형별 풀이 순서와 연습 문제 연결">
+  <meta name="description" content="기초통신수학 II 중간고사 범위 Ch.12~16.4 핵심 공식과 출제 유형 55가지 정리 — 유형별 풀이 순서와 연습 문제 연결">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16.png">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
@@ -38,8 +38,8 @@
     <p class="lead">단원별 핵심 공식과, 강의 예제·복습문제·과제에서 뽑은 출제 유형을 강의 순서대로 정리했어요. 유형 아래의 문제 번호를 누르면 문제 은행의 그 문제로 바로 이동해요.</p>
     <div class="facts">
       <span><b>8</b>개 강의 단위</span>
-      <span><b data-count="types">52</b>개 출제 유형</span>
-      <span><b data-count="problems">120</b>문제와 연결</span>
+      <span><b data-count="types">55</b>개 출제 유형</span>
+      <span><b data-count="problems">480</b>문제와 연결</span>
     </div>
   </section>
 
@@ -482,6 +482,17 @@
           <p class="from">근거: 강의 14.3 ex7 · ex8 · ex9</p>
           <p class="practice"></p>
         </article>
+        <article class="type" id="t-14-defpartial" data-type="14-defpartial">
+          <header><h4>연속성 판정·정의로 구하는 편도함수</h4><span class="sec-tag">14.2 – 14.4</span></header>
+          <ol>
+            <li>조각으로 정의된 함수: 원점 근처에서 $|f|\le$ ($0$으로 가는 식)을 만들어 연속 보이기</li>
+            <li>원점의 편도함수는 정의로: $f_x(0,0)=\displaystyle\lim_{h\to0}\frac{f(h,0)-f(0,0)}{h}$</li>
+            <li>$f_{xx}(0,0)$, $f_{xy}(0,0)$은 $f_x(x,0)$, $f_x(0,y)$를 먼저 구한 뒤 다시 정의로</li>
+            <li>미분가능성: $D_{\mathbf u}f(0,0)$을 정의로 구해 $\nabla f\cdot\mathbf u$와 비교</li>
+          </ol>
+          <p class="from">근거: 2022 중간 블럭2 2번 · 강의 14.3 (클레로 정리) · 14.4 (미분가능성)</p>
+          <p class="practice"></p>
+        </article>
       </div>
       <aside class="pitfall">
         <h4>자주 하는 실수</h4>
@@ -776,6 +787,17 @@
           <p class="from">근거: 강의 15.3 ex1 – ex4 · 과제 15.3 #13 · #17 · #35 · #49 · 복습 15.1–3 기초6 · 7 · 심화1 · 2</p>
           <p class="practice"></p>
         </article>
+        <article class="type" id="t-15-mass" data-type="15-mass">
+          <header><h4>질량·질량중심</h4><span class="sec-tag">15.3 · 15.6 – 15.8</span></header>
+          <ol>
+            <li>$m=\iint_D\rho\,dA$, $\bar x=\frac1m\iint_Dx\rho\,dA$, $\bar y=\frac1m\iint_Dy\rho\,dA$ (입체는 $\iiint$)</li>
+            <li>대칭축이 있으면 그 방향 좌표는 바로 결정 ($x$축 대칭 → $\bar y=0$)</li>
+            <li>원·심장형 영역은 극좌표, 밀도 $\sqrt{x^2+y^2}$이면 $r\cdot r\,dr\,d\theta$</li>
+            <li>빈 곳이 있는 영역은 (큰 영역) − (빼는 영역)으로 나눠 계산해도 돼요</li>
+          </ol>
+          <p class="from">근거: 2025 중간 1번 · 2022 중간 블럭1 8번 · 블럭2 7(b) · 2022 기말 블럭1 1번</p>
+          <p class="practice"></p>
+        </article>
       </div>
       <aside class="pitfall">
         <h4>자주 하는 실수</h4>
@@ -850,13 +872,24 @@
           <p class="practice"></p>
         </article>
         <article class="type" id="t-15-sph" data-type="15-sph">
-          <header><h4>구면좌표·질량중심</h4><span class="sec-tag">15.8</span></header>
+          <header><h4>구면좌표 삼중적분</h4><span class="sec-tag">15.8</span></header>
           <ol>
             <li>구·원뿔이 경계면이면 구면좌표</li>
             <li>변환표로 $\rho,\phi$ 범위 → $dV=\rho^2\sin\phi\,d\rho\,d\theta\,d\phi$</li>
+            <li>$(x^2+y^2+z^2)^n=\cdots$ 꼴의 곡면은 $\rho=g(\phi)$로 풀어 $\rho$의 위끝으로</li>
             <li>질량중심은 대칭으로 $\bar x=\bar y=0$, $\bar z$만 계산</li>
           </ol>
-          <p class="from">근거: 강의 15.8 ex1 – ex3 · 과제 15.8 #5 · #17 · #23 · 복습 15.6–8 기초4 · 심화1 · 2</p>
+          <p class="from">근거: 강의 15.8 ex1 – ex3 · 과제 15.8 #5 · #17 · #23 · 복습 15.6–8 기초4 · 심화1 · 2 · 2024 중간 10번 · 2022 중간 블럭2 10번</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-15-sphconv" data-type="15-sphconv">
+          <header><h4>구면좌표로 바꾸어 쓰기</h4><span class="sec-tag">15.8</span></header>
+          <ol>
+            <li>주어진 직교·원주좌표 적분(들)의 범위로 입체를 먼저 그리기 — 합·차는 하나의 입체로</li>
+            <li>경계면을 변환표로: $z=c\iff\rho=c\sec\phi$, $z=\sqrt3\,r\iff\phi=\tfrac\pi6$</li>
+            <li>$zr\,dz\,dr\,d\theta$의 $r$은 원주좌표 야코비안 — 바꾼 뒤에는 $\rho^2\sin\phi$로</li>
+          </ol>
+          <p class="from">근거: 2024 중간 8번 · 2025 중간 10번 · 2022 중간 블럭1 10번 · 블럭2 8(b)</p>
           <p class="practice"></p>
         </article>
       </div>

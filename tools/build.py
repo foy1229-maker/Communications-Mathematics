@@ -1,9 +1,13 @@
 """모든 문제의 정답을 sympy로 다시 계산해 확인한 뒤 assets/problems.js 와 assets/mock-problems.js 를 만든다.
 
+모의고사 데이터: tools/mock.py (예상 모의고사) + tools/mock_sets.py (실전 모의고사 1–5회).
+
 사용법 (저장소 루트에서):
-    pip install sympy
-    python3 tools/build.py
+    pip install sympy mpmath
+    python3 tools/build.py            # 전체 검산 + 생성 (단계당 120문제 확인)
+    python3 tools/build.py --partial  # 작업 중: 아직 120문제가 안 된 단계는 개수 확인을 건너뜀
 """
+import importlib
 import json
 import os
 import re
@@ -14,13 +18,24 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 
 import bank_lib  # noqa: E402
-import level1, level2, level3, level4  # noqa: E402,F401
 import mock  # noqa: E402
+import mock_sets  # noqa: E402
 from bank_lib import PROBLEMS, CHAPTERS, SECTIONS, TYPES, LEVELS  # noqa: E402
+
+PARTIAL = "--partial" in sys.argv
+# 단계마다 원래 30문제(levelN.py) + 추가 90문제(levelN_c1213 / _c14 / _c15 / _c16)
+MODULES = [f"level{lv}{part}" for lv in (1, 2, 3, 4) for part in ("", "_c1213", "_c14", "_c15", "_c16")]
+for _name in MODULES:
+    try:
+        importlib.import_module(_name)
+    except ModuleNotFoundError as _e:
+        if not (PARTIAL and _e.name == _name):
+            raise
 
 OUT = os.path.join(HERE, "..", "assets", "problems.js")
 MOCK_OUT = os.path.join(HERE, "..", "assets", "mock-problems.js")
-EXPECTED_PER_CHAPTER = {12: 6, 13: 4, 14: 9, 15: 6, 16: 5}
+PER_LEVEL = 120
+EXPECTED_PER_CHAPTER = {12: 8, 13: 6, 14: 46, 15: 36, 16: 24}
 
 
 def fix_html(text):
@@ -33,6 +48,11 @@ def space_text(text):
     """수식 밖에서 연속 공백(문항 (a)/(b) 구분 등)을 &emsp; 로 바꿔 HTML에서도 간격이 보이게 한다."""
     parts = re.split(r"(\$\$.*?\$\$|\$.*?\$)", text, flags=re.S)
     return "".join(seg if seg.startswith("$") else re.sub(r" {2,}", "&emsp;", seg) for seg in parts)
+
+
+def bank_html(text):
+    """문제 은행 문자열: 행렬·cases 의 '&' 가 HTML 에서 깨지지 않게 &amp; 로, '<' 는 \\lt 로."""
+    return space_text(fix_html(text.replace("&", "&amp;")))
 
 
 def check_dollars(pid, field, text):
@@ -57,23 +77,27 @@ def main():
     assert len(ids) == len(set(ids)), "중복 id"
     for lv in (1, 2, 3, 4):
         items = [p for p in PROBLEMS if p["lv"] == lv]
-        assert len(items) == 30, f"{lv}단계 문제 수 {len(items)}"
+        if PARTIAL and len(items) != PER_LEVEL:
+            print(f"  (작업 중) {lv}단계 {len(items)}문제 — 개수 확인 건너뜀")
+            continue
+        assert len(items) == PER_LEVEL, f"{lv}단계 문제 수 {len(items)}"
         cnt = Counter(p["ch"] for p in items)
         assert dict(cnt) == EXPECTED_PER_CHAPTER, f"{lv}단계 단원 분배 {dict(cnt)}"
         nums = sorted(int(p["id"].split("-")[1]) for p in items)
-        assert nums == list(range(1, 31)), f"{lv}단계 번호 누락"
+        assert nums == list(range(1, PER_LEVEL + 1)), f"{lv}단계 번호 누락"
     unused = [k for k in TYPES if not any(p["type"] == k for p in PROBLEMS)]
-    assert not unused, f"문제가 없는 유형: {unused}"
+    if unused and not PARTIAL:
+        raise SystemExit(f"문제가 없는 유형: {unused}")
 
     out = []
     for p in sorted(PROBLEMS, key=lambda q: (q["lv"], int(q["id"].split("-")[1]))):
         item = {k: p[k] for k in ("id", "lv", "ch", "sec", "type", "src", "q", "hint", "ans", "sol")}
         for f in ("q", "hint", "ans"):
             check_dollars(p["id"], f, item[f])
-            item[f] = space_text(fix_html(item[f]))
+            item[f] = bank_html(item[f])
         for i, line in enumerate(item["sol"]):
             check_dollars(p["id"], f"sol[{i}]", line)
-        item["sol"] = [space_text(fix_html(line)) for line in item["sol"]]
+        item["sol"] = [bank_html(line) for line in item["sol"]]
         out.append(item)
 
     data = {
@@ -147,18 +171,42 @@ def build_mock():
     ids = [q["id"] for q in exam + extra]
     assert len(ids) == len(set(ids)), "예상 모의고사 id 중복"
     assert len(exam) == 10, f"예상 문제 수 {len(exam)}"
+
+    # 실전 모의고사 1–5회
+    set_results = mock_sets.check_all()
+    bad_sets = [r for r in set_results if not r[1]]
+    if bad_sets:
+        for name, _, err in bad_sets:
+            print("FAIL mock set", name, err)
+        raise SystemExit(f"실전 모의고사 {len(bad_sets)}문항 정답 확인 실패")
+    sets = []
+    for S in mock_sets.SETS:
+        probs = []
+        for q in S["problems"]:
+            item = conv(q)
+            for key in q["types"]:
+                assert key in TYPES, f"{S['id']}-{q['id']}: 모르는 유형 {key}"
+            item["types"] = [[key, TYPES[key]] for key in q["types"]]
+            probs.append(item)
+        pids = [q["id"] for q in probs]
+        assert pids == [f"q{i}" for i in range(1, 11)], f"{S['id']} 문항 번호 {pids}"
+        sets.append({"id": S["id"], "no": S["no"], "title": S["title"], "focus": S["focus"],
+                     "lead": S["lead"], "problems": probs})
+
     data = {
         "exam": exam,
         "extra": extra,
         "map": [{"no": no, "what": mock_html("map", no, what), "sec": sec, "mine": mine, "here": here, "href": href}
                 for no, what, sec, mine, here, href in mock.MAP_MID],
+        "sets": sets,
     }
     assert all(row["href"] in ids for row in data["map"]), "비교표 링크가 없는 문항을 가리킴"
-    js = ("/* 자동 생성 파일 — tools/mock.py 를 고친 뒤 tools/build.py 로 다시 만드세요. */\n"
+    js = ("/* 자동 생성 파일 — tools/mock.py · tools/mock_sets.py 를 고친 뒤 tools/build.py 로 다시 만드세요. */\n"
           "window.CM_MOCK = " + json.dumps(data, ensure_ascii=False, indent=1) + ";\n")
     with open(MOCK_OUT, "w", encoding="utf-8") as fh:
         fh.write(js)
-    print(f"예상 모의고사 검산 {len(results)}개 모두 통과 · {len(exam)}+{len(extra)}문항 · {os.path.relpath(MOCK_OUT)} 작성")
+    print(f"예상 모의고사 검산 {len(results)}개 모두 통과 · {len(exam)}+{len(extra)}문항")
+    print(f"실전 모의고사 {len(sets)}회 · {sum(len(S['problems']) for S in sets)}문항 검산 통과 · {os.path.relpath(MOCK_OUT)} 작성")
 
 
 if __name__ == "__main__":
