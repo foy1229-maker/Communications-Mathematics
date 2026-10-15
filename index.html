@@ -3,14 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="assets/session.js"></script>
   <title>기초통신수학 II · 중간고사 문제 은행</title>
   <meta name="description" content="고려대학교 차세대통신학과 기초통신수학 II(미적분학) 중간고사 대비 — Ch.12~16.4 개념 정리, 1~4단계 문제 은행 480문제, 모의고사 6회분">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16.png">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
-  <link rel="stylesheet" href="assets/user-menu.css">
   <style>
 :root {
   --abyss: #05080b;
@@ -214,7 +212,7 @@ body::before {
 
 .slogan { margin: clamp(26px, 4.5vh, 44px) 0 0; font-size: 14px; color: var(--body); text-align: center; text-shadow: 0 1px 10px rgba(0, 0, 0, .85); line-height: 1.6; }
 .slogan b { color: #e9c983; font-weight: 700; }
-.foot { margin: 10px 0 0; max-width: 640px; font-size: 12px; line-height: 1.6; color: var(--muted); text-align: center; text-shadow: 0 1px 8px rgba(0, 0, 0, .85); }
+.foot { margin: 10px 0 0; max-width: 640px; font-size: 12px; line-height: 1.6; color: var(--muted); text-align: center; text-wrap: balance; text-shadow: 0 1px 8px rgba(0, 0, 0, .85); }
 
 /* 노트북 화면: 다섯 장이 한 줄에 들어가지 않으면 3 + 2 */
 @media (max-width: 1239px) and (min-width: 761px) {
@@ -283,8 +281,6 @@ body::before {
       <path id="cm-ticks" d="M111.00 60.00L118.00 60.00M109.26 73.20L114.57 74.62M104.17 85.50L110.23 89.00M96.06 96.06L99.95 99.95M85.50 104.17L89.00 110.23M73.20 109.26L74.62 114.57M60.00 111.00L60.00 118.00M46.80 109.26L45.38 114.57M34.50 104.17L31.00 110.23M23.94 96.06L20.05 99.95M15.83 85.50L9.77 89.00M10.74 73.20L5.43 74.62M9.00 60.00L2.00 60.00M10.74 46.80L5.43 45.38M15.83 34.50L9.77 31.00M23.94 23.94L20.05 20.05M34.50 15.83L31.00 9.77M46.80 10.74L45.38 5.43M60.00 9.00L60.00 2.00M73.20 10.74L74.62 5.43M85.50 15.83L89.00 9.77M96.06 23.94L99.95 20.05M104.17 34.50L110.23 31.00M109.26 46.80L114.57 45.38"/>
     </defs>
   </svg>
-
-  <div class="user-corner" data-user-menu></div>
 
   <header class="masthead">
     <div class="dept">
@@ -422,13 +418,12 @@ body::before {
   </div>
 
   <p class="slogan"><b>시험 범위 Ch.12 – 16.4:</b> 개념 한 장, 단계별 480문제와 모의고사 6회분, 계산기 없이 정확한 값으로</p>
-  <p class="foot">수업 자료의 강의 예제·복습문제·과제 유형을 바탕으로 새로 만든 개인 학습용 문제예요. 계정과 풀이 기록은 이 브라우저에만 저장돼요.</p>
+  <p class="foot">수업 자료의 강의 예제·복습문제·과제 유형을 바탕으로 새로 만든 개인 학습용 문제예요. 풀이 기록은 이 브라우저에만 저장돼요.</p>
 
+  <script src="assets/common.js"></script>
   <script>
   (function () {
-    var progress = {};
-    var key = window.CM_SESSION ? window.CM_SESSION.progressKey() : 'cm2.progress.v1';   // 계정마다 따로
-    try { progress = JSON.parse(localStorage.getItem(key)) || {}; } catch (e) { progress = {}; }
+    var progress = window.CM ? window.CM.load() : {};
     var els = document.querySelectorAll('.prog[data-level]');
     for (var i = 0; i < els.length; i++) {
       var lv = els[i].getAttribute('data-level');
