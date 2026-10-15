@@ -1,5 +1,7 @@
 """모든 문제의 정답을 sympy로 다시 계산해 확인한 뒤 assets/problems.js 와 assets/mock-problems.js 를 만든다.
 
+모의고사 데이터: tools/mock.py (예상 모의고사) + tools/mock_sets.py (실전 모의고사 1–5회).
+
 사용법 (저장소 루트에서):
     pip install sympy mpmath
     python3 tools/build.py            # 전체 검산 + 생성 (단계당 120문제 확인)
@@ -17,6 +19,7 @@ sys.path.insert(0, HERE)
 
 import bank_lib  # noqa: E402
 import mock  # noqa: E402
+import mock_sets  # noqa: E402
 from bank_lib import PROBLEMS, CHAPTERS, SECTIONS, TYPES, LEVELS  # noqa: E402
 
 PARTIAL = "--partial" in sys.argv
@@ -168,18 +171,42 @@ def build_mock():
     ids = [q["id"] for q in exam + extra]
     assert len(ids) == len(set(ids)), "예상 모의고사 id 중복"
     assert len(exam) == 10, f"예상 문제 수 {len(exam)}"
+
+    # 실전 모의고사 1–5회
+    set_results = mock_sets.check_all()
+    bad_sets = [r for r in set_results if not r[1]]
+    if bad_sets:
+        for name, _, err in bad_sets:
+            print("FAIL mock set", name, err)
+        raise SystemExit(f"실전 모의고사 {len(bad_sets)}문항 정답 확인 실패")
+    sets = []
+    for S in mock_sets.SETS:
+        probs = []
+        for q in S["problems"]:
+            item = conv(q)
+            for key in q["types"]:
+                assert key in TYPES, f"{S['id']}-{q['id']}: 모르는 유형 {key}"
+            item["types"] = [[key, TYPES[key]] for key in q["types"]]
+            probs.append(item)
+        pids = [q["id"] for q in probs]
+        assert pids == [f"q{i}" for i in range(1, 11)], f"{S['id']} 문항 번호 {pids}"
+        sets.append({"id": S["id"], "no": S["no"], "title": S["title"], "focus": S["focus"],
+                     "lead": S["lead"], "problems": probs})
+
     data = {
         "exam": exam,
         "extra": extra,
         "map": [{"no": no, "what": mock_html("map", no, what), "sec": sec, "mine": mine, "here": here, "href": href}
                 for no, what, sec, mine, here, href in mock.MAP_MID],
+        "sets": sets,
     }
     assert all(row["href"] in ids for row in data["map"]), "비교표 링크가 없는 문항을 가리킴"
-    js = ("/* 자동 생성 파일 — tools/mock.py 를 고친 뒤 tools/build.py 로 다시 만드세요. */\n"
+    js = ("/* 자동 생성 파일 — tools/mock.py · tools/mock_sets.py 를 고친 뒤 tools/build.py 로 다시 만드세요. */\n"
           "window.CM_MOCK = " + json.dumps(data, ensure_ascii=False, indent=1) + ";\n")
     with open(MOCK_OUT, "w", encoding="utf-8") as fh:
         fh.write(js)
-    print(f"예상 모의고사 검산 {len(results)}개 모두 통과 · {len(exam)}+{len(extra)}문항 · {os.path.relpath(MOCK_OUT)} 작성")
+    print(f"예상 모의고사 검산 {len(results)}개 모두 통과 · {len(exam)}+{len(extra)}문항")
+    print(f"실전 모의고사 {len(sets)}회 · {sum(len(S['problems']) for S in sets)}문항 검산 통과 · {os.path.relpath(MOCK_OUT)} 작성")
 
 
 if __name__ == "__main__":

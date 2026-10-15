@@ -446,7 +446,7 @@ def _c():
     assert sorted((s_[x], s_[y]) for s_ in sols) == [(-2, -2), (0, 0), (2, 2)]
     D = diff(f, x, 2)*diff(f, y, 2) - diff(f, x, y)**2
     assert D.subs({x: 0, y: 0}) == -256 and D.subs({x: 2, y: 2}) == 2048 and f.subs({x: 2, y: 2}) == -32
-P(id="1-64", ch=14, sec="14.7", type="14-crit", src="강의 14.7 ($x^4+y^4-4xy$ 예제) 유형",
+P(id="1-64", ch=14, sec="14.7", type="14-crit", src="강의 14.7 (x⁴+y⁴−4xy 예제) 유형",
   q=r"$f(x,y)=x^4+y^4-16xy$의 임계점을 모두 구하고 분류하라.",
   hint=r"$f_x=0$에서 $y=\tfrac{x^3}{4}$을 $f_y=0$에 대입해요.",
   ans=r"$(0,0)$ 안장점,  $(2,2)$와 $(-2,-2)$에서 극솟값 $-32$",
