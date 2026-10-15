@@ -12,9 +12,15 @@
       var box = types[i].querySelector('.practice');
       if (!box) continue;
       if (!list.length) { box.remove(); continue; }
-      box.innerHTML = '<span>연습</span>' + list.map(function (p) {
-        var done = progress[p.id] === 'ok';
-        return '<a href="' + CM.bankUrl(p) + '"' + (done ? ' class="done" title="맞은 문제"' : '') + '>' + p.id + '</a>';
+      // 단계별로 묶어서: "1단계 3 · 2단계 2/4 …" → bank.html?level=N&type=유형 (맞은 수/문제 수)
+      box.innerHTML = '<span>연습 ' + list.length + '문제</span>' + [1, 2, 3, 4].map(function (lv) {
+        var items = list.filter(function (p) { return p.lv === lv; });
+        if (!items.length) return '';
+        var done = items.filter(function (p) { return progress[p.id] === 'ok'; }).length;
+        return '<a href="bank.html?level=' + lv + '&amp;type=' + encodeURIComponent(key) + '"' +
+          (done === items.length ? ' class="done"' : '') +
+          ' title="' + lv + '단계에서 이 유형 ' + items.length + '문제만 보기' + (done ? ' (맞음 ' + done + ')' : '') + '">' +
+          lv + '단계 ' + (done ? done + '/' : '') + items.length + '</a>';
       }).join('');
     }
     var counts = { types: Object.keys(D.types).length, problems: D.problems.length };

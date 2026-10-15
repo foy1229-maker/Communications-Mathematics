@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="assets/session.js"></script>
   <title>문제 은행 · 기초통신수학 II</title>
-  <meta name="description" content="기초통신수학 II 중간고사 대비 문제 은행 — 1~4단계, 단계당 30문제, 힌트·정답·풀이 포함">
+  <meta name="description" content="기초통신수학 II 중간고사 대비 문제 은행 — 1~4단계, 단계당 120문제(총 480문제), 힌트·정답·풀이 포함">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16.png">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
@@ -52,6 +52,8 @@
   <div class="filterbar">
     <div class="wrap">
       <div class="fgroup" id="f-ch" role="group" aria-label="단원으로 거르기"></div>
+      <span class="fsep" id="f-sec-sep" aria-hidden="true" hidden></span>
+      <div class="fgroup" id="f-sec" role="group" aria-label="소단원으로 거르기" hidden></div>
       <span class="fsep" aria-hidden="true"></span>
       <div class="fgroup" role="group" aria-label="풀이 상태로 거르기">
         <button class="chip" type="button" data-status="all" aria-pressed="true">전체</button>
@@ -61,18 +63,19 @@
       </div>
       <div class="progress" aria-live="polite">
         <span class="bar" aria-hidden="true"><i class="ok" id="bar-ok"></i><i class="retry" id="bar-retry"></i></span>
-        <span>맞음 <b id="p-ok">0</b> · 다시 <b id="p-retry">0</b> / 30</span>
+        <span>맞음 <b id="p-ok">0</b> · 다시 <b id="p-retry">0</b> / <span class="p-total">120</span></span>
       </div>
     </div>
   </div>
 
   <div class="wrap toolrow">
-    <p class="mprog" aria-hidden="true">맞음 <b id="pm-ok">0</b> · 다시 <b id="pm-retry">0</b> / 30</p>
-    <p class="toolnote">풀어 본 문제는 <b>맞았어요</b> / <b>다시 풀기</b>로 표시해 두면 위의 필터로 다시 모아 볼 수 있어요.</p>
+    <p class="mprog" aria-hidden="true">맞음 <b id="pm-ok">0</b> · 다시 <b id="pm-retry">0</b> / <span class="p-total">120</span></p>
+    <p class="toolnote">단원 칩을 누르면 소단원(14.2, 15.3 …)별로 좁혀 볼 수 있어요. 풀어 본 문제는 <b>맞았어요</b> / <b>다시 풀기</b>로 표시해 두면 필터로 다시 모아 볼 수 있어요.</p>
     <div class="tools">
       <button class="tool" type="button" id="expand-all" aria-pressed="false">정답·풀이 모두 펼치기</button>
       <button class="tool" type="button" id="reset">기록 초기화</button>
     </div>
+    <div class="typepill" id="type-pill" hidden></div>
   </div>
 
   <main class="wrap" id="bank">
