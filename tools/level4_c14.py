@@ -1,7 +1,7 @@
-"""4단계 · 심화 추가분 — Ch.14 편도함수: 4-35 ~ 4-71"""
+"""4단계 · 심화 추가분 — Ch.14 편도함수: 4-35 ~ 4-71, 미분가능성의 정의 4-121 ~ 4-123"""
 from bank_lib import *
 import mpmath as mp
-from sympy import lambdify
+from sympy import lambdify, Abs
 
 
 def taylor2(x0, y0, val, fx, fy, fxx, fxy, fyy):
@@ -883,4 +883,71 @@ P(id="4-71", ch=14, sec="14.8", type="14-lagrange", src="2022 중간 블럭1 6�
        r"$xy=x+y=s$: $x^2+y^2=s^2-2s=2$ → $s=1\pm\sqrt3$. 실근 조건 $s^2-4s\ge0$ → $s=1-\sqrt3$만 가능",
        r"$f=s^3-3ps+3p=s^3-3s^2+3s=(s-1)^3+1=(-\sqrt3)^3+1=1-3\sqrt3\approx-4.20$",
        r"후보 $5,\ 1,\ 1-3\sqrt3$ 비교 → 최댓값 $5$, 최솟값 $1-3\sqrt3$"],
+  check=_c)
+
+
+# ───────── 14.4 미분가능성의 정의 (추가) ─────────
+def _c():
+    import random
+    f = x*y*(x + y)/(x**2 + y**2)
+    hh = symbols('hh', nonzero=True, real=True)
+    assert f.subs({x: hh, y: 0}) == 0 and f.subs({x: 0, y: hh}) == 0
+    assert simplify(f.subs({x: hh, y: hh}) - hh) == 0          # Δy=Δx 이면 Δz=Δx → ε1+ε2=1
+    tt = symbols('tt', positive=True)
+    assert simplify(f.subs({x: tt/sqrt(2), y: tt/sqrt(2)})/tt - 1/sqrt(2)) == 0
+    fn = lambdify((x, y), f)
+    rnd = random.Random(3)
+    for _ in range(400):
+        X, Y = rnd.uniform(-1, 1), rnd.uniform(-1, 1)
+        assert abs(fn(X, Y)) <= abs(X + Y)/2 + 1e-12        # 연속: |f| ≤ |x+y|/2
+P(id="4-121", ch=14, sec="14.4", type="14-differentiable", src="수업 자료 밖 · 교재 14.4 정의 7 반례",
+  q=r"$f(x,y)=\dfrac{xy(x+y)}{x^2+y^2}\ \big((x,y)\ne(0,0)\big)$, $f(0,0)=0$ 일 때<br>(a) $f$ 가 원점에서 연속임을 보여라.  (b) $f_x(0,0),\ f_y(0,0)$ 을 구하라.<br>(c) $f$ 가 원점에서 미분가능하지 않음을 정의를 이용해 보여라.<br>(d) $\mathbf u=\big\langle\tfrac1{\sqrt2},\tfrac1{\sqrt2}\big\rangle$ 방향의 방향도함수 $D_{\mathbf u}f(0,0)$ 을 정의로 구하고 $\nabla f(0,0)\cdot\mathbf u$ 와 비교하라.",
+  hint=r"(a) $|xy|\le\tfrac12(x^2+y^2)$. (c) 미분가능하다고 가정하고 $\Delta y=\Delta x$ 를 넣어 모순을 찾아요. (d) $D_{\mathbf u}f(0,0)=\displaystyle\lim_{t\to0}\frac{f(t/\sqrt2,\ t/\sqrt2)-f(0,0)}{t}$",
+  ans=r"(a) $|f|\le\tfrac12|x+y|\to0$  (b) $0,\ 0$  (c) $\Delta y=\Delta x$ 이면 $\varepsilon_1+\varepsilon_2=1$ → 모순  (d) $D_{\mathbf u}f(0,0)=\dfrac1{\sqrt2}\ne0=\nabla f(0,0)\cdot\mathbf u$",
+  sol=[r"(a) $|xy|\le\tfrac12(x^2+y^2)$ 이므로 $|f(x,y)|\le\tfrac12|x+y|\to0=f(0,0)$ → 원점에서 연속",
+       r"(b) $f(h,0)=0,\ f(0,h)=0$ → $f_x(0,0)=\displaystyle\lim_{h\to0}\frac{0-0}{h}=0$, 같은 방법으로 $f_y(0,0)=0$",
+       r"(c) 미분가능하다면 (b)에 의해 $\Delta z=f(\Delta x,\Delta y)=\varepsilon_1\Delta x+\varepsilon_2\Delta y$ 이고 $\varepsilon_1,\varepsilon_2\to0$ 이어야 해요. $\Delta y=\Delta x\ne0$ 이면 $f(\Delta x,\Delta x)=\dfrac{(\Delta x)^2\cdot2\Delta x}{2(\Delta x)^2}=\Delta x$ 이므로 $\Delta x=(\varepsilon_1+\varepsilon_2)\Delta x$, 즉 $\varepsilon_1+\varepsilon_2=1$",
+       r"$\Delta x\to0$ 이면 $(\Delta x,\Delta y)\to(0,0)$ 이라 $\varepsilon_1+\varepsilon_2\to0$ 이어야 하는데 늘 $1$ → 모순. 원점에서 <b>미분가능하지 않아요</b>.",
+       r"(d) $f\big(\tfrac{t}{\sqrt2},\tfrac{t}{\sqrt2}\big)=\dfrac{\frac{t^2}{2}\cdot\sqrt2\,t}{t^2}=\dfrac{t}{\sqrt2}$ → $D_{\mathbf u}f(0,0)=\dfrac1{\sqrt2}$. 그런데 $\nabla f(0,0)\cdot\mathbf u=0$ — 공식 $D_{\mathbf u}f=\nabla f\cdot\mathbf u$ 는 미분가능할 때만 쓸 수 있어요."],
+  check=_c)
+
+
+def _c():
+    import random
+    hp = symbols('hp', positive=True)
+    f, g = sqrt(Abs(x*y)), Abs(x*y)
+    for F in (f, g):
+        assert F.subs({x: hp, y: 0}) == 0 and F.subs({x: 0, y: hp}) == 0
+    assert simplify(f.subs({x: hp, y: hp})/hp) == 1 and simplify(f.subs({x: -hp, y: -hp})/(-hp)) == -1
+    rnd = random.Random(5)
+    for _ in range(400):                                      # (b) ε1 = sgn(Δx)|Δy| 이면 ε1Δx = |ΔxΔy|, |ε1| ≤ |Δy|
+        X, Y = rnd.uniform(-1, 1), rnd.uniform(-1, 1)
+        e1 = (1 if X > 0 else -1)*abs(Y)
+        assert abs(e1*X - abs(X*Y)) < 1e-14 and abs(e1) <= abs(Y)
+P(id="4-122", ch=14, sec="14.4", type="14-differentiable", src="수업 자료 밖 · 교재 14.4 정의 7 심화",
+  q=r"다음 두 함수가 원점에서 미분가능한지 정의를 이용해 판정하라.<br>(a) $f(x,y)=\sqrt{|xy|}$  (b) $g(x,y)=|xy|$",
+  hint=r"두 함수 모두 $x$축·$y$축 위에서 $0$ 이라 편도함수는 모두 $0$ 이에요. (a)는 $\Delta y=\Delta x$ 를 넣어 보고, (b)는 $|\Delta x\Delta y|=\Big(\dfrac{|\Delta x|}{\Delta x}|\Delta y|\Big)\Delta x$ 로 써 보세요.",
+  ans=r"(a) 미분가능하지 않음 ($\Delta y=\Delta x$ 이면 $\varepsilon_1+\varepsilon_2=\pm1$)  (b) 미분가능 ($\varepsilon_1=\pm|\Delta y|,\ \varepsilon_2=0$)",
+  sol=[r"두 함수 모두 축 위에서 $0$ 이므로 $f_x(0,0)=f_y(0,0)=0$, $\ g_x(0,0)=g_y(0,0)=0$ → 미분가능하다면 $\Delta z=\varepsilon_1\Delta x+\varepsilon_2\Delta y$, $\ \varepsilon_1,\varepsilon_2\to0$",
+       r"(a) $\Delta y=\Delta x\ne0$ 이면 $\Delta z=\sqrt{(\Delta x)^2}=|\Delta x|=(\varepsilon_1+\varepsilon_2)\Delta x$ → $\varepsilon_1+\varepsilon_2=\dfrac{|\Delta x|}{\Delta x}=\pm1$ 이라 $0$ 으로 갈 수 없어요 → <b>미분가능하지 않음</b> (연속이고 편도함수도 있지만 미분불가능한 예)",
+       r"(b) $\Delta x\ne0$ 이면 $\varepsilon_1=\dfrac{|\Delta x|}{\Delta x}\,|\Delta y|$, $\ \Delta x=0$ 이면 $\varepsilon_1=0$, 그리고 $\varepsilon_2=0$ 으로 두면 $\varepsilon_1\Delta x+\varepsilon_2\Delta y=|\Delta x||\Delta y|=\Delta z$",
+       r"$|\varepsilon_1|\le|\Delta y|\to0$ 이므로 정의를 만족 → $g$ 는 원점에서 <b>미분가능</b> (접평면 $z=0$). 절댓값이 있어도 미분가능할 수 있어요."],
+  check=_c)
+
+
+def _c():
+    hh = symbols('hh', real=True)
+    ft = 4*(x - 1) - (y - 2) + (x - 1)**2*(y - 2) + 3*(y - 2)**2   # f_x(1,2)=4, f_y(1,2)=-1 인 함수로 확인
+    assert diff(ft, x).subs({x: 1, y: 2}) == 4 and diff(ft, y).subs({x: 1, y: 2}) == -1
+    F0 = ft.subs({x: 1, y: 2})
+    assert limit((ft.subs({x: 1 + 3*hh, y: 2 + 4*hh}) - F0)/hh, hh, 0) == 8
+    assert limit((ft.subs({x: 1 + hh**2, y: 2 - hh}) - F0)/hh, hh, 0) == 1
+    assert limit((ft.subs({x: 1 + R(3, 5)*hh, y: 2 + R(4, 5)*hh}) - F0)/hh, hh, 0) == R(8, 5)
+P(id="4-123", ch=14, sec="14.4", type="14-differentiable", src="수업 자료 밖 · 교재 14.5·14.6 증명 방식 (정의 7 이용)",
+  q=r"$f$ 는 점 $(1,2)$ 에서 미분가능하고 $f_x(1,2)=4,\ f_y(1,2)=-1$ 이다. 미분가능성의 정의 $\Delta z=f_x\Delta x+f_y\Delta y+\varepsilon_1\Delta x+\varepsilon_2\Delta y$ 를 이용하여 다음을 구하라.<br>(a) $\displaystyle\lim_{h\to0}\frac{f(1+3h,\ 2+4h)-f(1,2)}{h}$  (b) $\displaystyle\lim_{h\to0}\frac{f(1+h^2,\ 2-h)-f(1,2)}{h}$<br>(c) (a)를 이용해 $\mathbf u=\big\langle\tfrac35,\tfrac45\big\rangle$ 방향의 방향도함수 $D_{\mathbf u}f(1,2)$",
+  hint=r"$\Delta x,\ \Delta y$ 를 $h$ 로 나타내 정의에 넣고 $h$ 로 나누세요. $h\to0$ 이면 $(\Delta x,\Delta y)\to(0,0)$ 이라 $\varepsilon_1,\varepsilon_2\to0$ 이에요.",
+  ans=r"(a) $8$  (b) $1$  (c) $\dfrac85$",
+  sol=[r"(a) $\Delta x=3h,\ \Delta y=4h$ 이면 $\Delta z=4(3h)+(-1)(4h)+\varepsilon_1(3h)+\varepsilon_2(4h)$ 이므로 $$\frac{\Delta z}{h}=8+3\varepsilon_1+4\varepsilon_2\to8$$",
+       r"(b) $\Delta x=h^2,\ \Delta y=-h$ 이면 $\Delta z=4h^2+h+\varepsilon_1h^2-\varepsilon_2h$ 이므로 $$\frac{\Delta z}{h}=4h+1+\varepsilon_1h-\varepsilon_2\to1$$ 곡선을 따라가도 정의만 있으면 계산돼요.",
+       r"(c) $D_{\mathbf u}f(1,2)=\displaystyle\lim_{t\to0}\frac{f(1+\frac35t,\ 2+\frac45t)-f(1,2)}{t}$ 에서 $t=5h$ 로 두면 (a) 극한의 $\dfrac15$ → $\dfrac85$ (확인: $\nabla f\cdot\mathbf u=\dfrac{4\cdot3-1\cdot4}{5}=\dfrac85$)"],
   check=_c)

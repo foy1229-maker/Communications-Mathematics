@@ -118,6 +118,7 @@ h3.sub::after { content: ""; flex: 1 1 auto; height: 1px; background: linear-gra
 .type header { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
 .type h4 { margin: 0; font-size: 16px; font-weight: 700; }
 .sec-tag { flex: none; font-size: 12px; font-weight: 700; color: var(--gold); font-variant-numeric: tabular-nums; }
+.out-tag { display: inline-block; margin-left: 6px; padding: 1px 7px 2px; border-radius: 4px; font-size: 11.5px; font-weight: 700; color: var(--amber); vertical-align: 2px; box-shadow: inset 0 0 0 1px rgba(244, 185, 66, .45); white-space: nowrap; }
 .type ol { margin: 10px 0 0; padding-left: 22px; font-size: 14.5px; color: var(--body); overflow-x: auto; overflow-y: hidden; }
 .type ol li { margin: 4px 0; padding-left: 2px; }
 .type ol li::marker { color: var(--gold); font-weight: 700; }

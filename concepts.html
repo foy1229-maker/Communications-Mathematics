@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>개념 정리 · 기초통신수학 II</title>
-  <meta name="description" content="기초통신수학 II 중간고사 범위 Ch.12~16.4 핵심 공식과 출제 유형 55가지 정리 — 유형별 풀이 순서와 연습 문제 연결">
+  <meta name="description" content="기초통신수학 II 중간고사 범위 Ch.12~16.4 핵심 공식과 출제 유형 57가지 정리 — 유형별 풀이 순서와 연습 문제 연결">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16.png">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
@@ -35,8 +35,8 @@
     <p class="lead">단원별 핵심 공식과, 강의 예제·복습문제·과제에서 뽑은 출제 유형을 강의 순서대로 정리했어요. 유형 아래의 문제 번호를 누르면 문제 은행의 그 문제로 바로 이동해요.</p>
     <div class="facts">
       <span><b>8</b>개 강의 단위</span>
-      <span><b data-count="types">55</b>개 출제 유형</span>
-      <span><b data-count="problems">480</b>문제와 연결</span>
+      <span><b data-count="types">57</b>개 출제 유형</span>
+      <span><b data-count="problems">492</b>문제와 연결</span>
     </div>
   </section>
 
@@ -521,6 +521,11 @@
           <p>최대 오차: $|dx|,|dy|$에 측정 오차의 최댓값</p>
         </div>
         <div class="fcard">
+          <h4>미분가능성의 정의 (정의 7)</h4>
+          <p>$$\Delta z=f_x(a,b)\Delta x+f_y(a,b)\Delta y+\varepsilon_1\Delta x+\varepsilon_2\Delta y,\qquad \varepsilon_1,\varepsilon_2\to0$$</p>
+          <p>일변수: $\Delta y=f'(a)\Delta x+\varepsilon\Delta x$, $\ \varepsilon=\dfrac{\Delta y}{\Delta x}-f'(a)\to0$.  편도함수 연속 ⇒ 미분가능 (정리 8) ⇒ 연속</p>
+        </div>
+        <div class="fcard">
           <h4>연쇄법칙</h4>
           <p>$$\frac{dz}{dt}=\frac{\partial z}{\partial x}\frac{dx}{dt}+\frac{\partial z}{\partial y}\frac{dy}{dt},\qquad \frac{\partial z}{\partial s}=\frac{\partial z}{\partial x}\frac{\partial x}{\partial s}+\frac{\partial z}{\partial y}\frac{\partial y}{\partial s}$$</p>
           <p>나무 그림: 경로마다 곱하고 모두 더하기</p>
@@ -558,6 +563,16 @@
             <li>$\Delta z$는 두 함숫값의 차 — 비교하면 $dz$는 1차 근사</li>
           </ol>
           <p class="from">근거: 강의 14.4 ex5 · 과제 14.4 #33 · #39</p>
+          <p class="practice"></p>
+        </article>
+        <article class="type" id="t-14-differentiable" data-type="14-differentiable">
+          <header><h4>미분가능성의 정의 (ε₁·ε₂) <span class="out-tag">수업 자료 밖</span></h4><span class="sec-tag">14.4</span></header>
+          <ol>
+            <li>$f_x(a,b),\ f_y(a,b)$ 부터 (조각함수는 정의로)</li>
+            <li>$\Delta z-f_x\Delta x-f_y\Delta y$ 를 $\varepsilon_1\Delta x+\varepsilon_2\Delta y$ 꼴로 묶고, $\varepsilon_1,\varepsilon_2\to0$ 은 이변수 극한으로 확인 (다항식이면 대입, 분수면 조임정리)</li>
+            <li>미분불가능: 미분가능하다고 가정한 뒤 $\Delta y=\Delta x$ 같은 경로를 넣어 $\varepsilon_1+\varepsilon_2$ 가 $0$ 으로 갈 수 없음을 보이기</li>
+          </ol>
+          <p class="from">근거: 강의 자료에는 정의 7과 일변수 증분식만 있고 예제·과제는 없어요. 교재 14.4 정의 7 · 수업 중 설명(시험 예고) · 모의고사 A세트 3번 · B세트 1번</p>
           <p class="practice"></p>
         </article>
         <article class="type" id="t-14-chain" data-type="14-chain">
@@ -615,6 +630,7 @@
           <li>방향벡터를 정규화하지 않고 내적하는 실수.</li>
           <li>연쇄법칙에서 편도함수에 $t$ 값을, 도함수에 $(x,y)$ 값을 넣는 혼동.</li>
           <li>$z=f(x,y)$의 접평면을 등위곡면 공식으로 쓰면 $F=f(x,y)-z$로 두어야 해요.</li>
+          <li>편도함수가 있어도 미분가능하지 않을 수 있어요. 미분불가능은 $\varepsilon$ 를 한 번 묶어 실패한 것으로는 보일 수 없고, 가정한 뒤 모순으로 보여야 해요.</li>
         </ul>
       </aside>
     </section>
@@ -811,7 +827,7 @@
       <div class="sec-h">
         <p class="k">15.6 – 15.8</p>
         <h2 id="h-c15b">삼중적분·원주좌표·구면좌표</h2>
-        <p>입체의 경계 곡면을 알맞은 좌표계로 바꾸면 적분 범위가 상수가 되는 순간이 있어요. 그 좌표계를 고르는 것이 핵심이에요.</p>
+        <p>입체의 경계 곡면을 알맞은 좌표계로 바꾸면 적분 범위가 상수가 되는 순간이 있어요. 그 좌표계를 고르는 것이 핵심이에요. 수업 자료에는 없지만 교재 15.9의 $u,v$ 변수변환도 끝에 함께 정리했어요.</p>
       </div>
       <h3 class="sub">핵심 공식</h3>
       <div class="fgrid">
@@ -836,6 +852,11 @@
         <div class="fcard">
           <h4>곡면 변환표</h4>
           <p>$z=\sqrt{x^2+y^2}\iff\phi=\tfrac\pi4$,  $z=\sqrt{3(x^2+y^2)}\iff\phi=\tfrac\pi6$,  $x^2+y^2+z^2=a^2\iff\rho=a$,  $x^2+y^2+z^2=2az\iff\rho=2a\cos\phi$,  $z=x^2+y^2\iff z=r^2$</p>
+        </div>
+        <div class="fcard">
+          <h4>변수변환 (야코비안) <span class="out-tag">수업 자료 밖 · 교재 15.9</span></h4>
+          <p>$$\iint_Rf(x,y)\,dA=\iint_Sf\big(x(u,v),y(u,v)\big)\Big|\frac{\partial(x,y)}{\partial(u,v)}\Big|\,du\,dv$$</p>
+          <p>$\dfrac{\partial(x,y)}{\partial(u,v)}=\begin{vmatrix}x_u&amp;x_v\\y_u&amp;y_v\end{vmatrix}=1\Big/\dfrac{\partial(u,v)}{\partial(x,y)}$. 극좌표의 $r$, 구면좌표의 $\rho^2\sin\phi$ 도 이 값이에요.</p>
         </div>
       </div>
       <h3 class="sub">출제 유형</h3>
@@ -889,6 +910,16 @@
           <p class="from">근거: 2024 중간 8번 · 2025 중간 10번 · 2022 중간 블럭1 10번 · 블럭2 8(b)</p>
           <p class="practice"></p>
         </article>
+        <article class="type" id="t-15-change" data-type="15-change">
+          <header><h4>변수변환·야코비안 <span class="out-tag">수업 자료 밖</span></h4><span class="sec-tag">15.9</span></header>
+          <ol>
+            <li>경계가 $ax+by=c$ 꼴 직선 두 쌍이면 $u,v$ 를 그 일차식으로, $xy=c$·$y=kx$ 꼴이면 $u=xy,\ v=\dfrac yx$</li>
+            <li>$\dfrac{\partial(u,v)}{\partial(x,y)}$ 의 역수가 $\dfrac{\partial(x,y)}{\partial(u,v)}$ (역변환을 안 풀어도 돼요), $dA=|\cdot|\,du\,dv$</li>
+            <li>경계마다 $u,v$ 값으로 바꿔 $S$ 를 그리고, 적분이 바로 되는 변수부터</li>
+          </ol>
+          <p class="from">근거: 강의 자료·과제에는 없어요. 교재 15.9 · 모의고사 A세트 8번 · B세트 3번</p>
+          <p class="practice"></p>
+        </article>
       </div>
       <aside class="pitfall">
         <h4>자주 하는 실수</h4>
@@ -896,6 +927,7 @@
           <li>야코비안: 원주 $r$, 구면 $\rho^2\sin\phi$.</li>
           <li>$\phi$는 $z$축에서 잰 각 — 위쪽 반구는 $0\le\phi\le\tfrac\pi2$.</li>
           <li>$x^2+y^2+z^2=2z$는 중심 $(0,0,1)$의 구 → $\rho=2\cos\phi$.</li>
+          <li>변수변환에서는 야코비안의 <b>절댓값</b>을 곱해요: $\frac{\partial(x,y)}{\partial(u,v)}=-\frac12$ 이면 $dA=\frac12\,du\,dv$.</li>
         </ul>
       </aside>
     </section>

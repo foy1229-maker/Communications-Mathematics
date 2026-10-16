@@ -1,4 +1,4 @@
-"""3단계 · 응용 추가분 — Ch.15 중적분: 3-72 ~ 3-101"""
+"""3단계 · 응용 추가분 — Ch.15 중적분: 3-72 ~ 3-101, 변수변환 3-124 ~ 3-126"""
 from bank_lib import *
 from sympy import asin, sec, csc
 import mpmath as mp
@@ -446,4 +446,62 @@ P(id="3-101", ch=15, sec="15.8", type="15-sph", src="강의 15.8 (구면좌표 �
   ans=r"$\dfrac{4\pi}{3}(e-1)$",
   sol=[r"$\displaystyle\int_0^{2\pi}\!\!\int_0^{\pi}\!\!\int_0^1e^{\rho^3}\rho^2\sin\phi\,d\rho\,d\phi\,d\theta=2\pi\cdot2\cdot\int_0^1\rho^2e^{\rho^3}d\rho$",
        r"$=4\pi\cdot\dfrac13\Big[e^{\rho^3}\Big]_0^1=\dfrac{4\pi}{3}(e-1)$"],
+  check=_c)
+
+
+# ───────── 15.9 변수변환 (추가) ─────────
+def _c():
+    J1 = Matrix([[diff(u**2 - v**2, u), diff(u**2 - v**2, v)], [diff(2*u*v, u), diff(2*u*v, v)]]).det()
+    assert expand(J1 - 4*(u**2 + v**2)) == 0
+    J2 = Matrix([[2, 1], [1, -3]]).det()
+    assert J2 == -7 and integrate(abs(J2), (u, 0, 1), (v, 0, 1)) == 7
+    assert abs(Matrix([2, 1, 0]).cross(Matrix([1, -3, 0]))[2]) == 7
+P(id="3-124", ch=15, sec="15.9", type="15-change", src="수업 자료 밖 · 교재 15.9 야코비안",
+  q=r"(a) 변환 $x=u^2-v^2,\ y=2uv$ 의 야코비안 $\dfrac{\partial(x,y)}{\partial(u,v)}$ 를 구하라.<br>(b) 변환 $x=2u+v,\ y=u-3v$ 가 정사각형 $S=[0,1]\times[0,1]$ 을 옮긴 평행사변형 $R$ 의 넓이를 $\displaystyle\iint_RdA=\iint_S\Big|\frac{\partial(x,y)}{\partial(u,v)}\Big|\,du\,dv$ 로 구하라.",
+  hint=r"$\dfrac{\partial(x,y)}{\partial(u,v)}=\begin{vmatrix}x_u&x_v\\y_u&y_v\end{vmatrix}$. 넓이에는 절댓값을 써요.",
+  ans=r"(a) $4(u^2+v^2)$  (b) $7$",
+  sol=[r"(a) $\dfrac{\partial(x,y)}{\partial(u,v)}=\begin{vmatrix}2u&-2v\\2v&2u\end{vmatrix}=4u^2+4v^2=4(u^2+v^2)$",
+       r"(b) $\dfrac{\partial(x,y)}{\partial(u,v)}=\begin{vmatrix}2&1\\1&-3\end{vmatrix}=-6-1=-7$ → 절댓값 $7$",
+       r"$\displaystyle\iint_RdA=\int_0^1\!\!\int_0^1 7\,du\,dv=7$ (확인: 두 변 벡터 $\langle2,1\rangle,\ \langle1,-3\rangle$ 로 만든 평행사변형의 넓이 $|2\cdot(-3)-1\cdot1|=7$)"],
+  check=_c)
+
+
+def _c():
+    xs, ys = (u + v)/3, (2*v - u)/3          # u=2x-y, v=x+y 의 역변환
+    assert simplify(2*xs - ys - u) == 0 and simplify(xs + ys - v) == 0
+    J = Matrix([[diff(xs, u), diff(xs, v)], [diff(ys, u), diff(ys, v)]]).det()
+    assert J == R(1, 3)
+    assert expand(((2*x - y)*(x + y)**2).subs({x: xs, y: ys}, simultaneous=True) - u*v**2) == 0
+    assert integrate(u*v**2*R(1, 3), (u, 0, 4), (v, 0, 3)) == 24
+    num = mp.quad(lambda Y: mp.quad(lambda X: (2*X - Y)*(X + Y)**2, [max(Y/2, -Y), min((Y + 4)/2, 3 - Y)]),
+                  [-mp.mpf(4)/3, 0, mp.mpf(2)/3, 2])
+    assert abs(num - 24) < 1e-9
+P(id="3-125", ch=15, sec="15.9", type="15-change", src="수업 자료 밖 · 교재 15.9 평행사변형 영역",
+  q=r"$R$ 은 네 직선 $y=2x,\ y=2x-4,\ y=-x,\ y=-x+3$ 으로 둘러싸인 평행사변형이다. 변환 $u=2x-y,\ v=x+y$ 를 이용하여 $\displaystyle\iint_R(2x-y)(x+y)^2\,dA$ 를 구하라.",
+  hint=r"$\dfrac{\partial(u,v)}{\partial(x,y)}$ 를 먼저 구하면 $\dfrac{\partial(x,y)}{\partial(u,v)}$ 는 그 역수예요. 네 직선은 $u=0,\ 4$ 와 $v=0,\ 3$ 이 돼요.",
+  ans=r"$24$",
+  sol=[r"$\dfrac{\partial(u,v)}{\partial(x,y)}=\begin{vmatrix}2&-1\\1&1\end{vmatrix}=3$ → $\dfrac{\partial(x,y)}{\partial(u,v)}=\dfrac13$, $\ dA=\dfrac13\,du\,dv$ (역변환을 풀지 않아도 돼요)",
+       r"$y=2x,\ y=2x-4$ → $u=0,\ u=4$;  $y=-x,\ y=-x+3$ → $v=0,\ v=3$ → $S=[0,4]\times[0,3]$",
+       r"$$\begin{aligned}&\iint_R(2x-y)(x+y)^2\,dA\\&=\frac13\int_0^3\!\!\int_0^4uv^2\,du\,dv\\&=\frac13\cdot\frac{4^2}{2}\cdot\frac{3^3}{3}=\frac13\cdot8\cdot9=24\end{aligned}$$"],
+  check=_c)
+
+
+def _c():
+    J = Matrix([[2*u, -2*v], [2*v, 2*u]]).det()
+    assert expand(J - 4*(u**2 + v**2)) == 0
+    assert expand((u**2 - v**2)**2 + (2*u*v)**2 - (u**2 + v**2)**2) == 0
+    assert integrate(J, (u, 0, 1), (v, 0, 1)) == R(8, 3)
+    assert integrate((u**2 + v**2)*J, (u, 0, 1), (v, 0, 1)) == R(112, 45)
+    # 원래 영역 R: 0 ≤ y ≤ 2, y²/4 - 1 ≤ x ≤ 1 - y²/4 에서 직접 수치적분
+    area = mp.quad(lambda Y: 2 - Y*Y/2, [0, 2])
+    num = mp.quad(lambda Y: mp.quad(lambda X: mp.sqrt(X*X + Y*Y), [Y*Y/4 - 1, 0, 1 - Y*Y/4]), [0, 2])
+    assert abs(area - mp.mpf(8)/3) < 1e-12 and abs(num - mp.mpf(112)/45) < 1e-9
+P(id="3-126", ch=15, sec="15.9", type="15-change", src="수업 자료 밖 · 교재 15.9 포물선 영역",
+  q=r"변환 $x=u^2-v^2,\ y=2uv$ 는 정사각형 $S=\{(u,v)\mid0\le u\le1,\ 0\le v\le1\}$ 을, $x$축과 두 포물선 $y^2=4-4x,\ y^2=4+4x$ 로 둘러싸인 영역 $R\ (y\ge0)$ 로 옮긴다.<br>(a) $R$ 의 넓이를 구하라.  (b) $\displaystyle\iint_R\sqrt{x^2+y^2}\,dA$ 를 구하라.",
+  hint=r"야코비안은 $4(u^2+v^2)$ ($S$ 위에서 $0$ 이상). $x^2+y^2=(u^2+v^2)^2$ 이에요.",
+  ans=r"(a) $\dfrac83$  (b) $\dfrac{112}{45}$",
+  sol=[r"$\dfrac{\partial(x,y)}{\partial(u,v)}=\begin{vmatrix}2u&-2v\\2v&2u\end{vmatrix}=4(u^2+v^2)\ \ge0$",
+       r"(a) $\displaystyle A=\int_0^1\!\!\int_0^14(u^2+v^2)\,du\,dv=4\Big(\frac13+\frac13\Big)=\frac83$",
+       r"(b) $x^2+y^2=(u^2-v^2)^2+4u^2v^2=(u^2+v^2)^2$ → $\sqrt{x^2+y^2}=u^2+v^2$",
+       r"$$\begin{aligned}&\iint_R\sqrt{x^2+y^2}\,dA\\&=\int_0^1\!\!\int_0^14(u^2+v^2)^2\,du\,dv\\&=4\Big(\frac15+\frac29+\frac15\Big)=\frac{112}{45}\end{aligned}$$"],
   check=_c)
