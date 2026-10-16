@@ -235,7 +235,7 @@ a.tag:hover { color: var(--ivory); box-shadow: inset 0 0 0 1px rgba(233, 201, 13
 .typepill .tp-lv b { color: var(--ac-ink); background: var(--ac-fill); }
 .typepill .tool { margin-left: auto; }
 
-/* ─────────── 예상 모의고사 (mock.html) ─────────── */
+/* ─────────── 모의고사 (mock.html) ─────────── */
 .timer { flex: none; display: flex; align-items: center; gap: 6px; }
 .timer .tl { font-size: 13px; color: var(--muted); }
 .timer b { min-width: 3.2em; font-size: 15px; font-weight: 700; color: var(--ivory); font-variant-numeric: tabular-nums; }
@@ -254,16 +254,6 @@ a.tag:hover { color: var(--ivory); box-shadow: inset 0 0 0 1px rgba(233, 201, 13
 .notype .prob-h .tag { display: none; }
 
 .cmp-lead { margin: 0; max-width: 760px; font-size: 16px; line-height: 1.75; color: #d6cebd; }
-.miss-list { list-style: none; margin: 18px 0 0; padding: 0; border-top: 1px solid rgba(239, 217, 166, .3); }
-.miss-list li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 16px; align-items: baseline; padding: 12px 2px; border-bottom: 1px solid var(--line); }
-.mi-name { font-size: 16px; font-weight: 700; color: var(--ivory); }
-.mi-sec { margin-left: 8px; font-size: 12.5px; font-weight: 700; color: var(--gold); font-variant-numeric: tabular-nums; }
-.mi-why { grid-column: 1; font-size: 14px; line-height: 1.6; color: var(--body); }
-.mi-go { grid-row: 1 / span 2; grid-column: 2; align-self: center; font-size: 13.5px; font-weight: 700; text-decoration: none; color: var(--ivory); padding: 6px 12px; border-radius: 8px; border: 1px solid var(--ac-edge); background: var(--ac-glass); white-space: nowrap; }
-.mi-go:hover { background: var(--ac-wash); }
-.cmp-notes { margin: 18px 0 0; padding-left: 20px; max-width: 820px; font-size: 15px; line-height: 1.7; color: var(--body); }
-.cmp-notes li { margin: 6px 0; }
-.cmp-notes li::marker { color: var(--gold); }
 .cmp-table { margin-top: 24px; overflow-x: auto; }
 .cmp-table table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 14px; line-height: 1.55; }
 .cmp-table caption { caption-side: top; text-align: left; padding: 0 0 10px; font-size: 15px; font-weight: 700; color: var(--ivory); }
@@ -273,7 +263,10 @@ a.tag:hover { color: var(--ivory); box-shadow: inset 0 0 0 1px rgba(233, 201, 13
 .cmp-table td.c { white-space: nowrap; }
 .cmp-table .num { font-variant-numeric: tabular-nums; }
 .cmp-table a { color: var(--teal); }
-.cmp-table .miss { color: #ff8a7a; font-weight: 700; }
+.cmp-table .muted { color: var(--muted); }
+.cmp-table table.topics { min-width: 0; max-width: 640px; }
+.cmp-table table.topics td:first-child, .cmp-table table.topics th:first-child { width: 3.5em; }
+.cmp-table + .cmp-table { margin-top: 28px; }
 
 /* 모의고사 회차 탭 · 비슷한 문제 링크 */
 .sets a small b { color: inherit; font-weight: 800; }
@@ -315,8 +308,6 @@ noscript p { padding: 20px; text-align: center; color: var(--amber); }
   .state { margin-left: 0; width: 100%; }
   .qparts li, .reveal .arow { grid-template-columns: 1.9em minmax(0, 1fr); }
   .reveal .arow.nolab { grid-template-columns: minmax(0, 1fr); }
-  .miss-list li { grid-template-columns: minmax(0, 1fr); }
-  .mi-go { grid-row: auto; grid-column: 1; justify-self: start; margin-top: 6px; }
 }
 @media (max-width: 480px) {
   /* 모의고사: 휴대폰에서는 긴 전개식이 한 화면에 들어오도록 디스플레이 수식만 조금 작게 */
