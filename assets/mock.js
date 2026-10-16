@@ -1,39 +1,38 @@
-/* 모의고사: mock.html (예상 모의고사) · mock.html?set=1…5 (실전 모의고사)
-   문제 데이터는 assets/mock-problems.js — tools/mock.py · tools/mock_sets.py 에서 생성 */
+/* 모의고사: mock.html?set=1 (A세트) · mock.html?set=2 (B세트) — 주소에 set 이 없으면 A세트
+   문제 데이터는 assets/mock-problems.js — tools/mock_sets.py 에서 tools/build.py 로 생성 */
 (function () {
   var D = window.CM_MOCK;
   var root = document.getElementById('mock');
-  if (!D || !root) return;
+  if (!D || !root || !D.sets || !D.sets.length) return;
 
-  var sets = D.sets || [];
+  var sets = D.sets;
   var setNo = parseInt(new URLSearchParams(window.location.search).get('set'), 10);
-  if (!(setNo >= 1 && setNo <= sets.length)) setNo = 0;
-  var S = setNo ? sets[setNo - 1] : null;
+  if (!(setNo >= 1 && setNo <= sets.length)) setNo = 1;
+  var S = sets[setNo - 1];
+  var all = S.problems;
 
   var progress = CM.load();
   var esc = CM.escapeHtml;
-  // 풀이 기록 키: 예상 모의고사는 기존 그대로 mock-q1 · mock-x1, 실전 n회는 mock-s{n}-q1 (문제 은행의 1-01 같은 키와 겹치지 않게)
-  function keyOf(n, id) { return n ? 'mock-s' + n + '-' + id : 'mock-' + id; }
-  function key(id) { return keyOf(setNo, id); }
-  var all = S ? S.problems : D.exam.concat(D.extra);
+  // 풀이 기록 키: mock-a-q1 … mock-a-q10, mock-b-q1 … (예전 예상·실전 모의고사 키 mock-q1 · mock-s1-q1 과 겹치지 않게)
+  function keyOf(set, id) { return 'mock-' + set.id + '-' + id; }
+  function key(id) { return keyOf(S, id); }
 
-  /* ── 회차 탭 ── */
-  function setCounts(n) {
-    var list = n ? sets[n - 1].problems : D.exam.concat(D.extra);
+  /* ── 세트 탭 ── */
+  function setCounts(set) {
     var ok = 0;
-    list.forEach(function (q) { if (progress[keyOf(n, q.id)] === 'ok') ok++; });
-    return [ok, list.length];
+    set.problems.forEach(function (q) { if (progress[keyOf(set, q.id)] === 'ok') ok++; });
+    return [ok, set.problems.length];
   }
   function renderTabs() {
     var tabs = document.querySelectorAll('#set-tabs a[data-set]');
     for (var i = 0; i < tabs.length; i++) {
       var n = parseInt(tabs[i].getAttribute('data-set'), 10);
-      if (n > sets.length) { tabs[i].hidden = true; continue; }
-      var c = setCounts(n);
+      var set = sets[n - 1];
+      if (!set) { tabs[i].hidden = true; continue; }
+      var c = setCounts(set);
       var sm = tabs[i].querySelector('small');
-      if (!sm.hasAttribute('data-label')) sm.setAttribute('data-label', sm.textContent);   // 짧은 이름(표준·2025형 …)은 HTML 그대로
-      sm.innerHTML = esc(sm.getAttribute('data-label')) + (c[0] ? ' · <b>' + c[0] + '</b>/' + c[1] : '');
-      tabs[i].title = n ? sets[n - 1].title + ' — ' + sets[n - 1].focus : '예상 모의고사 — 예상 유형 10문항 + 추가 5문항';
+      sm.innerHTML = esc(set.mins + '분') + (c[0] ? ' · <b>' + c[0] + '</b>/' + c[1] : '');
+      tabs[i].title = set.title + ' — ' + set.focus;
       tabs[i].classList.toggle('done', c[0] === c[1]);
       if (n === setNo) tabs[i].setAttribute('aria-current', 'page');
       else tabs[i].removeAttribute('aria-current');
@@ -41,22 +40,19 @@
   }
   renderTabs();
 
-  /* ── 머리말 (실전 모의고사) ── */
-  if (S) {
-    document.title = S.title + ' · 기초통신수학 II';
-    document.getElementById('mk-eyebrow').textContent = 'MOCK EXAM · SET ' + S.no;
-    document.getElementById('mk-title').textContent = S.title;
-    document.getElementById('mk-lead').textContent = S.lead;
-    document.getElementById('mk-facts').innerHTML =
-      '<span><b>10</b>문항 · 각 10점</span><span>' + esc(S.focus) + '</span><span>범위 Ch.12 – 16.4</span><span>계산기 사용 불가</span>';
-    document.getElementById('mk-nav').innerHTML =
-      '<a class="chip" href="#sec-exam">문항 1 – 10</a><a class="chip" href="#sec-plan">출제 구성</a>';
-    document.getElementById('h-exam-t').textContent = S.no + '회 문제';
-    document.getElementById('h-exam-s').textContent = '10문항 · 각 10점 · 권장 100분';
-    document.getElementById('sec-compare').hidden = true;
-    document.getElementById('sec-extra').hidden = true;
-    document.getElementById('sec-plan').hidden = false;
-  }
+  /* ── 머리말 ── */
+  document.title = S.title + ' · 기초통신수학 II';
+  document.getElementById('mk-eyebrow').textContent = 'MOCK EXAM · SET ' + S.label;
+  document.getElementById('mk-title').textContent = '중간고사 ' + S.title;
+  document.getElementById('mk-lead').textContent = S.lead;
+  document.getElementById('mk-facts').innerHTML =
+    '<span><b>10</b>문항 · 각 10점</span>' +
+    '<span>권장 <b>' + S.mins + '</b>분 (시험 75 – 90분)</span>' +
+    '<span>15개 주제 모두 포함</span>' +
+    '<span>범위 Ch.12 – 16.4</span>' +
+    '<span>계산기 사용 불가</span>';
+  document.getElementById('h-exam-t').textContent = S.label + '세트 문제';
+  document.getElementById('h-exam-s').textContent = '10문항 · 각 10점 · 권장 ' + S.mins + '분';
   var totals = document.querySelectorAll('.p-total');
   for (var tt = 0; tt < totals.length; tt++) totals[tt].textContent = all.length;
 
@@ -73,8 +69,11 @@
       return '<a href="bank.html?level=4&amp;type=' + encodeURIComponent(t[0]) + '" title="문제 은행에서 이 유형만 보기">' + esc(t[1]) + '</a>';
     }).join('') + '</p>';
   }
+  function topicNos(q) {
+    return q.topics.map(function (t) { return t[0]; }).join(' · ');
+  }
 
-  function card(q, isExam) {
+  function card(q) {
     var parts = q.parts.length
       ? '<ol class="qparts">' + q.parts.map(function (p) {
           return '<li><span class="pl">(' + p[0] + ')</span><div>' + p[1] + '</div></li>';
@@ -90,7 +89,8 @@
           '<span class="pno">' + q.no + '</span>' +
           '<span class="tag sec">' + esc(q.type) + '</span>' +
           '<span class="tag">' + esc(q.ref) + '</span>' +
-          (isExam ? '<span class="pts">10점</span>' : '') +
+          '<span class="tag">권장 ' + q.mins + '분</span>' +
+          '<span class="pts">10점</span>' +
           '<span class="state" aria-live="polite"></span>' +
         '</div>' +
         '<div class="prob-q">' + (q.stem ? '<p class="stem">' + q.stem + '</p>' : '') + parts + '</div>' +
@@ -107,23 +107,28 @@
       '</article>';
   }
 
-  if (S) {
-    document.getElementById('exam-list').innerHTML = S.problems.map(function (q) { return card(q, true); }).join('');
-    document.getElementById('plan-lead').textContent = S.lead;
-    document.getElementById('plan-cap').textContent = S.title + ' 문항별 구성';
-    document.getElementById('plan-body').innerHTML = S.problems.map(function (q) {
-      return '<tr><td class="c"><a href="#' + q.id + '">' + q.no + '번</a></td><td>' + esc(q.type) + '</td><td>' + esc(q.ref) + '</td>' +
-        '<td>' + similar(q) + '</td></tr>';
-    }).join('');
-  } else {
-    document.getElementById('exam-list').innerHTML = D.exam.map(function (q) { return card(q, true); }).join('');
-    document.getElementById('extra-list').innerHTML = D.extra.map(function (q) { return card(q, false); }).join('');
-    document.getElementById('map-body').innerHTML = D.map.map(function (m) {
-      return '<tr><td class="c">' + m.no + '</td><td>' + m.what + '</td><td class="c num">' + m.sec + '</td>' +
-        '<td class="c">' + (m.mine ? esc(m.mine) : '<span class="miss">없음</span>') + '</td>' +
-        '<td><a href="#' + m.href + '">' + esc(m.here) + '</a></td></tr>';
-    }).join('');
-  }
+  document.getElementById('exam-list').innerHTML = all.map(card).join('');
+
+  /* ── 출제 구성: 문항별 표 + 15개 주제 → 문항 ── */
+  document.getElementById('plan-lead').textContent =
+    '시험에 꼭 나올 15개 주제를 10문항에 모두 담았어요. 소문항마다 배점을 적어 두었고, 권장 시간 합은 ' + S.mins +
+    '분이에요. 단원 순서는 일부러 섞었어요.';
+  document.getElementById('plan-cap').textContent = S.title + ' 문항별 구성';
+  document.getElementById('plan-body').innerHTML = all.map(function (q) {
+    return '<tr><td class="c"><a href="#' + q.id + '">' + q.no + '번</a></td><td>' + esc(q.type) + '</td>' +
+      '<td class="c num">' + esc(topicNos(q)) + '</td><td class="c num">' + esc(q.ref) + '</td>' +
+      '<td class="c num">' + q.mins + '분</td>' +
+      '<td>' + (similar(q) || '<span class="muted">문제 은행에 없는 유형</span>') + '</td></tr>';
+  }).join('');
+  document.getElementById('topic-cap').textContent = S.title + ' — 15개 주제가 들어간 문항';
+  document.getElementById('topic-body').innerHTML = (D.topics || []).map(function (tp) {
+    var where = all.filter(function (q) {
+      return q.topics.some(function (t) { return t[0] === tp[0]; });
+    }).map(function (q) { return '<a href="#' + q.id + '">' + q.no + '번</a>'; });
+    return '<tr><td class="c num">' + tp[0] + '</td><td>' + esc(tp[1]) + '</td><td>' +
+      (where.length ? where.join(', ') : '<span class="muted">없음</span>') + '</td></tr>';
+  }).join('');
+
   CM.renderMath(root);
 
   /* ── 풀이 기록 ── */
@@ -204,7 +209,7 @@
   resetBtn.addEventListener('click', function () {
     if (!resetBtn.classList.contains('armed')) {
       resetBtn.classList.add('armed');
-      resetBtn.textContent = '한 번 더 누르면 이 회차 기록 삭제';
+      resetBtn.textContent = '한 번 더 누르면 이 세트 기록 삭제';
       armTimer = setTimeout(function () {
         resetBtn.classList.remove('armed');
         resetBtn.textContent = '기록 초기화';
@@ -243,17 +248,17 @@
     show();
   });
 
-  /* ── 아래쪽 이동 링크: 다음 회차 ── */
+  /* ── 아래쪽 이동 링크: 다음 세트 ── */
   var nextNav = document.querySelector('nav.next');
   if (nextNav) {
-    var nxt = setNo < sets.length ? setNo + 1 : 0;
+    var nxt = setNo < sets.length ? sets[setNo] : null;
     nextNav.innerHTML = '<a class="ghost" href="concepts.html">개념 정리 보기</a>' +
-      (nxt ? '<a href="mock.html?set=' + nxt + '">실전 모의고사 ' + nxt + '회 풀기</a>' : '<a href="index.html">대시보드로</a>');
+      (nxt ? '<a href="mock.html?set=' + (setNo + 1) + '">' + esc(nxt.title) + ' 풀기</a>' : '<a href="index.html">대시보드로</a>');
   }
 
-  /* ── #q3, #x2 처럼 특정 문항으로 들어온 경우 ── */
+  /* ── #q3 처럼 특정 문항으로 들어온 경우 ── */
   function focusHash() {
-    var m = /^#([qx]\d{1,2})$/.exec(window.location.hash);
+    var m = /^#(q\d{1,2})$/.exec(window.location.hash);
     if (!m) return;
     var el = document.getElementById(m[1]);
     if (!el) return;

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>기초통신수학 II · 중간고사 문제 은행</title>
-  <meta name="description" content="고려대학교 차세대통신학과 기초통신수학 II(미적분학) 중간고사 대비 — Ch.12~16.4 개념 정리, 1~4단계 문제 은행 480문제, 모의고사 6회분">
+  <meta name="description" content="고려대학교 차세대통신학과 기초통신수학 II(미적분학) 중간고사 대비 — Ch.12~16.4 개념 정리, 1~4단계 문제 은행 480문제, 모의고사 A·B 2세트">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16.png">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
@@ -163,7 +163,7 @@ body::before {
 .aug:active { transform: translateY(-6px) scale(.985); }
 .aug:focus-visible .aug-line { border-color: var(--f-line-on); }
 
-/* ── 예상 모의고사 띠: 카드 다섯 장 아래, 같은 폭. 테두리는 네 단계 색이 이어지는 그라데이션 (모든 단계가 섞인 시험) */
+/* ── 모의고사 띠: 카드 다섯 장 아래, 같은 폭. 테두리는 네 단계 색이 이어지는 그라데이션 (모든 단계가 섞인 시험) */
 .mock-row { display: flex; justify-content: center; width: 100%; margin-top: clamp(18px, 2.6vh, 28px); }
 .mock-slot { width: calc(5 * clamp(222px, 16.6vw, 248px) + 4 * clamp(16px, 1.5vw, 26px)); max-width: 100%; align-items: stretch; }
 .mock-cta { display: block; color: inherit; text-decoration: none; outline: none; filter: drop-shadow(0 14px 22px rgba(0, 0, 0, .55)); transition: transform .35s cubic-bezier(.2, .8, .2, 1), filter .35s; }
@@ -405,11 +405,11 @@ body::before {
         <span class="mc-frame"><span class="mc-face">
           <span class="mc-gems" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
           <span class="mc-text">
-            <span class="mc-title" id="mock-t">중간고사 모의고사 · 6회분</span>
-            <span class="mc-desc" id="mock-d">예상 모의고사(15문항)와 2022·2024·2025 기출 스타일의 실전 모의고사 1–5회(각 10문항). 시간을 재면서 실전처럼 풀어 보세요.</span>
+            <span class="mc-title" id="mock-t">중간고사 모의고사 · A·B 2세트</span>
+            <span class="mc-desc" id="mock-d">시험 범위 15개 주제를 10문항에 모두 담은 A·B 세트(각 10문항 · 권장 81분 · 목표 평균 70점). 시간을 재면서 실전처럼 풀어 보세요.</span>
           </span>
           <span class="mc-side">
-            <span class="mc-prog" data-mock-prog><b>0</b> / 65 맞음</span>
+            <span class="mc-prog" data-mock-prog><b>0</b> / 20 맞음</span>
             <span class="mc-go" aria-hidden="true">풀러 가기</span>
           </span>
         </span></span>
@@ -417,7 +417,7 @@ body::before {
     </div>
   </div>
 
-  <p class="slogan"><b>시험 범위 Ch.12 – 16.4:</b> 개념 한 장, 단계별 480문제와 모의고사 6회분, 계산기 없이 정확한 값으로</p>
+  <p class="slogan"><b>시험 범위 Ch.12 – 16.4:</b> 개념 한 장, 단계별 480문제와 모의고사 2세트, 계산기 없이 정확한 값으로</p>
   <p class="foot">수업 자료의 강의 예제·복습문제·과제 유형을 바탕으로 새로 만든 개인 학습용 문제예요. 풀이 기록은 이 브라우저에만 저장돼요.</p>
 
   <script src="assets/common.js"></script>
@@ -434,10 +434,10 @@ body::before {
       els[i].querySelector('.prog-txt b').textContent = ok;
       els[i].querySelector('.prog-bar i').style.width = Math.round(ok / 120 * 100) + '%';
     }
-    // 모의고사 6회분 (기록 키: 예상 mock-q1 … mock-q10 · mock-x1 … mock-x5, 실전 n회 mock-s{n}-q1 … mock-s{n}-q10)
+    // 모의고사 A·B 세트 (기록 키: mock-a-q1 … mock-a-q10, mock-b-q1 … mock-b-q10)
     var mockOk = 0;
     for (var mk in progress) {
-      if (Object.prototype.hasOwnProperty.call(progress, mk) && /^mock-((q([1-9]|10)|x[1-5])|s[1-5]-q([1-9]|10))$/.test(mk) && progress[mk] === 'ok') mockOk++;
+      if (Object.prototype.hasOwnProperty.call(progress, mk) && /^mock-[ab]-q([1-9]|10)$/.test(mk) && progress[mk] === 'ok') mockOk++;
     }
     var mockOut = document.querySelector('[data-mock-prog] b');
     if (mockOut) mockOut.textContent = mockOk;

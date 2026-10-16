@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>예상 모의고사 · 기초통신수학 II</title>
-  <meta name="description" content="기초통신수학 II 중간고사 모의고사 6회분 — 예상 모의고사(예상 유형 10문항 + 추가 5문항)와 기출 스타일 실전 모의고사 1–5회(각 10문항), 정답·풀이 포함">
+  <title>중간고사 모의고사 · 기초통신수학 II</title>
+  <meta name="description" content="기초통신수학 II 중간고사 모의고사 A·B 세트 — 세트마다 시험 범위 15개 주제를 10문항(각 10점)에 담고 권장 81분, 정답·풀이 포함">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16.png">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
@@ -30,22 +30,19 @@
   </header>
 
   <section class="hero wrap">
-    <nav class="levels sets" id="set-tabs" aria-label="모의고사 회차">
-      <a href="mock.html" data-set="0">예상<small>15문항</small></a>
-      <a href="mock.html?set=1" data-set="1">1회<small>표준</small></a>
-      <a href="mock.html?set=2" data-set="2">2회<small>2025형</small></a>
-      <a href="mock.html?set=3" data-set="3">3회<small>2024형</small></a>
-      <a href="mock.html?set=4" data-set="4">4회<small>2022형</small></a>
-      <a href="mock.html?set=5" data-set="5">5회<small>종합 심화</small></a>
+    <nav class="levels sets" id="set-tabs" aria-label="모의고사 세트">
+      <a href="mock.html?set=1" data-set="1">A세트<small>10문항</small></a>
+      <a href="mock.html?set=2" data-set="2">B세트<small>10문항</small></a>
     </nav>
     <p class="eyebrow" id="mk-eyebrow">MOCK EXAM</p>
-    <h1 id="mk-title">중간고사 예상 모의고사</h1>
-    <p class="lead" id="mk-lead">예상 유형 10개를 2025학년도 미적분학 II 시험(다른 교수님) 난이도에 맞춰 만든 10문항이에요. 뒤에는 2025 시험에 나왔지만 예상 목록에 없던 유형 5문항을 붙였어요. 시간을 재면서 종이에 풀고, 문항마다 정답과 풀이를 확인하세요.</p>
+    <h1 id="mk-title">중간고사 모의고사</h1>
+    <p class="lead" id="mk-lead">시험 범위의 15개 주제를 10문항에 모두 담은 A·B 두 세트예요. 75–90분 안에 평균 70점 정도를 목표로 난이도를 맞췄어요. 시간을 재면서 종이에 풀고, 문항마다 정답과 풀이를 확인하세요.</p>
     <div class="facts" id="mk-facts">
       <span><b>10</b>문항 · 각 10점</span>
+      <span>권장 <b>81</b>분 (시험 75 – 90분)</span>
+      <span>15개 주제 모두 포함</span>
       <span>범위 Ch.12 – 16.4</span>
       <span>계산기 사용 불가</span>
-      <span>풀이 과정을 자세히 기술</span>
     </div>
   </section>
 
@@ -59,19 +56,18 @@
       </div>
       <span class="fsep" aria-hidden="true"></span>
       <nav class="fgroup" id="mk-nav" aria-label="구역">
-        <a class="chip" href="#sec-exam">예상 10문항</a>
-        <a class="chip" href="#sec-compare">2025 비교</a>
-        <a class="chip" href="#sec-extra">추가 5문항</a>
+        <a class="chip" href="#sec-exam">문항 1 – 10</a>
+        <a class="chip" href="#sec-plan">출제 구성</a>
       </nav>
       <div class="progress" aria-live="polite">
         <span class="bar" aria-hidden="true"><i class="ok" id="bar-ok"></i><i class="retry" id="bar-retry"></i></span>
-        <span>맞음 <b id="p-ok">0</b> · 다시 <b id="p-retry">0</b> / <span class="p-total">15</span></span>
+        <span>맞음 <b id="p-ok">0</b> · 다시 <b id="p-retry">0</b> / <span class="p-total">10</span></span>
       </div>
     </div>
   </div>
 
   <div class="wrap toolrow">
-    <p class="mprog" aria-hidden="true">맞음 <b id="pm-ok">0</b> · 다시 <b id="pm-retry">0</b> / <span class="p-total">15</span></p>
+    <p class="mprog" aria-hidden="true">맞음 <b id="pm-ok">0</b> · 다시 <b id="pm-retry">0</b> / <span class="p-total">10</span></p>
     <p class="toolnote">푼 문제는 <b>맞았어요</b> / <b>다시 풀기</b>로 표시해 두면 대시보드에서도 진행 상황을 볼 수 있어요.</p>
     <div class="tools">
       <button class="tool" type="button" id="hide-type" aria-pressed="false">유형 이름 가리기</button>
@@ -84,49 +80,27 @@
     <noscript><p>문제를 보려면 JavaScript를 켜 주세요.</p></noscript>
 
     <section class="chapter" id="sec-exam" aria-labelledby="h-exam">
-      <h2 id="h-exam"><span class="n">10</span><span id="h-exam-t">예상 문제</span><small id="h-exam-s">예상 유형 1 – 10 · 각 10점</small></h2>
+      <h2 id="h-exam"><span class="n">10</span><span id="h-exam-t">문제</span><small id="h-exam-s">10문항 · 각 10점</small></h2>
       <div id="exam-list"></div>
     </section>
 
-    <section class="chapter cmp" id="sec-compare" aria-labelledby="h-compare">
-      <h2 id="h-compare"><span class="n">VS</span>2025 시험과 비교<small>예상 목록에 없던 유형</small></h2>
-      <p class="cmp-lead">2025 중간고사 10문항 중 2(a)·5·7번은 예상 목록에 없는 유형이고, 6번은 일부만 겹쳐요. 넷 다 14장이에요. 12–13장은 시험 범위인데 목록에도 2025 시험에도 없어요.</p>
-      <ol class="miss-list">
-        <li><span class="mi-name">극값과 안장점<span class="mi-sec">14.7</span></span><span class="mi-why">2025 중간 2(a). 임계점을 구하고 $D=f_{xx}f_{yy}-f_{xy}^2$ 로 판정</span><a class="mi-go" href="#x1">추가 1</a></li>
-        <li><span class="mi-name">닫힌 영역에서 최댓값·최솟값<span class="mi-sec">14.7</span></span><span class="mi-why">2025 중간 7번 (심장형 영역). 내부 임계점과 경계의 후보를 모두 비교</span><a class="mi-go" href="#x2">추가 2</a></li>
-        <li><span class="mi-name">2계 연쇄법칙<span class="mi-sec">14.5</span></span><span class="mi-why">2025 중간 5번. $z_{ss}$ 처럼 두 번 미분할 때 $f_x,\ f_y$ 도 다시 연쇄법칙</span><a class="mi-go" href="#x3">추가 3</a></li>
-        <li><span class="mi-name">음함수 미분과 선형근사<span class="mi-sec">14.4–14.6</span></span><span class="mi-why">2025 중간 6번. <span class="nw">$z_x=-F_x/F_z$,</span> 접평면으로 근삿값 구하기</span><a class="mi-go" href="#x4">추가 4</a></li>
-        <li><span class="mi-name">직선·평면과 벡터함수<span class="mi-sec">12–13장</span></span><span class="mi-why">2025 시험엔 없었지만(그 강의는 14장부터였을 수 있어요) 우리 범위는 12장부터예요</span><a class="mi-go" href="#x5">추가 5</a></li>
-      </ol>
-      <ul class="cmp-notes">
-        <li>예상 유형 7과 10은 둘 다 방향도함수·그래디언트라 실제로는 한 문항으로 합쳐질 수 있어요. 그러면 빈 자리에는 14.7 극값 문제가 들어올 가능성이 커요. 2025 중간에서는 14.7이 두 문항이었어요.</li>
-        <li>2025 중간 1번의 질량중심(15.4)은 우리 강의 자료(15.1–3, 15.6–8)에 없는 단원이라 빼도 돼요. 극좌표 적분 계산 자체는 1번 유형과 같아요.</li>
-        <li>2025 기말은 대부분 범위 밖(곡면적분·스토크스·발산정리, 15.9 변수변환, 선형대수)이지만, 1(a)·4번은 선적분의 기본정리(8번 유형), 1(b)·5번은 그린 정리(9번 유형)와 같은 방식이에요.</li>
-      </ul>
-      <div class="cmp-table">
-        <table>
-          <caption>2025 중간고사 문항별 비교</caption>
-          <thead><tr><th scope="col">문항</th><th scope="col">내용</th><th scope="col">단원</th><th scope="col">예상 목록</th><th scope="col">여기서</th></tr></thead>
-          <tbody id="map-body"></tbody>
-        </table>
-      </div>
-    </section>
-
-    <section class="chapter cmp" id="sec-plan" aria-labelledby="h-plan" hidden>
-      <h2 id="h-plan"><span class="n">≡</span>출제 구성<small>문항별 유형 · 근거 기출 · 비슷한 문제</small></h2>
+    <section class="chapter cmp" id="sec-plan" aria-labelledby="h-plan">
+      <h2 id="h-plan"><span class="n">≡</span>출제 구성<small>문항별 주제 · 단원 · 권장 시간 · 비슷한 문제</small></h2>
       <p class="cmp-lead" id="plan-lead"></p>
       <div class="cmp-table">
         <table>
           <caption id="plan-cap">문항별 구성</caption>
-          <thead><tr><th scope="col">문항</th><th scope="col">유형</th><th scope="col">근거</th><th scope="col">비슷한 문제 (4단계)</th></tr></thead>
+          <thead><tr><th scope="col">문항</th><th scope="col">내용</th><th scope="col">주제</th><th scope="col">단원</th><th scope="col">권장</th><th scope="col">비슷한 문제 (4단계)</th></tr></thead>
           <tbody id="plan-body"></tbody>
         </table>
       </div>
-    </section>
-
-    <section class="chapter" id="sec-extra" aria-labelledby="h-extra">
-      <h2 id="h-extra"><span class="n">+5</span>추가 문제<small>2025 중간고사에 나온 유형 중심</small></h2>
-      <div id="extra-list"></div>
+      <div class="cmp-table">
+        <table class="topics">
+          <caption id="topic-cap">15개 주제가 들어간 문항</caption>
+          <thead><tr><th scope="col">번호</th><th scope="col">주제</th><th scope="col">문항</th></tr></thead>
+          <tbody id="topic-body"></tbody>
+        </table>
+      </div>
     </section>
   </main>
 
@@ -136,7 +110,7 @@
   </nav></div>
 
   <footer class="foot">
-    2022·2024·2025학년도 Calculus II (MATH 162) 중간·기말고사(다른 교수님)와 강의 예제·복습문제·과제 유형을 참고해 새로 만든 문제예요. 정답은 모두 다시 계산해 확인했어요.<br>
+    시험 범위의 15개 주제를 바탕으로 강의 예제·복습문제·과제·기출 유형을 참고해 새로 만든 문제예요. 정답은 모두 sympy로 다시 계산해 확인했어요.<br>
     맞음/다시 풀기 기록은 이 브라우저에만 저장돼요. · <a href="index.html">대시보드</a> · <a href="concepts.html">개념 정리</a>
   </footer>
 </body>
