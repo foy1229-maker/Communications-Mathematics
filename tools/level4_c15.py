@@ -1,4 +1,4 @@
-"""4단계 · 심화 추가분 — Ch.15 중적분: 4-72 ~ 4-101"""
+"""4단계 · 심화 추가분 — Ch.15 중적분: 4-72 ~ 4-101, 변수변환 4-124 ~ 4-126"""
 from bank_lib import *
 import mpmath as mp
 
@@ -526,4 +526,70 @@ P(id="4-101", ch=15, sec="15.8", type="15-sph", src="교재 15.8 심화형 (공�
   sol=[r"(a) $e^{-(x^2+y^2+z^2)}=e^{-x^2}e^{-y^2}e^{-z^2}$ → $(\sqrt\pi)^3=\pi^{3/2}$",
        r"(b) $\displaystyle\int_0^{2\pi}\!\!\int_0^\pi\!\!\int_0^\infty e^{-\rho^2}\rho^2\sin\phi\,d\rho\,d\phi\,d\theta=4\pi\int_0^\infty\rho^2e^{-\rho^2}d\rho=\pi^{3/2}$ → $\dfrac{\sqrt\pi}4$",
        r"(c) $4\pi\displaystyle\int_0^\infty\rho^3e^{-\rho^2}d\rho\overset{u=\rho^2}{=}4\pi\cdot\frac12\int_0^\infty ue^{-u}du=2\pi$"],
+  check=_c)
+
+
+# ───────── 15.9 변수변환 (추가) ─────────
+def _c():
+    Juv = Matrix([[diff(x*y, x), diff(x*y, y)], [diff(y/x, x), diff(y/x, y)]]).det()
+    assert simplify(Juv - 2*y/x) == 0
+    assert EQ(integrate(1/(2*v), (v, 1, 2), (u, 1, 3)), log(2))
+    assert integrate(u*v/(2*v), (v, 1, 2), (u, 1, 3)) == 2
+    up, vp = symbols('up vp', positive=True)
+    xs, ys = sqrt(up/vp), sqrt(up*vp)                        # 역변환 (u, v > 0)
+    assert simplify(xs*ys - up) == 0 and simplify(ys/xs - vp) == 0
+    assert simplify(Matrix([[diff(xs, up), diff(xs, vp)], [diff(ys, up), diff(ys, vp)]]).det() - 1/(2*vp)) == 0
+    lo = lambda X: max(X, 1/X)
+    hi = lambda X: min(2*X, 3/X)
+    pts = [1/mp.sqrt(2), 1, mp.sqrt(mp.mpf(3)/2), mp.sqrt(3)]
+    area = q2(lambda X, Y: 1, None, None, lo, hi, xpts=pts)
+    I = q2(lambda X, Y: Y*Y, None, None, lo, hi, xpts=pts)
+    assert abs(area - mp.log(2)) < 1e-10 and abs(I - 2) < 1e-10
+P(id="4-124", ch=15, sec="15.9", type="15-change", src="수업 자료 밖 · 교재 15.9 쌍곡선·직선 영역",
+  q=r"$R$ 은 제1사분면에서 곡선 $xy=1,\ xy=3$ 과 직선 $y=x,\ y=2x$ 로 둘러싸인 영역이다. 변환 $u=xy,\ v=\dfrac yx$ 를 이용하여<br>(a) $\dfrac{\partial(x,y)}{\partial(u,v)}$ 를 $u,v$ 로 나타내고, $R$ 에 대응하는 $uv$ 평면의 영역 $S$ 를 구하라.<br>(b) $R$ 의 넓이를 구하라.  (c) $\displaystyle\iint_Ry^2\,dA$ 를 구하라.",
+  hint=r"역변환을 구하지 않아도 $\dfrac{\partial(x,y)}{\partial(u,v)}=1\Big/\dfrac{\partial(u,v)}{\partial(x,y)}$ 예요. (c)에서는 $y^2=xy\cdot\dfrac yx=uv$",
+  ans=r"(a) $\dfrac{1}{2v}$, $\ S=\{1\le u\le3,\ 1\le v\le2\}$  (b) $\ln2$  (c) $2$",
+  sol=[r"(a) $\dfrac{\partial(u,v)}{\partial(x,y)}=\begin{vmatrix}y&x\\-\dfrac{y}{x^2}&\dfrac1x\end{vmatrix}=\dfrac yx+\dfrac yx=\dfrac{2y}{x}=2v$ → $\dfrac{\partial(x,y)}{\partial(u,v)}=\dfrac1{2v}$",
+       r"경계: $xy=1,\ 3$ → $u=1,\ 3$;  $y=x,\ y=2x$ → $v=1,\ 2$ → $S=\{1\le u\le3,\ 1\le v\le2\}$ (직사각형)",
+       r"(b) $\displaystyle\iint_RdA=\int_1^3\!\!\int_1^2\frac1{2v}\,dv\,du=2\cdot\frac{\ln2}{2}=\ln2$",
+       r"(c) $y^2=uv$ → $\displaystyle\iint_Ry^2\,dA=\int_1^3\!\!\int_1^2uv\cdot\frac1{2v}\,dv\,du=\int_1^3\frac u2\,du=\frac12\cdot\frac{9-1}{2}=2$"],
+  check=_c)
+
+
+def _c():
+    assert Matrix([[3, 0], [0, 2]]).det() == 6
+    assert EQ(integrate(6*r, (r, 0, 1), (th, 0, 2*pi)), 6*pi)
+    assert EQ(integrate(54*r**2*cos(th)**2*r, (r, 0, 1), (th, 0, 2*pi)), 27*pi/2)
+    assert expand(36 - 4*(3*u)**2 - 9*(2*v)**2 - 36*(1 - u**2 - v**2)) == 0
+    assert EQ(integrate(36*sqrt(1 - r**2)*r, (r, 0, 1), (th, 0, 2*pi)), 24*pi)
+    hy = lambda X: 2*mp.sqrt(max(0, 1 - X*X/9))
+    I2 = mp.quad(lambda X: X*X*2*hy(X), [-3, 3])
+    I3 = mp.quad(lambda X: mp.quad(lambda Y: mp.sqrt(max(0, 36 - 4*X*X - 9*Y*Y)), [-hy(X), hy(X)]), [-3, 3])
+    assert abs(I2 - 27*mp.pi/2) < 1e-8 and abs(I3 - 24*mp.pi) < 1e-6
+P(id="4-125", ch=15, sec="15.9", type="15-change", src="수업 자료 밖 · 교재 15.9 타원 영역 (+ 극좌표)",
+  q=r"$R$ 이 타원 영역 $\dfrac{x^2}{9}+\dfrac{y^2}{4}\le1$ 일 때 변환 $x=3u,\ y=2v$ 를 이용하여 다음을 구하라.<br>(a) $R$ 의 넓이  (b) $\displaystyle\iint_Rx^2\,dA$  (c) $\displaystyle\iint_R\sqrt{36-4x^2-9y^2}\,dA$",
+  hint=r"$\dfrac{\partial(x,y)}{\partial(u,v)}=6$ 이고 $R$ 은 단위원판 $u^2+v^2\le1$ 로 바뀌어요. 그다음은 극좌표 $u=r\cos\theta,\ v=r\sin\theta$",
+  ans=r"(a) $6\pi$  (b) $\dfrac{27\pi}{2}$  (c) $24\pi$",
+  sol=[r"$\dfrac{\partial(x,y)}{\partial(u,v)}=\begin{vmatrix}3&0\\0&2\end{vmatrix}=6$, $\ \dfrac{x^2}9+\dfrac{y^2}4\le1\iff u^2+v^2\le1$ (단위원판 $S$)",
+       r"(a) $\displaystyle\iint_RdA=\iint_S6\,du\,dv=6\pi$ (타원 넓이 $\pi ab$ 와 같아요)",
+       r"(b) $$\begin{aligned}&\iint_Rx^2\,dA=\iint_S54u^2\,du\,dv\\&=54\int_0^{2\pi}\cos^2\theta\,d\theta\int_0^1r^3\,dr\\&=54\cdot\pi\cdot\frac14=\frac{27\pi}{2}\end{aligned}$$",
+       r"(c) $36-4x^2-9y^2=36(1-u^2-v^2)$ 이므로 $$\begin{aligned}&\iint_R\sqrt{36-4x^2-9y^2}\,dA\\&=36\iint_S\sqrt{1-u^2-v^2}\,du\,dv\\&=36\int_0^{2\pi}\!\!\int_0^1\sqrt{1-r^2}\,r\,dr\,d\theta\\&=36\cdot2\pi\cdot\frac13=24\pi\end{aligned}$$"],
+  check=_c)
+
+
+def _c():
+    xs, ys = (u + v)/2, (v - u)/2                            # u=x-y, v=x+y 의 역변환
+    J = Matrix([[diff(xs, u), diff(xs, v)], [diff(ys, u), diff(ys, v)]]).det()
+    assert J == R(1, 2)
+    I = integrate(cos(u/v)*R(1, 2), (u, -v, v), (v, 1, 2))
+    assert EQ(I, R(3, 2)*sin(1))
+    num = mp.quad(lambda X: mp.quad(lambda Y: mp.cos((X - Y)/(X + Y)), [max(0, 1 - X), 2 - X]), [0, 1, 2])
+    assert abs(num - mp.mpf(3)/2*mp.sin(1)) < 1e-10
+P(id="4-126", ch=15, sec="15.9", type="15-change", src="수업 자료 밖 · 교재 15.9 사다리꼴 영역",
+  q=r"$R$ 은 네 점 $(1,0),\ (2,0),\ (0,2),\ (0,1)$ 을 꼭짓점으로 하는 사다리꼴이다. 변환 $u=x-y,\ v=x+y$ 를 이용하여 $\displaystyle\iint_R\cos\Big(\frac{x-y}{x+y}\Big)\,dA$ 를 구하라.",
+  hint=r"네 변 $x+y=1,\ x+y=2,\ x=0,\ y=0$ 을 $u,v$ 로 바꾸면 $v=1,\ v=2,\ u=-v,\ u=v$. $u$ 로 먼저 적분하면 $\cos\dfrac uv$ 가 바로 적분돼요.",
+  ans=r"$\dfrac32\sin1$",
+  sol=[r"$x=\dfrac{u+v}{2},\ y=\dfrac{v-u}{2}$ → $\dfrac{\partial(x,y)}{\partial(u,v)}=\begin{vmatrix}\frac12&\frac12\\-\frac12&\frac12\end{vmatrix}=\dfrac12$",
+       r"경계: $x+y=1,\ 2$ → $v=1,\ 2$;  $x=0$ → $u=-v$;  $y=0$ → $u=v$ → $S:\ 1\le v\le2,\ -v\le u\le v$ (직사각형이 아니에요)",
+       r"$$\begin{aligned}&\iint_R\cos\Big(\frac{x-y}{x+y}\Big)dA\\&=\int_1^2\!\!\int_{-v}^{v}\frac12\cos\frac uv\,du\,dv\\&=\int_1^2\frac12\Big[v\sin\frac uv\Big]_{u=-v}^{u=v}dv\\&=\int_1^2v\sin1\,dv=\frac32\sin1\end{aligned}$$"],
   check=_c)

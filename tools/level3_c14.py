@@ -1,4 +1,4 @@
-"""3단계 · 응용 추가분 — Ch.14 편도함수: 3-35 ~ 3-71"""
+"""3단계 · 응용 추가분 — Ch.14 편도함수: 3-35 ~ 3-71, 미분가능성의 정의 3-121 ~ 3-123"""
 from bank_lib import *
 
 lam, mu = symbols('lambda mu', real=True)
@@ -629,4 +629,64 @@ P(id="3-71", ch=14, sec="14.8", type="14-lagrange", src="2022 생명과학대 �
        r"경계: 세 식에 각각 $x,y,z$를 곱하면 $xyz=2\lambda x^2=2\lambda y^2=2\lambda z^2$",
        r"$xyz\ne0$인 경우 $x^2=y^2=z^2=\tfrac13$ → $f=\pm\dfrac{1}{3\sqrt3}=\pm\dfrac{\sqrt3}{9}$",
        r"최댓값 $\dfrac{\sqrt3}{9}$ (부호가 $+$인 점, 예: $(\tfrac1{\sqrt3},\tfrac1{\sqrt3},\tfrac1{\sqrt3})$), 최솟값 $-\dfrac{\sqrt3}{9}$"],
+  check=_c)
+
+
+# ───────── 14.4 미분가능성의 정의 (추가) ─────────
+def _c():
+    dx, dy = symbols('dx dy', real=True)
+    f = x**2*y - 3*y**2
+    fx0, fy0 = diff(f, x).subs({x: 2, y: 1}), diff(f, y).subs({x: 2, y: 1})
+    assert (fx0, fy0) == (4, -2) and f.subs({x: 2, y: 1}) == 1
+    Dz = expand(f.subs({x: 2 + dx, y: 1 + dy}, simultaneous=True) - f.subs({x: 2, y: 1}))
+    e1, e2 = dx + 4*dy + dx*dy, -3*dy
+    assert expand(Dz - (fx0*dx + fy0*dy + e1*dx + e2*dy)) == 0
+    assert e1.subs({dx: 0, dy: 0}) == 0 and e2.subs({dx: 0, dy: 0}) == 0
+P(id="3-121", ch=14, sec="14.4", type="14-differentiable", src="수업 자료 밖 · 교재 14.4 정의 7 (ε₁·ε₂ 찾기)",
+  q=r"$f(x,y)=x^2y-3y^2$ 이 점 $(2,1)$ 에서 미분가능함을 정의로 보여라. 즉 $\Delta z=f(2+\Delta x,\,1+\Delta y)-f(2,1)$ 을 $$\begin{aligned}\Delta z&=f_x(2,1)\Delta x+f_y(2,1)\Delta y\\&\quad+\varepsilon_1\Delta x+\varepsilon_2\Delta y\end{aligned}$$ 꼴로 정리하고, $(\Delta x,\Delta y)\to(0,0)$ 일 때 $\varepsilon_1,\ \varepsilon_2\to0$ 임을 보여라.",
+  hint=r"$f(2+\Delta x,1+\Delta y)$ 를 전개해 1차 항($\Delta x,\ \Delta y$)과 2차 이상의 항으로 나누고, 2차 이상의 항에서 $\Delta x$ 나 $\Delta y$ 를 하나씩 묶어 내요.",
+  ans=r"$f_x(2,1)=4,\ f_y(2,1)=-2$, 예: $\varepsilon_1=\Delta x+4\Delta y+\Delta x\Delta y,\ \varepsilon_2=-3\Delta y$ (묶는 방법은 여러 가지)",
+  sol=[r"$f_x=2xy,\ f_y=x^2-6y$ → $f_x(2,1)=4,\ f_y(2,1)=-2$, $\ f(2,1)=4-3=1$",
+       r"$$\begin{aligned}\Delta z&=(2+\Delta x)^2(1+\Delta y)\\&\quad-3(1+\Delta y)^2-1\\&=4\Delta x-2\Delta y+(\Delta x)^2\\&\quad+4\Delta x\Delta y+(\Delta x)^2\Delta y\\&\quad-3(\Delta y)^2\end{aligned}$$",
+       r"2차 이상의 항을 묶으면 $(\Delta x+4\Delta y+\Delta x\Delta y)\,\Delta x+(-3\Delta y)\,\Delta y$ → $\varepsilon_1=\Delta x+4\Delta y+\Delta x\Delta y$, $\ \varepsilon_2=-3\Delta y$",
+       r"$\varepsilon_1,\ \varepsilon_2$ 는 상수항이 없는 다항식이라 $(\Delta x,\Delta y)\to(0,0)$ 이면 $0$ 으로 가요 → 정의에 따라 $(2,1)$ 에서 미분가능 (정리 8로도 확인: $f_x,f_y$ 가 연속)"],
+  check=_c)
+
+
+def _c():
+    hh = symbols('hh', nonzero=True, real=True)
+    g = 1/x
+    Dy = g.subs(x, 2 + hh) - g.subs(x, 2)
+    gp = diff(g, x).subs(x, 2)
+    eps = simplify(Dy/hh - gp)
+    assert gp == -R(1, 4) and simplify(eps - hh/(4*(2 + hh))) == 0 and limit(eps, hh, 0) == 0
+    assert simplify(Dy - (gp*hh + eps*hh)) == 0
+P(id="3-122", ch=14, sec="14.4", type="14-differentiable", src="수업 자료 밖 · 수업 중 설명(시험 예고) 일변수 증분식",
+  q=r"(a) $y=g(x)$ 가 $x=a$ 에서 미분가능할 때, 미분의 정의로부터 $\Delta y=g'(a)\Delta x+\varepsilon\Delta x$ 이고 $\Delta x\to0$ 일 때 $\varepsilon\to0$ 인 $\varepsilon$ 이 있음을 보여라. 단, $\Delta y=g(a+\Delta x)-g(a)$ 이다.<br>(b) $g(x)=\dfrac1x,\ a=2$ 일 때 $\varepsilon$ 을 $\Delta x$ 로 나타내고 $\varepsilon\to0$ 을 확인하라.",
+  hint=r"(a) $\Delta x\ne0$ 일 때 $\varepsilon=\dfrac{\Delta y}{\Delta x}-g'(a)$ 로 정의해 보세요. (b) $\Delta y$ 를 통분한 뒤 같은 식에 대입.",
+  ans=r"(a) 풀이 참고  (b) $\varepsilon=\dfrac{\Delta x}{4(2+\Delta x)}$",
+  sol=[r"(a) $\Delta x\ne0$ 일 때 $\varepsilon=\dfrac{\Delta y}{\Delta x}-g'(a)$ 로 두면, 미분의 정의 $g'(a)=\displaystyle\lim_{\Delta x\to0}\frac{\Delta y}{\Delta x}$ 에서 $\displaystyle\lim_{\Delta x\to0}\varepsilon=g'(a)-g'(a)=0$",
+       r"양변에 $\Delta x$ 를 곱하면 $\Delta y=g'(a)\Delta x+\varepsilon\Delta x$. $\ \Delta x=0$ 일 때는 $\varepsilon=0$ 으로 정해 두면 양변이 모두 $0$ 이라 그대로 성립해요.",
+       r"(b) $\Delta y=\dfrac{1}{2+\Delta x}-\dfrac12=-\dfrac{\Delta x}{2(2+\Delta x)}$, $\ g'(x)=-\dfrac1{x^2}$ 이므로 $g'(2)=-\dfrac14$",
+       r"$\varepsilon=\dfrac{\Delta y}{\Delta x}-g'(2)=-\dfrac{1}{2(2+\Delta x)}+\dfrac14=\dfrac{-2+(2+\Delta x)}{4(2+\Delta x)}=\dfrac{\Delta x}{4(2+\Delta x)}\to0$"],
+  check=_c)
+
+
+def _c():
+    dx, dy = symbols('dx dy', real=True)
+    Dz = 2*dx + 5*dy + 3*dx**2 - dx*dy + dy**3
+    e1, e2 = 3*dx - dy, dy**2
+    assert expand(Dz - (2*dx + 5*dy + e1*dx + e2*dy)) == 0
+    assert limit(Dz.subs(dy, 0)/dx, dx, 0) == 2 and limit(Dz.subs(dx, 0)/dy, dy, 0) == 5
+    vals = {dx: R(1, 10), dy: -R(2, 10)}
+    assert 4 + (2*dx + 5*dy).subs(vals) == R(32, 10)
+    assert 4 + Dz.subs(vals) == R(3242, 1000)
+P(id="3-123", ch=14, sec="14.4", type="14-differentiable", src="수업 자료 밖 · 교재 14.4 정의 7 + 선형근사",
+  q=r"어떤 함수 $f$ 가 점 $(1,-2)$ 근처에서 $$\begin{aligned}\Delta z&=2\Delta x+5\Delta y\\&\quad+3(\Delta x)^2-\Delta x\,\Delta y+(\Delta y)^3\end{aligned}$$ 을 만족한다.<br>(a) $f$ 가 $(1,-2)$ 에서 미분가능함을 정의로 보이고 $f_x(1,-2),\ f_y(1,-2)$ 를 구하라.  (b) $f(1,-2)=4$ 일 때 $f(1.1,\,-2.2)$ 의 선형근삿값과 정확한 값을 구하라.",
+  hint=r"2차 이상의 항에서 $\Delta x$, $\Delta y$ 를 하나씩 묶어 $\varepsilon_1\Delta x+\varepsilon_2\Delta y$ 꼴로. (b)는 $\Delta x=0.1,\ \Delta y=-0.2$",
+  ans=r"(a) 미분가능, $f_x(1,-2)=2,\ f_y(1,-2)=5$  (b) 선형근삿값 $3.2$, 정확한 값 $3.242$",
+  sol=[r"(a) $3(\Delta x)^2-\Delta x\Delta y+(\Delta y)^3=(3\Delta x-\Delta y)\,\Delta x+(\Delta y)^2\,\Delta y$ → $\varepsilon_1=3\Delta x-\Delta y,\ \varepsilon_2=(\Delta y)^2$ 는 $(\Delta x,\Delta y)\to(0,0)$ 일 때 $0$ 으로 가요.",
+       r"$\Delta z=2\Delta x+5\Delta y+\varepsilon_1\Delta x+\varepsilon_2\Delta y$ 가 정의 7의 꼴이므로 미분가능하고, 계수에서 $f_x(1,-2)=2,\ f_y(1,-2)=5$ (확인: $\Delta y=0$ 이면 $\dfrac{\Delta z}{\Delta x}=2+3\Delta x\to2$)",
+       r"(b) 선형근사: $f(1.1,-2.2)\approx4+2(0.1)+5(-0.2)=3.2$",
+       r"정확한 값: 나머지 항 $3(0.1)^2-(0.1)(-0.2)+(-0.2)^3=0.03+0.02-0.008=0.042$ → $f(1.1,-2.2)=3.2+0.042=3.242$"],
   check=_c)

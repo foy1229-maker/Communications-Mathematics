@@ -15,7 +15,7 @@ window.CM_DATA = {
   },
   "15": {
    "name": "중적분",
-   "range": "15.1–15.3 · 15.6–15.8"
+   "range": "15.1–15.3 · 15.6–15.9"
   },
   "16": {
    "name": "벡터 미적분",
@@ -45,6 +45,7 @@ window.CM_DATA = {
   "15.6": "삼중적분",
   "15.7": "원주좌표 삼중적분",
   "15.8": "구면좌표 삼중적분",
+  "15.9": "변수변환",
   "16.1": "벡터장",
   "16.2": "선적분",
   "16.3": "선적분의 기본정리",
@@ -78,6 +79,7 @@ window.CM_DATA = {
   "14-defpartial": "연속성 판정·정의로 구하는 편도함수",
   "14-tangent": "접평면·선형근사",
   "14-diff": "전미분·오차 추정",
+  "14-differentiable": "미분가능성의 정의 (ε₁·ε₂)",
   "14-chain": "연쇄법칙",
   "14-chain2": "2계 연쇄법칙",
   "14-dir": "방향도함수",
@@ -98,6 +100,7 @@ window.CM_DATA = {
   "15-cyl": "원주좌표",
   "15-sph": "구면좌표 삼중적분",
   "15-sphconv": "구면좌표로 바꾸어 쓰기",
+  "15-change": "변수변환·야코비안",
   "16-field": "벡터장·기울기장",
   "16-scalar": "스칼라 선적분 ∫f ds",
   "16-vector": "벡터 선적분·일",
@@ -127,14 +130,14 @@ window.CM_DATA = {
    "eyebrow": "LEVEL 3 · APPLIED",
    "title": "3단계 · 응용",
    "focus": "복습문제·기출 유형",
-   "lead": "각 장 복습문제와 기출(2022·2024·2025 미적분학 II) 수준의 여러 단계 문제예요. 조임정리·곡선 경로 극한, 음함수와 선형근사, 닫힌 영역의 최대·최소, 적분식 변환, 구면좌표, 곡선을 닫아서 쓰는 그린 정리까지 연결해요."
+   "lead": "각 장 복습문제와 기출(2022·2024·2025 미적분학 II) 수준의 여러 단계 문제예요. 조임정리·곡선 경로 극한, 음함수와 선형근사, 정의로 판정하는 미분가능성, 닫힌 영역의 최대·최소, 적분식 변환, u·v 변수변환, 구면좌표, 곡선을 닫아서 쓰는 그린 정리까지 연결해요."
   },
   "4": {
    "name": "심화",
    "eyebrow": "LEVEL 4 · ADVANCED",
    "title": "4단계 · 심화",
    "focus": "기출 실전형·심화",
-   "lead": "기출 실전형과 복습문제(심화) 수준의 고난도 문제예요. 2계 연쇄법칙, 주어진 정보로 그래디언트 복원, 제약조건 2개 라그랑주, 질량중심, 구면좌표 변환, 원점을 감는 벡터장처럼 개념 두세 개를 엮어야 풀려요. 막히면 힌트 → 정답 → 풀이 순서로 열어 보세요."
+   "lead": "기출 실전형과 복습문제(심화) 수준의 고난도 문제예요. 2계 연쇄법칙, 주어진 정보로 그래디언트 복원, 미분가능성의 정의와 반례, 제약조건 2개 라그랑주, 질량중심, 비선형 변수변환, 구면좌표 변환, 원점을 감는 벡터장처럼 개념 두세 개를 엮어야 풀려요. 막히면 힌트 → 정답 → 풀이 순서로 열어 보세요."
   }
  },
  "problems": [
@@ -5929,6 +5932,106 @@ window.CM_DATA = {
    ]
   },
   {
+   "id": "3-121",
+   "lv": 3,
+   "ch": 14,
+   "sec": "14.4",
+   "type": "14-differentiable",
+   "src": "수업 자료 밖 · 교재 14.4 정의 7 (ε₁·ε₂ 찾기)",
+   "q": "$f(x,y)=x^2y-3y^2$ 이 점 $(2,1)$ 에서 미분가능함을 정의로 보여라. 즉 $\\Delta z=f(2+\\Delta x,\\,1+\\Delta y)-f(2,1)$ 을 $$\\begin{aligned}\\Delta z&amp;=f_x(2,1)\\Delta x+f_y(2,1)\\Delta y\\\\&amp;\\quad+\\varepsilon_1\\Delta x+\\varepsilon_2\\Delta y\\end{aligned}$$ 꼴로 정리하고, $(\\Delta x,\\Delta y)\\to(0,0)$ 일 때 $\\varepsilon_1,\\ \\varepsilon_2\\to0$ 임을 보여라.",
+   "hint": "$f(2+\\Delta x,1+\\Delta y)$ 를 전개해 1차 항($\\Delta x,\\ \\Delta y$)과 2차 이상의 항으로 나누고, 2차 이상의 항에서 $\\Delta x$ 나 $\\Delta y$ 를 하나씩 묶어 내요.",
+   "ans": "$f_x(2,1)=4,\\ f_y(2,1)=-2$, 예: $\\varepsilon_1=\\Delta x+4\\Delta y+\\Delta x\\Delta y,\\ \\varepsilon_2=-3\\Delta y$ (묶는 방법은 여러 가지)",
+   "sol": [
+    "$f_x=2xy,\\ f_y=x^2-6y$ → $f_x(2,1)=4,\\ f_y(2,1)=-2$, $\\ f(2,1)=4-3=1$",
+    "$$\\begin{aligned}\\Delta z&amp;=(2+\\Delta x)^2(1+\\Delta y)\\\\&amp;\\quad-3(1+\\Delta y)^2-1\\\\&amp;=4\\Delta x-2\\Delta y+(\\Delta x)^2\\\\&amp;\\quad+4\\Delta x\\Delta y+(\\Delta x)^2\\Delta y\\\\&amp;\\quad-3(\\Delta y)^2\\end{aligned}$$",
+    "2차 이상의 항을 묶으면 $(\\Delta x+4\\Delta y+\\Delta x\\Delta y)\\,\\Delta x+(-3\\Delta y)\\,\\Delta y$ → $\\varepsilon_1=\\Delta x+4\\Delta y+\\Delta x\\Delta y$, $\\ \\varepsilon_2=-3\\Delta y$",
+    "$\\varepsilon_1,\\ \\varepsilon_2$ 는 상수항이 없는 다항식이라 $(\\Delta x,\\Delta y)\\to(0,0)$ 이면 $0$ 으로 가요 → 정의에 따라 $(2,1)$ 에서 미분가능 (정리 8로도 확인: $f_x,f_y$ 가 연속)"
+   ]
+  },
+  {
+   "id": "3-122",
+   "lv": 3,
+   "ch": 14,
+   "sec": "14.4",
+   "type": "14-differentiable",
+   "src": "수업 자료 밖 · 수업 중 설명(시험 예고) 일변수 증분식",
+   "q": "(a) $y=g(x)$ 가 $x=a$ 에서 미분가능할 때, 미분의 정의로부터 $\\Delta y=g'(a)\\Delta x+\\varepsilon\\Delta x$ 이고 $\\Delta x\\to0$ 일 때 $\\varepsilon\\to0$ 인 $\\varepsilon$ 이 있음을 보여라. 단, $\\Delta y=g(a+\\Delta x)-g(a)$ 이다.<br>(b) $g(x)=\\dfrac1x,\\ a=2$ 일 때 $\\varepsilon$ 을 $\\Delta x$ 로 나타내고 $\\varepsilon\\to0$ 을 확인하라.",
+   "hint": "(a) $\\Delta x\\ne0$ 일 때 $\\varepsilon=\\dfrac{\\Delta y}{\\Delta x}-g'(a)$ 로 정의해 보세요. (b) $\\Delta y$ 를 통분한 뒤 같은 식에 대입.",
+   "ans": "(a) 풀이 참고&emsp;(b) $\\varepsilon=\\dfrac{\\Delta x}{4(2+\\Delta x)}$",
+   "sol": [
+    "(a) $\\Delta x\\ne0$ 일 때 $\\varepsilon=\\dfrac{\\Delta y}{\\Delta x}-g'(a)$ 로 두면, 미분의 정의 $g'(a)=\\displaystyle\\lim_{\\Delta x\\to0}\\frac{\\Delta y}{\\Delta x}$ 에서 $\\displaystyle\\lim_{\\Delta x\\to0}\\varepsilon=g'(a)-g'(a)=0$",
+    "양변에 $\\Delta x$ 를 곱하면 $\\Delta y=g'(a)\\Delta x+\\varepsilon\\Delta x$. $\\ \\Delta x=0$ 일 때는 $\\varepsilon=0$ 으로 정해 두면 양변이 모두 $0$ 이라 그대로 성립해요.",
+    "(b) $\\Delta y=\\dfrac{1}{2+\\Delta x}-\\dfrac12=-\\dfrac{\\Delta x}{2(2+\\Delta x)}$, $\\ g'(x)=-\\dfrac1{x^2}$ 이므로 $g'(2)=-\\dfrac14$",
+    "$\\varepsilon=\\dfrac{\\Delta y}{\\Delta x}-g'(2)=-\\dfrac{1}{2(2+\\Delta x)}+\\dfrac14=\\dfrac{-2+(2+\\Delta x)}{4(2+\\Delta x)}=\\dfrac{\\Delta x}{4(2+\\Delta x)}\\to0$"
+   ]
+  },
+  {
+   "id": "3-123",
+   "lv": 3,
+   "ch": 14,
+   "sec": "14.4",
+   "type": "14-differentiable",
+   "src": "수업 자료 밖 · 교재 14.4 정의 7 + 선형근사",
+   "q": "어떤 함수 $f$ 가 점 $(1,-2)$ 근처에서 $$\\begin{aligned}\\Delta z&amp;=2\\Delta x+5\\Delta y\\\\&amp;\\quad+3(\\Delta x)^2-\\Delta x\\,\\Delta y+(\\Delta y)^3\\end{aligned}$$ 을 만족한다.<br>(a) $f$ 가 $(1,-2)$ 에서 미분가능함을 정의로 보이고 $f_x(1,-2),\\ f_y(1,-2)$ 를 구하라.&emsp;(b) $f(1,-2)=4$ 일 때 $f(1.1,\\,-2.2)$ 의 선형근삿값과 정확한 값을 구하라.",
+   "hint": "2차 이상의 항에서 $\\Delta x$, $\\Delta y$ 를 하나씩 묶어 $\\varepsilon_1\\Delta x+\\varepsilon_2\\Delta y$ 꼴로. (b)는 $\\Delta x=0.1,\\ \\Delta y=-0.2$",
+   "ans": "(a) 미분가능, $f_x(1,-2)=2,\\ f_y(1,-2)=5$&emsp;(b) 선형근삿값 $3.2$, 정확한 값 $3.242$",
+   "sol": [
+    "(a) $3(\\Delta x)^2-\\Delta x\\Delta y+(\\Delta y)^3=(3\\Delta x-\\Delta y)\\,\\Delta x+(\\Delta y)^2\\,\\Delta y$ → $\\varepsilon_1=3\\Delta x-\\Delta y,\\ \\varepsilon_2=(\\Delta y)^2$ 는 $(\\Delta x,\\Delta y)\\to(0,0)$ 일 때 $0$ 으로 가요.",
+    "$\\Delta z=2\\Delta x+5\\Delta y+\\varepsilon_1\\Delta x+\\varepsilon_2\\Delta y$ 가 정의 7의 꼴이므로 미분가능하고, 계수에서 $f_x(1,-2)=2,\\ f_y(1,-2)=5$ (확인: $\\Delta y=0$ 이면 $\\dfrac{\\Delta z}{\\Delta x}=2+3\\Delta x\\to2$)",
+    "(b) 선형근사: $f(1.1,-2.2)\\approx4+2(0.1)+5(-0.2)=3.2$",
+    "정확한 값: 나머지 항 $3(0.1)^2-(0.1)(-0.2)+(-0.2)^3=0.03+0.02-0.008=0.042$ → $f(1.1,-2.2)=3.2+0.042=3.242$"
+   ]
+  },
+  {
+   "id": "3-124",
+   "lv": 3,
+   "ch": 15,
+   "sec": "15.9",
+   "type": "15-change",
+   "src": "수업 자료 밖 · 교재 15.9 야코비안",
+   "q": "(a) 변환 $x=u^2-v^2,\\ y=2uv$ 의 야코비안 $\\dfrac{\\partial(x,y)}{\\partial(u,v)}$ 를 구하라.<br>(b) 변환 $x=2u+v,\\ y=u-3v$ 가 정사각형 $S=[0,1]\\times[0,1]$ 을 옮긴 평행사변형 $R$ 의 넓이를 $\\displaystyle\\iint_RdA=\\iint_S\\Big|\\frac{\\partial(x,y)}{\\partial(u,v)}\\Big|\\,du\\,dv$ 로 구하라.",
+   "hint": "$\\dfrac{\\partial(x,y)}{\\partial(u,v)}=\\begin{vmatrix}x_u&amp;x_v\\\\y_u&amp;y_v\\end{vmatrix}$. 넓이에는 절댓값을 써요.",
+   "ans": "(a) $4(u^2+v^2)$&emsp;(b) $7$",
+   "sol": [
+    "(a) $\\dfrac{\\partial(x,y)}{\\partial(u,v)}=\\begin{vmatrix}2u&amp;-2v\\\\2v&amp;2u\\end{vmatrix}=4u^2+4v^2=4(u^2+v^2)$",
+    "(b) $\\dfrac{\\partial(x,y)}{\\partial(u,v)}=\\begin{vmatrix}2&amp;1\\\\1&amp;-3\\end{vmatrix}=-6-1=-7$ → 절댓값 $7$",
+    "$\\displaystyle\\iint_RdA=\\int_0^1\\!\\!\\int_0^1 7\\,du\\,dv=7$ (확인: 두 변 벡터 $\\langle2,1\\rangle,\\ \\langle1,-3\\rangle$ 로 만든 평행사변형의 넓이 $|2\\cdot(-3)-1\\cdot1|=7$)"
+   ]
+  },
+  {
+   "id": "3-125",
+   "lv": 3,
+   "ch": 15,
+   "sec": "15.9",
+   "type": "15-change",
+   "src": "수업 자료 밖 · 교재 15.9 평행사변형 영역",
+   "q": "$R$ 은 네 직선 $y=2x,\\ y=2x-4,\\ y=-x,\\ y=-x+3$ 으로 둘러싸인 평행사변형이다. 변환 $u=2x-y,\\ v=x+y$ 를 이용하여 $\\displaystyle\\iint_R(2x-y)(x+y)^2\\,dA$ 를 구하라.",
+   "hint": "$\\dfrac{\\partial(u,v)}{\\partial(x,y)}$ 를 먼저 구하면 $\\dfrac{\\partial(x,y)}{\\partial(u,v)}$ 는 그 역수예요. 네 직선은 $u=0,\\ 4$ 와 $v=0,\\ 3$ 이 돼요.",
+   "ans": "$24$",
+   "sol": [
+    "$\\dfrac{\\partial(u,v)}{\\partial(x,y)}=\\begin{vmatrix}2&amp;-1\\\\1&amp;1\\end{vmatrix}=3$ → $\\dfrac{\\partial(x,y)}{\\partial(u,v)}=\\dfrac13$, $\\ dA=\\dfrac13\\,du\\,dv$ (역변환을 풀지 않아도 돼요)",
+    "$y=2x,\\ y=2x-4$ → $u=0,\\ u=4$;&emsp;$y=-x,\\ y=-x+3$ → $v=0,\\ v=3$ → $S=[0,4]\\times[0,3]$",
+    "$$\\begin{aligned}&amp;\\iint_R(2x-y)(x+y)^2\\,dA\\\\&amp;=\\frac13\\int_0^3\\!\\!\\int_0^4uv^2\\,du\\,dv\\\\&amp;=\\frac13\\cdot\\frac{4^2}{2}\\cdot\\frac{3^3}{3}=\\frac13\\cdot8\\cdot9=24\\end{aligned}$$"
+   ]
+  },
+  {
+   "id": "3-126",
+   "lv": 3,
+   "ch": 15,
+   "sec": "15.9",
+   "type": "15-change",
+   "src": "수업 자료 밖 · 교재 15.9 포물선 영역",
+   "q": "변환 $x=u^2-v^2,\\ y=2uv$ 는 정사각형 $S=\\{(u,v)\\mid0\\le u\\le1,\\ 0\\le v\\le1\\}$ 을, $x$축과 두 포물선 $y^2=4-4x,\\ y^2=4+4x$ 로 둘러싸인 영역 $R\\ (y\\ge0)$ 로 옮긴다.<br>(a) $R$ 의 넓이를 구하라.&emsp;(b) $\\displaystyle\\iint_R\\sqrt{x^2+y^2}\\,dA$ 를 구하라.",
+   "hint": "야코비안은 $4(u^2+v^2)$ ($S$ 위에서 $0$ 이상). $x^2+y^2=(u^2+v^2)^2$ 이에요.",
+   "ans": "(a) $\\dfrac83$&emsp;(b) $\\dfrac{112}{45}$",
+   "sol": [
+    "$\\dfrac{\\partial(x,y)}{\\partial(u,v)}=\\begin{vmatrix}2u&amp;-2v\\\\2v&amp;2u\\end{vmatrix}=4(u^2+v^2)\\ \\ge0$",
+    "(a) $\\displaystyle A=\\int_0^1\\!\\!\\int_0^14(u^2+v^2)\\,du\\,dv=4\\Big(\\frac13+\\frac13\\Big)=\\frac83$",
+    "(b) $x^2+y^2=(u^2-v^2)^2+4u^2v^2=(u^2+v^2)^2$ → $\\sqrt{x^2+y^2}=u^2+v^2$",
+    "$$\\begin{aligned}&amp;\\iint_R\\sqrt{x^2+y^2}\\,dA\\\\&amp;=\\int_0^1\\!\\!\\int_0^14(u^2+v^2)^2\\,du\\,dv\\\\&amp;=4\\Big(\\frac15+\\frac29+\\frac15\\Big)=\\frac{112}{45}\\end{aligned}$$"
+   ]
+  },
+  {
    "id": "4-01",
    "lv": 4,
    "ch": 12,
@@ -7955,6 +8058,107 @@ window.CM_DATA = {
     "$Q_x-P_y=(y^2+1)-(-x^2)=x^2+y^2+1$",
     "$W=\\displaystyle\\iint_D(r^2+1)\\,dA=\\int_{-\\pi/2}^{\\pi/2}\\!\\!\\int_0^{2\\cos\\theta}(r^3+r)\\,dr\\,d\\theta=\\int_{-\\pi/2}^{\\pi/2}\\big(4\\cos^4\\theta+2\\cos^2\\theta\\big)d\\theta$",
     "$=4\\cdot\\dfrac{3\\pi}{8}+2\\cdot\\dfrac\\pi2=\\dfrac{3\\pi}{2}+\\pi=\\dfrac{5\\pi}{2}$"
+   ]
+  },
+  {
+   "id": "4-121",
+   "lv": 4,
+   "ch": 14,
+   "sec": "14.4",
+   "type": "14-differentiable",
+   "src": "수업 자료 밖 · 교재 14.4 정의 7 반례",
+   "q": "$f(x,y)=\\dfrac{xy(x+y)}{x^2+y^2}\\ \\big((x,y)\\ne(0,0)\\big)$, $f(0,0)=0$ 일 때<br>(a) $f$ 가 원점에서 연속임을 보여라.&emsp;(b) $f_x(0,0),\\ f_y(0,0)$ 을 구하라.<br>(c) $f$ 가 원점에서 미분가능하지 않음을 정의를 이용해 보여라.<br>(d) $\\mathbf u=\\big\\langle\\tfrac1{\\sqrt2},\\tfrac1{\\sqrt2}\\big\\rangle$ 방향의 방향도함수 $D_{\\mathbf u}f(0,0)$ 을 정의로 구하고 $\\nabla f(0,0)\\cdot\\mathbf u$ 와 비교하라.",
+   "hint": "(a) $|xy|\\le\\tfrac12(x^2+y^2)$. (c) 미분가능하다고 가정하고 $\\Delta y=\\Delta x$ 를 넣어 모순을 찾아요. (d) $D_{\\mathbf u}f(0,0)=\\displaystyle\\lim_{t\\to0}\\frac{f(t/\\sqrt2,\\ t/\\sqrt2)-f(0,0)}{t}$",
+   "ans": "(a) $|f|\\le\\tfrac12|x+y|\\to0$&emsp;(b) $0,\\ 0$&emsp;(c) $\\Delta y=\\Delta x$ 이면 $\\varepsilon_1+\\varepsilon_2=1$ → 모순&emsp;(d) $D_{\\mathbf u}f(0,0)=\\dfrac1{\\sqrt2}\\ne0=\\nabla f(0,0)\\cdot\\mathbf u$",
+   "sol": [
+    "(a) $|xy|\\le\\tfrac12(x^2+y^2)$ 이므로 $|f(x,y)|\\le\\tfrac12|x+y|\\to0=f(0,0)$ → 원점에서 연속",
+    "(b) $f(h,0)=0,\\ f(0,h)=0$ → $f_x(0,0)=\\displaystyle\\lim_{h\\to0}\\frac{0-0}{h}=0$, 같은 방법으로 $f_y(0,0)=0$",
+    "(c) 미분가능하다면 (b)에 의해 $\\Delta z=f(\\Delta x,\\Delta y)=\\varepsilon_1\\Delta x+\\varepsilon_2\\Delta y$ 이고 $\\varepsilon_1,\\varepsilon_2\\to0$ 이어야 해요. $\\Delta y=\\Delta x\\ne0$ 이면 $f(\\Delta x,\\Delta x)=\\dfrac{(\\Delta x)^2\\cdot2\\Delta x}{2(\\Delta x)^2}=\\Delta x$ 이므로 $\\Delta x=(\\varepsilon_1+\\varepsilon_2)\\Delta x$, 즉 $\\varepsilon_1+\\varepsilon_2=1$",
+    "$\\Delta x\\to0$ 이면 $(\\Delta x,\\Delta y)\\to(0,0)$ 이라 $\\varepsilon_1+\\varepsilon_2\\to0$ 이어야 하는데 늘 $1$ → 모순. 원점에서 <b>미분가능하지 않아요</b>.",
+    "(d) $f\\big(\\tfrac{t}{\\sqrt2},\\tfrac{t}{\\sqrt2}\\big)=\\dfrac{\\frac{t^2}{2}\\cdot\\sqrt2\\,t}{t^2}=\\dfrac{t}{\\sqrt2}$ → $D_{\\mathbf u}f(0,0)=\\dfrac1{\\sqrt2}$. 그런데 $\\nabla f(0,0)\\cdot\\mathbf u=0$ — 공식 $D_{\\mathbf u}f=\\nabla f\\cdot\\mathbf u$ 는 미분가능할 때만 쓸 수 있어요."
+   ]
+  },
+  {
+   "id": "4-122",
+   "lv": 4,
+   "ch": 14,
+   "sec": "14.4",
+   "type": "14-differentiable",
+   "src": "수업 자료 밖 · 교재 14.4 정의 7 심화",
+   "q": "다음 두 함수가 원점에서 미분가능한지 정의를 이용해 판정하라.<br>(a) $f(x,y)=\\sqrt{|xy|}$&emsp;(b) $g(x,y)=|xy|$",
+   "hint": "두 함수 모두 $x$축·$y$축 위에서 $0$ 이라 편도함수는 모두 $0$ 이에요. (a)는 $\\Delta y=\\Delta x$ 를 넣어 보고, (b)는 $|\\Delta x\\Delta y|=\\Big(\\dfrac{|\\Delta x|}{\\Delta x}|\\Delta y|\\Big)\\Delta x$ 로 써 보세요.",
+   "ans": "(a) 미분가능하지 않음 ($\\Delta y=\\Delta x$ 이면 $\\varepsilon_1+\\varepsilon_2=\\pm1$)&emsp;(b) 미분가능 ($\\varepsilon_1=\\pm|\\Delta y|,\\ \\varepsilon_2=0$)",
+   "sol": [
+    "두 함수 모두 축 위에서 $0$ 이므로 $f_x(0,0)=f_y(0,0)=0$, $\\ g_x(0,0)=g_y(0,0)=0$ → 미분가능하다면 $\\Delta z=\\varepsilon_1\\Delta x+\\varepsilon_2\\Delta y$, $\\ \\varepsilon_1,\\varepsilon_2\\to0$",
+    "(a) $\\Delta y=\\Delta x\\ne0$ 이면 $\\Delta z=\\sqrt{(\\Delta x)^2}=|\\Delta x|=(\\varepsilon_1+\\varepsilon_2)\\Delta x$ → $\\varepsilon_1+\\varepsilon_2=\\dfrac{|\\Delta x|}{\\Delta x}=\\pm1$ 이라 $0$ 으로 갈 수 없어요 → <b>미분가능하지 않음</b> (연속이고 편도함수도 있지만 미분불가능한 예)",
+    "(b) $\\Delta x\\ne0$ 이면 $\\varepsilon_1=\\dfrac{|\\Delta x|}{\\Delta x}\\,|\\Delta y|$, $\\ \\Delta x=0$ 이면 $\\varepsilon_1=0$, 그리고 $\\varepsilon_2=0$ 으로 두면 $\\varepsilon_1\\Delta x+\\varepsilon_2\\Delta y=|\\Delta x||\\Delta y|=\\Delta z$",
+    "$|\\varepsilon_1|\\le|\\Delta y|\\to0$ 이므로 정의를 만족 → $g$ 는 원점에서 <b>미분가능</b> (접평면 $z=0$). 절댓값이 있어도 미분가능할 수 있어요."
+   ]
+  },
+  {
+   "id": "4-123",
+   "lv": 4,
+   "ch": 14,
+   "sec": "14.4",
+   "type": "14-differentiable",
+   "src": "수업 자료 밖 · 교재 14.5·14.6 증명 방식 (정의 7 이용)",
+   "q": "$f$ 는 점 $(1,2)$ 에서 미분가능하고 $f_x(1,2)=4,\\ f_y(1,2)=-1$ 이다. 미분가능성의 정의 $\\Delta z=f_x\\Delta x+f_y\\Delta y+\\varepsilon_1\\Delta x+\\varepsilon_2\\Delta y$ 를 이용하여 다음을 구하라.<br>(a) $\\displaystyle\\lim_{h\\to0}\\frac{f(1+3h,\\ 2+4h)-f(1,2)}{h}$&emsp;(b) $\\displaystyle\\lim_{h\\to0}\\frac{f(1+h^2,\\ 2-h)-f(1,2)}{h}$<br>(c) (a)를 이용해 $\\mathbf u=\\big\\langle\\tfrac35,\\tfrac45\\big\\rangle$ 방향의 방향도함수 $D_{\\mathbf u}f(1,2)$",
+   "hint": "$\\Delta x,\\ \\Delta y$ 를 $h$ 로 나타내 정의에 넣고 $h$ 로 나누세요. $h\\to0$ 이면 $(\\Delta x,\\Delta y)\\to(0,0)$ 이라 $\\varepsilon_1,\\varepsilon_2\\to0$ 이에요.",
+   "ans": "(a) $8$&emsp;(b) $1$&emsp;(c) $\\dfrac85$",
+   "sol": [
+    "(a) $\\Delta x=3h,\\ \\Delta y=4h$ 이면 $\\Delta z=4(3h)+(-1)(4h)+\\varepsilon_1(3h)+\\varepsilon_2(4h)$ 이므로 $$\\frac{\\Delta z}{h}=8+3\\varepsilon_1+4\\varepsilon_2\\to8$$",
+    "(b) $\\Delta x=h^2,\\ \\Delta y=-h$ 이면 $\\Delta z=4h^2+h+\\varepsilon_1h^2-\\varepsilon_2h$ 이므로 $$\\frac{\\Delta z}{h}=4h+1+\\varepsilon_1h-\\varepsilon_2\\to1$$ 곡선을 따라가도 정의만 있으면 계산돼요.",
+    "(c) $D_{\\mathbf u}f(1,2)=\\displaystyle\\lim_{t\\to0}\\frac{f(1+\\frac35t,\\ 2+\\frac45t)-f(1,2)}{t}$ 에서 $t=5h$ 로 두면 (a) 극한의 $\\dfrac15$ → $\\dfrac85$ (확인: $\\nabla f\\cdot\\mathbf u=\\dfrac{4\\cdot3-1\\cdot4}{5}=\\dfrac85$)"
+   ]
+  },
+  {
+   "id": "4-124",
+   "lv": 4,
+   "ch": 15,
+   "sec": "15.9",
+   "type": "15-change",
+   "src": "수업 자료 밖 · 교재 15.9 쌍곡선·직선 영역",
+   "q": "$R$ 은 제1사분면에서 곡선 $xy=1,\\ xy=3$ 과 직선 $y=x,\\ y=2x$ 로 둘러싸인 영역이다. 변환 $u=xy,\\ v=\\dfrac yx$ 를 이용하여<br>(a) $\\dfrac{\\partial(x,y)}{\\partial(u,v)}$ 를 $u,v$ 로 나타내고, $R$ 에 대응하는 $uv$ 평면의 영역 $S$ 를 구하라.<br>(b) $R$ 의 넓이를 구하라.&emsp;(c) $\\displaystyle\\iint_Ry^2\\,dA$ 를 구하라.",
+   "hint": "역변환을 구하지 않아도 $\\dfrac{\\partial(x,y)}{\\partial(u,v)}=1\\Big/\\dfrac{\\partial(u,v)}{\\partial(x,y)}$ 예요. (c)에서는 $y^2=xy\\cdot\\dfrac yx=uv$",
+   "ans": "(a) $\\dfrac{1}{2v}$, $\\ S=\\{1\\le u\\le3,\\ 1\\le v\\le2\\}$&emsp;(b) $\\ln2$&emsp;(c) $2$",
+   "sol": [
+    "(a) $\\dfrac{\\partial(u,v)}{\\partial(x,y)}=\\begin{vmatrix}y&amp;x\\\\-\\dfrac{y}{x^2}&amp;\\dfrac1x\\end{vmatrix}=\\dfrac yx+\\dfrac yx=\\dfrac{2y}{x}=2v$ → $\\dfrac{\\partial(x,y)}{\\partial(u,v)}=\\dfrac1{2v}$",
+    "경계: $xy=1,\\ 3$ → $u=1,\\ 3$;&emsp;$y=x,\\ y=2x$ → $v=1,\\ 2$ → $S=\\{1\\le u\\le3,\\ 1\\le v\\le2\\}$ (직사각형)",
+    "(b) $\\displaystyle\\iint_RdA=\\int_1^3\\!\\!\\int_1^2\\frac1{2v}\\,dv\\,du=2\\cdot\\frac{\\ln2}{2}=\\ln2$",
+    "(c) $y^2=uv$ → $\\displaystyle\\iint_Ry^2\\,dA=\\int_1^3\\!\\!\\int_1^2uv\\cdot\\frac1{2v}\\,dv\\,du=\\int_1^3\\frac u2\\,du=\\frac12\\cdot\\frac{9-1}{2}=2$"
+   ]
+  },
+  {
+   "id": "4-125",
+   "lv": 4,
+   "ch": 15,
+   "sec": "15.9",
+   "type": "15-change",
+   "src": "수업 자료 밖 · 교재 15.9 타원 영역 (+ 극좌표)",
+   "q": "$R$ 이 타원 영역 $\\dfrac{x^2}{9}+\\dfrac{y^2}{4}\\le1$ 일 때 변환 $x=3u,\\ y=2v$ 를 이용하여 다음을 구하라.<br>(a) $R$ 의 넓이&emsp;(b) $\\displaystyle\\iint_Rx^2\\,dA$&emsp;(c) $\\displaystyle\\iint_R\\sqrt{36-4x^2-9y^2}\\,dA$",
+   "hint": "$\\dfrac{\\partial(x,y)}{\\partial(u,v)}=6$ 이고 $R$ 은 단위원판 $u^2+v^2\\le1$ 로 바뀌어요. 그다음은 극좌표 $u=r\\cos\\theta,\\ v=r\\sin\\theta$",
+   "ans": "(a) $6\\pi$&emsp;(b) $\\dfrac{27\\pi}{2}$&emsp;(c) $24\\pi$",
+   "sol": [
+    "$\\dfrac{\\partial(x,y)}{\\partial(u,v)}=\\begin{vmatrix}3&amp;0\\\\0&amp;2\\end{vmatrix}=6$, $\\ \\dfrac{x^2}9+\\dfrac{y^2}4\\le1\\iff u^2+v^2\\le1$ (단위원판 $S$)",
+    "(a) $\\displaystyle\\iint_RdA=\\iint_S6\\,du\\,dv=6\\pi$ (타원 넓이 $\\pi ab$ 와 같아요)",
+    "(b) $$\\begin{aligned}&amp;\\iint_Rx^2\\,dA=\\iint_S54u^2\\,du\\,dv\\\\&amp;=54\\int_0^{2\\pi}\\cos^2\\theta\\,d\\theta\\int_0^1r^3\\,dr\\\\&amp;=54\\cdot\\pi\\cdot\\frac14=\\frac{27\\pi}{2}\\end{aligned}$$",
+    "(c) $36-4x^2-9y^2=36(1-u^2-v^2)$ 이므로 $$\\begin{aligned}&amp;\\iint_R\\sqrt{36-4x^2-9y^2}\\,dA\\\\&amp;=36\\iint_S\\sqrt{1-u^2-v^2}\\,du\\,dv\\\\&amp;=36\\int_0^{2\\pi}\\!\\!\\int_0^1\\sqrt{1-r^2}\\,r\\,dr\\,d\\theta\\\\&amp;=36\\cdot2\\pi\\cdot\\frac13=24\\pi\\end{aligned}$$"
+   ]
+  },
+  {
+   "id": "4-126",
+   "lv": 4,
+   "ch": 15,
+   "sec": "15.9",
+   "type": "15-change",
+   "src": "수업 자료 밖 · 교재 15.9 사다리꼴 영역",
+   "q": "$R$ 은 네 점 $(1,0),\\ (2,0),\\ (0,2),\\ (0,1)$ 을 꼭짓점으로 하는 사다리꼴이다. 변환 $u=x-y,\\ v=x+y$ 를 이용하여 $\\displaystyle\\iint_R\\cos\\Big(\\frac{x-y}{x+y}\\Big)\\,dA$ 를 구하라.",
+   "hint": "네 변 $x+y=1,\\ x+y=2,\\ x=0,\\ y=0$ 을 $u,v$ 로 바꾸면 $v=1,\\ v=2,\\ u=-v,\\ u=v$. $u$ 로 먼저 적분하면 $\\cos\\dfrac uv$ 가 바로 적분돼요.",
+   "ans": "$\\dfrac32\\sin1$",
+   "sol": [
+    "$x=\\dfrac{u+v}{2},\\ y=\\dfrac{v-u}{2}$ → $\\dfrac{\\partial(x,y)}{\\partial(u,v)}=\\begin{vmatrix}\\frac12&amp;\\frac12\\\\-\\frac12&amp;\\frac12\\end{vmatrix}=\\dfrac12$",
+    "경계: $x+y=1,\\ 2$ → $v=1,\\ 2$;&emsp;$x=0$ → $u=-v$;&emsp;$y=0$ → $u=v$ → $S:\\ 1\\le v\\le2,\\ -v\\le u\\le v$ (직사각형이 아니에요)",
+    "$$\\begin{aligned}&amp;\\iint_R\\cos\\Big(\\frac{x-y}{x+y}\\Big)dA\\\\&amp;=\\int_1^2\\!\\!\\int_{-v}^{v}\\frac12\\cos\\frac uv\\,du\\,dv\\\\&amp;=\\int_1^2\\frac12\\Big[v\\sin\\frac uv\\Big]_{u=-v}^{u=v}dv\\\\&amp;=\\int_1^2v\\sin1\\,dv=\\frac32\\sin1\\end{aligned}$$"
    ]
   }
  ]

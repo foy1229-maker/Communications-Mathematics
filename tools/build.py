@@ -4,8 +4,8 @@
 
 사용법 (저장소 루트에서):
     pip install sympy mpmath
-    python3 tools/build.py            # 전체 검산 + 생성 (단계당 120문제 확인)
-    python3 tools/build.py --partial  # 작업 중: 아직 120문제가 안 된 단계는 개수 확인을 건너뜀
+    python3 tools/build.py            # 전체 검산 + 생성 (단계별 문제 수 확인: 1·2단계 120, 3·4단계 126)
+    python3 tools/build.py --partial  # 작업 중: 문제 수가 아직 안 맞는 단계는 개수 확인을 건너뜀
 """
 import importlib
 import json
@@ -33,8 +33,11 @@ for _name in MODULES:
 
 OUT = os.path.join(HERE, "..", "assets", "problems.js")
 MOCK_OUT = os.path.join(HERE, "..", "assets", "mock-problems.js")
-PER_LEVEL = 120
-EXPECTED_PER_CHAPTER = {12: 8, 13: 6, 14: 46, 15: 36, 16: 24}
+# 단계별 문제 수와 단원 분배. 3·4단계에는 미분가능성의 정의(14.4) 3문제와 변수변환(15.9) 3문제를 더했어요 (121–126번).
+_BASE = {12: 8, 13: 6, 14: 46, 15: 36, 16: 24}
+_PLUS = {12: 8, 13: 6, 14: 49, 15: 39, 16: 24}
+EXPECTED_PER_CHAPTER = {1: _BASE, 2: _BASE, 3: _PLUS, 4: _PLUS}
+PER_LEVEL = {lv: sum(c.values()) for lv, c in EXPECTED_PER_CHAPTER.items()}
 
 
 def fix_html(text):
@@ -76,14 +79,14 @@ def main():
     assert len(ids) == len(set(ids)), "중복 id"
     for lv in (1, 2, 3, 4):
         items = [p for p in PROBLEMS if p["lv"] == lv]
-        if PARTIAL and len(items) != PER_LEVEL:
+        if PARTIAL and len(items) != PER_LEVEL[lv]:
             print(f"  (작업 중) {lv}단계 {len(items)}문제 — 개수 확인 건너뜀")
             continue
-        assert len(items) == PER_LEVEL, f"{lv}단계 문제 수 {len(items)}"
+        assert len(items) == PER_LEVEL[lv], f"{lv}단계 문제 수 {len(items)} (기대 {PER_LEVEL[lv]})"
         cnt = Counter(p["ch"] for p in items)
-        assert dict(cnt) == EXPECTED_PER_CHAPTER, f"{lv}단계 단원 분배 {dict(cnt)}"
+        assert dict(cnt) == EXPECTED_PER_CHAPTER[lv], f"{lv}단계 단원 분배 {dict(cnt)}"
         nums = sorted(int(p["id"].split("-")[1]) for p in items)
-        assert nums == list(range(1, PER_LEVEL + 1)), f"{lv}단계 번호 누락"
+        assert nums == list(range(1, PER_LEVEL[lv] + 1)), f"{lv}단계 번호 누락"
     unused = [k for k in TYPES if not any(p["type"] == k for p in PROBLEMS)]
     if unused and not PARTIAL:
         raise SystemExit(f"문제가 없는 유형: {unused}")

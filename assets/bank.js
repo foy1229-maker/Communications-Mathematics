@@ -133,7 +133,7 @@
   }).join('') +
   '<div class="empty" id="empty" hidden><p>이 조건에 맞는 문제가 없어요.</p><button class="tool" type="button" id="clear-filter">필터 해제</button></div>';
 
-  /* 수식: 문제 본문은 바로, 힌트·정답·풀이는 처음 펼칠 때 그려요 (단계당 120문제라 첫 화면을 가볍게) */
+  /* 수식: 문제 본문은 바로, 힌트·정답·풀이는 처음 펼칠 때 그려요 (단계당 120문제 넘게 있어서 첫 화면을 가볍게) */
   var qs = root.querySelectorAll('.prob-q');
   for (var qi = 0; qi < qs.length; qi++) CM.renderMath(qs[qi]);
   function ensureMath(panel) {

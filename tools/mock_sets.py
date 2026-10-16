@@ -159,7 +159,7 @@ def _c():
         X, Y = rnd.uniform(-1, 1), rnd.uniform(-1, 1)
         assert abs(X*Y*Y/(X*X + Y*Y)) <= abs(X) + 1e-15
 Q(SA, id="q3", no="3", type="극한의 존재성 · 미분가능성의 정의", ref="14.2 · 14.4", mins=9, topics=[3, 4],
-  types=["14-dne", "14-defpartial"],
+  types=["14-dne", "14-differentiable"],
   stem=r"다음 물음에 답하시오.",
   parts=[("a", r"$\displaystyle\lim_{(x,y)\to(0,0)}\frac{xy^2}{x^2+y^4}$ 가 존재하면 구하고, 존재하지 않으면 그 이유를 보이시오. [3점]"),
          ("b", r"$f(x,y)=\dfrac{xy^2}{x^2+y^2}\ \big((x,y)\ne(0,0)\big)$, $\ f(0,0)=0$ 일 때, $f$ 가 원점에서 연속임을 보이고 $f_x(0,0),\ f_y(0,0)$ 을 구하시오. [3점]"),
@@ -310,7 +310,7 @@ def _c():
     num = nquad(inner, [0, 1, 1.5, 2.5], None)
     assert abs(num - (mp.e**6 - 7)/4) < 1e-8
 Q(SA, id="q8", no="8", type="변수변환 (야코비안)", ref="15.9", mins=8, topics=[7],
-  types=[],
+  types=["15-change"],
   stem=r"$R$ 은 네 직선 $x-y=0,\ x-y=2,\ x+y=0,\ x+y=3$ 으로 둘러싸인 영역이다. 변환 $u=x+y,\ v=x-y$ 를 이용하여",
   parts=[("a", r"야코비안 $\dfrac{\partial(x,y)}{\partial(u,v)}$ 를 구하고, $R$ 에 대응하는 $uv$ 평면의 영역 $S$ 를 구하시오. [4점]"),
          ("b", r"$\displaystyle\iint_R(x+y)\,e^{x^2-y^2}\,dA$ 를 구하시오. [6점]")],
@@ -400,7 +400,7 @@ def _c():
         X, Y = rnd.uniform(-1, 1), rnd.uniform(-1, 1)
         assert abs(X*Y*Y/(X*X + Y*Y)) <= abs(X) + 1e-15
 Q(SB, id="q1", no="1", type="미분가능성의 정의 · 극한의 존재성", ref="14.4 · 14.2", mins=9, topics=[4, 3],
-  types=["14-dne", "14-defpartial"],
+  types=["14-differentiable", "14-dne"],
   stem=r"다음 물음에 답하시오.",
   parts=[("a", r"일변수함수 $y=g(x)$ 가 $x=a$ 에서 미분가능할 때, 미분의 정의로부터 $$\Delta y=g'(a)\,\Delta x+\varepsilon\,\Delta x$$ 이고 $\Delta x\to0$ 일 때 $\varepsilon\to0$ 인 $\varepsilon$ 이 존재함을 보이시오. 단, $\Delta y=g(a+\Delta x)-g(a)$ 이다. [3점]"),
          ("b", r"$\displaystyle\lim_{(x,y)\to(0,0)}\frac{x^2y}{x^4+y^2}$ 가 존재하면 구하고, 존재하지 않으면 그 이유를 보이시오. [3점]"),
@@ -461,7 +461,7 @@ def _c():
     num = nquad(inner, [-0.4, 0.4, 2.4, 3.2], None)
     assert abs(num - 24*mp.log(2)/5) < 1e-8
 Q(SB, id="q3", no="3", type="변수변환 (야코비안)", ref="15.9", mins=8, topics=[7],
-  types=[],
+  types=["15-change"],
   stem=r"$R$ 은 네 직선 $x-2y=0,\ x-2y=4,\ 3x-y=1,\ 3x-y=8$ 로 둘러싸인 평행사변형이다. 변환 $u=x-2y,\ v=3x-y$ 를 이용하여",
   parts=[("a", r"야코비안 $\dfrac{\partial(x,y)}{\partial(u,v)}$ 를 구하고, $R$ 에 대응하는 $uv$ 평면의 영역 $S$ 를 구하시오. [4점]"),
          ("b", r"$\displaystyle\iint_R\frac{x-2y}{3x-y}\,dA$ 를 구하시오. [6점]")],
