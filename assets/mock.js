@@ -1,4 +1,4 @@
-/* 모의고사: mock.html?set=1 (A세트) · mock.html?set=2 (B세트) — 주소에 set 이 없으면 A세트
+/* 모의고사: mock.html?set=1 … 5 (A–E세트) — 주소에 set 이 없으면 A세트
    문제 데이터는 assets/mock-problems.js — tools/mock_sets.py 에서 tools/build.py 로 생성 */
 (function () {
   var D = window.CM_MOCK;
