@@ -1,6 +1,6 @@
 """모든 문제의 정답을 sympy로 다시 계산해 확인한 뒤 assets/problems.js 와 assets/mock-problems.js 를 만든다.
 
-모의고사 데이터: tools/mock_sets.py (중간고사 모의고사 A·B 세트, 세트마다 15개 주제 · 10문항).
+모의고사 데이터: tools/mock_sets.py (중간고사 모의고사 A–E 세트, 세트마다 15개 주제 · 10문항).
 
 사용법 (저장소 루트에서):
     pip install sympy mpmath
@@ -155,7 +155,7 @@ MOCK_MINUTES = (75, 90)   # 세트마다 권장 풀이 시간 합의 범위 (시
 
 
 def build_mock():
-    """모의고사 A·B 세트: 정답 검산, 세트마다 10문항 · 15개 주제 모두 · 권장 시간 합 75–90분인지 확인."""
+    """모의고사 A–E 세트: 정답 검산, 세트마다 10문항 · 15개 주제 모두 · 권장 시간 합 75–90분인지 확인."""
     results = mock_sets.check_all()
     bad = [r for r in results if not r[1]]
     if bad:

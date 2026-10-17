@@ -314,6 +314,10 @@ noscript p { padding: 20px; text-align: center; color: var(--amber); }
   /* 모의고사: 휴대폰에서는 긴 전개식이 한 화면에 들어오도록 디스플레이 수식만 조금 작게 */
   .mock-q .katex-display > .katex { font-size: .96em; }
 }
+@media (max-width: 380px) {
+  /* 모의고사 세트 탭 5개가 좁은 화면에서도 두 줄(3 + 2)에 들어가게 */
+  .sets a { padding: 8px 10px 9px; gap: 4px; }
+}
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .prob.flash { animation: none; }
