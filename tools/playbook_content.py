@@ -24,7 +24,7 @@ COMMON = {
         r"'보이시오'는 마지막에 결론 문장을 따로: “따라서 극한은 존재하지 않는다.”",
         r"(b)가 (a)의 결과를 쓰면, (a)를 못 풀었어도 결과를 가정하고 (b)를 진행",
         r"답란에는 최종 답만, 풀이는 빈칸에 위에서 아래로 순서대로",
-        r"쓴 정리의 조건을 한 줄로: “$Q_x-P_y$ 가 $D$ 에서 연속이므로 그린 정리”, “$f_{xy}$ 연속이므로 $f_{xy}=f_{yx}$”",
+        r"쓴 정리의 조건을 한 줄로: “$C$ 는 양의 방향 단순 닫힌 곡선이고 $P,Q$ 의 1계 편도함수가 $D$ 를 포함하는 열린 영역에서 연속이므로 그린 정리”, “$f_{xy},\ f_{yx}$ 가 연속이므로 $f_{xy}=f_{yx}$”",
     ],
 }
 
@@ -162,7 +162,7 @@ UNITS = [
           "when": r"세 점·직선과 점·두 직선으로 정해지는 평면, 두 평면의 각과 교선, 직선과 평면의 교점",
           "steps": [
               r"법선 $\mathbf n=\langle a,b,c\rangle$ 과 점 $P_0$ → $a(x-x_0)+b(y-y_0)+c(z-z_0)=0$",
-              r"법선 고르기: 세 점 → $\overrightarrow{PQ}\times\overrightarrow{PR}$ / 직선과 직선 밖의 점 → $\mathbf v\times\overrightarrow{P_0P}$ / 두 직선 포함 → 두 방향벡터의 외적",
+              r"법선 고르기: 세 점 → $\overrightarrow{PQ}\times\overrightarrow{PR}$ / 직선과 직선 밖의 점 → $\mathbf v\times\overrightarrow{P_0P}$ / 만나는 두 직선 → $\mathbf v_1\times\mathbf v_2$ / 평행한 두 직선 → $\mathbf v_1\times\overrightarrow{P_1P_2}$ (꼬인 두 직선은 한 평면에 없음)",
               r"다른 평면과 평행 → 법선이 같음, 수직 → 법선끼리 내적 $0$",
               r"두 평면의 각 $\cos\theta=\dfrac{|\mathbf n_1\cdot\mathbf n_2|}{|\mathbf n_1||\mathbf n_2|}$, 교선의 방향 $\mathbf n_1\times\mathbf n_2$",
           ],
@@ -404,7 +404,7 @@ UNITS = [
               r"음함수 $F(x,y,z)=0$ (상수를 왼쪽으로 옮겨서): $z_x=-\dfrac{F_x}{F_z},\ z_y=-\dfrac{F_y}{F_z}$ ($F_z\ne0$)",
               r"또는 양변을 $x$ 로 미분 — $z$ 가 들어간 항마다 $z_x$ 를 곱함 (곱의 법칙 주의) → $z_x$ 로 정리",
               r"점의 값은 미분한 <b>다음에</b> 대입 (점의 $z$ 값이 없으면 방정식에서 먼저 구하기)",
-              r"2계: 연속이면 $f_{xy}=f_{yx}$ — 계산 쉬운 순서로",
+              r"2계: $f_{xy},\ f_{yx}$ 가 연속이면 $f_{xy}=f_{yx}$ — 계산 쉬운 순서로",
           ],
           "checks": [
               r"2변수 음함수 $F(x,y)=0$: $\frac{dy}{dx}=-\frac{F_x}{F_y}$",
@@ -444,7 +444,7 @@ UNITS = [
               r"## 원점에서 따로 정의된 분수식",
               r"$f_x(0,0),\ f_y(0,0)$ 을 정의로 (앞 카드)",
               r"미분가능 쪽: $\Delta z-f_x\Delta x-f_y\Delta y$ 를 $\varepsilon_1\Delta x+\varepsilon_2\Delta y$ 로 쓰고 $|\varepsilon_i|\le(\to0$ 인 식$)$ 로 조임 (예: $\varepsilon_1=\frac{(\Delta y)^2}{\sqrt{(\Delta x)^2+(\Delta y)^2}}$, $|\varepsilon_1|\le|\Delta y|$)",
-              r"미분불가능 쪽: 미분가능하다고 가정 → $\Delta y=\Delta x$ (또는 $m\Delta x$) 대입 → $\varepsilon_1+\varepsilon_2=$ ($0$ 이 아닌 상수) → $\varepsilon_i\to0$ 과 모순",
+              r"미분불가능 쪽: 미분가능하다고 가정 → $\Delta y=\Delta x$ 대입 → $\varepsilon_1+\varepsilon_2=$ ($0$ 이 아닌 상수) → $\varepsilon_i\to0$ 과 모순 (일반적으로 $\Delta y=m\Delta x$ 면 $\varepsilon_1+m\varepsilon_2$)",
           ],
           "checks": [
               r"$\varepsilon_1,\varepsilon_2$ 는 유일하지 않음 — 다르게 묶어도 둘 다 $\to0$ 이면 정답",
@@ -766,7 +766,7 @@ UNITS = [
               [r"$y=x,\ \ y=mx$", r"$\theta=\frac\pi4,\ \ \theta=\tan^{-1}m$"],
               [r"$x=a,\ \ y=a$", r"$r=a\sec\theta,\ \ r=a\csc\theta$"],
               [r"$x^2+y^2=\sqrt{x^2+y^2}+x$", r"$r=1+\cos\theta$ (심장형)"],
-              [r"$\arctan\frac yx,\ \ (x^2+y^2)^{3/2}$", r"$\theta,\ \ r^3$"],
+              [r"$\arctan\frac yx,\ \ (x^2+y^2)^{3/2}$", r"$\theta$ ($x>0$ 인 영역에서만; 제2·3사분면은 $\theta-\pi$),$\ \ r^3$"],
           ]},
           "checks": [
               r"원점이 영역 밖(두 원 사이·원 밖)이면 $r$ 의 아래 끝이 $0$ 이 아님",
@@ -1043,9 +1043,9 @@ UNITS = [
           "checks": [r"곡선 위에서 성립하는 식($x^2+y^2=a^2$ 등)을 대입해 피적분함수를 먼저 단순화"],
           "cases": [
               [r"원 $x^2+y^2=4$ 의 사분원 호", r"$x=2\cos t,\ y=2\sin t$, $ds=2\,dt$, $0\le t\le\frac\pi2$", ["1-104", "2-26"]],
-              [r"포물선 호 + 선분", r"조각마다 $ds$: 포물선 $\sqrt{1+x^2}\,dx$, 선분 $y=2$ 는 $|dx|$", ["2-106"]],
+              [r"포물선 $y=\frac12x^2$ 호 + 선분", r"조각마다 $ds$: 포물선 $\sqrt{1+(y')^2}\,dx=\sqrt{1+x^2}\,dx$, 선분 $y=2$ 는 $|dx|$", ["2-106"]],
               [r"나선 철사, 밀도 $z$", r"$\int z\,|\mathbf r'|\,dt$, $|\mathbf r'|$ 는 상수", ["2-107", "3-26", "4-103"]],
-              [r"대원(구 ∩ 원점을 지나는 평면) 위", r"대칭으로 $\int x^2=\int y^2=\int z^2$, $(x+y+z)^2=0$ 전개로 $\int xy\,ds$", ["4-104"]],
+              [r"구 ∩ 평면 $x+y+z=0$ (대원) 위", r"평면이 $x,y,z$ 에 대칭이라 $\int x^2=\int y^2=\int z^2=\frac13\int(x^2+y^2+z^2)$; $(x+y+z)^2=0$ 을 전개해 $\int xy\,ds$ (대칭이 아닌 평면에서는 성립 안 함)", ["4-104"]],
               [r"타원 호 위 $\int xy\,ds$", r"$ds=\sqrt{4\sin^2t+\cos^2t}\,dt=\sqrt{1+3\sin^2t}\,dt$ → $w=1+3\sin^2t$ 치환", ["4-107"]],
               [r"$g=\int_0^{x-y+z}f(u)\,du$ 를 선분 위에서", r"적분 순서 교환 $\int_0^1\!\int_0^tf=\int_0^1(1-u)f$", ["3-107"]],
           ]},
