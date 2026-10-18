@@ -1,7 +1,7 @@
 /* 자동 생성 파일 — tools/make_playbook.py.
    types: 문제 은행 유형 키 → 행동강령 카드 id (개념 정리의 '행동강령' 링크), total: 비교 체크 항목 수 (대시보드) */
 window.CM_PLAYBOOK = {
- "total": 671,
+ "total": 673,
  "cards": 44,
  "types": {
   "12-sphere": "p-12-sphere",
