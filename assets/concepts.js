@@ -22,6 +22,11 @@
           ' title="' + lv + '단계에서 이 유형 ' + items.length + '문제만 보기' + (done ? ' (맞음 ' + done + ')' : '') + '">' +
           lv + '단계 ' + (done ? done + '/' : '') + items.length + '</a>';
       }).join('');
+      // 유형 → 풀이 행동강령 카드 (assets/playbook-map.js)
+      var pbMap = window.CM_PLAYBOOK && window.CM_PLAYBOOK.types;
+      if (pbMap && pbMap[key]) {
+        box.insertAdjacentHTML('beforeend', '<a class="pb-link" href="playbook.html#' + pbMap[key] + '" title="이 유형의 세부 행동강령·상황별 대처">행동강령 →</a>');
+      }
     }
     var counts = { types: Object.keys(D.types).length, problems: D.problems.length };
     var cEls = document.querySelectorAll('[data-count]');
